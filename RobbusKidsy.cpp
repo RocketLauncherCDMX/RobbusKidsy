@@ -215,12 +215,10 @@ void RobbusKidsy :: movement :: MotorLeft(int16_t vel) {
   else direction = BACKWARD;
   speed = abs(vel);
   if(direction == FORWARD) {
-    Serial.println("MotorLeft - forward");
     ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - speed);
     ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
   }
   else {
-    Serial.println("MotorLeft - backward");
     ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
     ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - speed);
   
@@ -234,12 +232,10 @@ void RobbusKidsy :: movement :: MotorRight(int16_t vel) {
   else direction = BACKWARD;
   speed = abs(vel);
   if(direction == FORWARD) {
-    Serial.println("MotorRight - forward");
     ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - speed);
     ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
   }
   else {
-    Serial.println("MotorRight - backward");
     ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
     ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - speed);
   }
@@ -275,20 +271,6 @@ void RobbusKidsy :: movement :: turnLeft(uint8_t speed) {
 
 void RobbusKidsy :: movement :: turnRight(uint8_t speed) {
   ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - speed);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - speed);
-}
-
-void RobbusKidsy :: movement :: closedLeft(uint8_t speed) {
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - speed);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
-}
-
-void RobbusKidsy :: movement :: closedRight(uint8_t speed) {
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
   ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
   ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
   ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - speed);
@@ -338,11 +320,11 @@ void RobbusKidsy :: movement :: wideRightFront(uint8_t speed, float factor) {
     // ecuation 2
     speed_div = -0.0384*factor + 2.3;
   }
-  
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - speed);
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - (int)(speed/speed_div));
+
+  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - (int)(speed/speed_div));
+  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
+  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - speed);
+  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
 }
 
 void RobbusKidsy :: movement :: wideRightBack(uint8_t speed, float factor) {
@@ -356,10 +338,10 @@ void RobbusKidsy :: movement :: wideRightBack(uint8_t speed, float factor) {
     speed_div = -0.0384*factor + 2.46;
   }
   
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - speed);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - (int)(speed/speed_div));
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
+  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
+  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - (int)(speed/speed_div));
+  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
+  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - speed);
 }
 
 void RobbusKidsy :: movement :: stop() {

@@ -1,6 +1,6 @@
 // ------------------------------------------------ ROBBUS KIDSY ----------------------------------------------
 //
-// SET DE JUEGOS POR DEFECTO DE ROBBUS KIDSY
+// SET DE JUEGOS POR DEFECTO DE ROBBUS KIDSY GAME_BUNDLE_01
 // Este es el firmware que trae tu Robbus Kidsy por defecto cuando lo recibes por primera vez.
 // Autor: Rocket Launcher
 // Fecha: 06 de Junio de 2020
@@ -39,6 +39,60 @@
 // Para mas informacion sobre este programa, puedes entrar a: https://robbus.mx/kidsy
 // donde encontraras posters con la informacion y mas.
 // ------------------------------------------------------------------------------------------------------------
+//
+// ---------------------
+// Juego B: Guia a Kidsy.
+// ---------------------
+// Aquí deberas decirle a Kidsy por donde debe ir, con la ayuda de las flechas tactiles, podras
+// grabar un camino en su memoria. Para comenzar este juego, primero presiona el Boton B, entraras
+// al juego. Acontinuacion, para grabar hasta 100 direcciones diferentes, presiona A. El LED4 se
+// encendera, confirmando que te encuentras en modo grabacion. Kidsy esta listo para recordar
+// las indicaciones. 
+// Si seleccionar el juego tratar de reproducir las incidaciones, Kidsy te mostrara un error,
+// debido a que aun no tendra un camino que seguir.
+//
+// Las indicaciones que le puedes dar a Kidsy son: 
+//
+// - Adelante
+// - Atras
+// - Giro a la izquierda
+// - Giro a la derecha
+// 
+// Presiona cuantas flechas quieras grabar y al terminar, presiona de nuevo A.
+// Kidsy te indicara con el Neopixel y un tono que la grabacion esta completa. Para reproducir las
+// indicaciones, presiona B. Kidsy se preparara para hacerlo y comenzara el juego.
+// Cada movimiento se vera reflejado en un tono y en el Neopixel.
+//
+// Crea un circuito de obstaculos con las cosas que tengas a la mano y haz que Kidsy lo supere.
+// Si no lo consigues a la primera, no te preocupes, repitiendo la secuencia de grabacion podras
+// cargar un nuevo camino en la memoria de Kidsy.
+
+
+// Para mas informacion sobre este programa, puedes entrar a: https://robbus.mx/kidsy
+// donde encontraras posters con la informacion y mas.
+//
+// ---------------------
+// Juego C: Kidsy Kart.
+// ---------------------
+// En este divertido juego podras controlar a Kidsy como si de un go Kart se tratase. Esto por
+// medio de Bluetooth y una aplicacion.
+//
+// No solo podras controlarlo, si no que podras interactuar con diferentes colores gracias al
+// sensor de color.
+//
+// VERDE    - Te dara un turbo de 5 segundos.
+// AZUL     - Hara que vayas lento, como si de agua se tratase.
+// MAGENTA  - Te ponchara una llanta aleatoriamente.
+//
+// En el caso del Magenta, te dejara con una llanta ponchada, lo que significa que la llanta
+// afectada ira mucho mas lento, lo que hara que Kidsy se incline hacia un lado, para solucionarlo
+// deberas tocar las flecha del lado correspondiente por al menos 2 segundos. Kidsy te mostrara
+// cuando haya sido arreglada. Si no lo haces, no podras acceder al color verde y Kidsy se quedara
+// asi el resto de la carrera.  
+//
+// Para mas informacion sobre este programa, puedes entrar a: https://robbus.mx/kidsy
+// donde encontraras posters con la informacion y mas.
+// ------------------------------------------------------------------------------------------------------------
 
 #include <BLEDevice.h>
 #include <BLEServer.h>
@@ -49,6 +103,8 @@
 RobbusKidsy Kidsy;              // Llama a Robbus Kidsy
 
 // Estados de Kidsy
+#define FLAT        0           // se usan en las llantas
+#define OK          1
 #define IDDLE       0
 #define GAME_A      1
 #define GAME_B      2
@@ -56,18 +112,21 @@ RobbusKidsy Kidsy;              // Llama a Robbus Kidsy
 #define GAMEOVER    4
 
 // Acciones de Kidsy en los 3 juegos
-#define READY       5
-#define INTERACT    6
-#define INCORRECT   7
-#define CORRECT     8
-#define VICTORY     9
+#define READY           5
+#define INTERACT_SOUND  6
+#define INTERACT_NEOP   7
+#define INTERACT_BOTH   8
+#define INCORRECT       9
+#define CORRECT         10
+#define VICTORY         11
 
 int kidsyStatus = IDDLE;        // maneja en que estado del juego se encuentra
+int arrowTouched = 0;           // guarda la flecha que se toco
 
 // Constantes y variables del juego A
 // -------------------------------------------------------------------------------------
 #define MAX_MOVES   10          // numero maximo de movimientos
-#define SPEED_A     100         // velocidad de los movimientos de kidsy
+#define SPEED_A     150         // velocidad de los movimientos de kidsy
 #define DURATION_A  200         // tiempo que mantendra cada movimiento
 
 bool flag_waitTouch = false;    // bandera para esperar el toque de una flecha
@@ -75,15 +134,14 @@ bool timeOut = false;           // bandera de limite de tiempo
 int moves[MAX_MOVES];           // guarda hasta MAX_MOVE movimientos diferentes
 int nextMove = 0;               // lista de movimientos
 int movesNumber = 0;            // numero de movimientos por ronda
-int arrowTouched = 0;           // guarda la flecha que se toco
 double timeStamp;               // guarda una marca de tiempo
 // -------------------------------------------------------------------------------------
 
 // Constantes y variables del juego B
 // -------------------------------------------------------------------------------------
 #define MAX_ARROWS  100         // limite de memoria para guardar direcciones
-#define SPEED_B     50          // velocidad de los movimientos de kidsy
-#define DURATION_B  315          // tiempo que mantendra cada movimiento
+#define SPEED_B     150         // velocidad de los movimientos de kidsy
+#define DURATION_B  170         // tiempo que mantendra cada movimiento
 bool flag_record = false;       // bandera para grabar las flechas en la memoria
 bool flag_configureB = false;   // bandera para configurar el juego B
 bool flag_memOk = false;        // bandera de contenido en memoria, comienza vacia
@@ -93,8 +151,25 @@ int arrowCounter = 0;           // contador de direcciones guardadas
 
 // Constantes y variables del juego C
 // -------------------------------------------------------------------------------------
+#define FLAT_SPEED       100        // velocidad de una llanta ponchada (magenta)
+#define NOMINAL_SPEED    150        // velocidad nominal (negro o rojo)
+#define BOOST_SPEED      255        // velocidad con boost (amarillo)
+#define WATER_SPEED      75         // velocidad en el agua (azul)
+#define BOOST_TIME       5000       // tiempo que dura el turbo en milisegundos
+
 bool flag_configureC = false;
-int speed_C = 100;
+bool flag_error = false;            // bandera para llamar las accion de incorrecto
+bool flag_interact = false;         // bandera para llamar action de interaccion
+bool flag_boost = false;            // bandera para el turbo
+bool flag_left_forward = false;     // boton izquierdo adelante suelto
+bool flag_left_backward = false;    // boton izquierdo atras suelto
+bool flag_right_forward = false;    // boton derecho adelante suelto
+bool flag_right_backward = false;   // boton derecho atras suelto
+
+int speed_C_left = NOMINAL_SPEED;   // velocidad llanta izquierda
+int speed_C_right = NOMINAL_SPEED;  // velocidad llanta derecha
+int random_tireFlat = NONE;         // cuando se pasa por el morado, una llanta se poncha aleatoriamente
+double boost_timer;                 // contador del tiempo en turbo
 // -------------------------------------------------------------------------------------
 
 // Constantes y variables clases del bluetooth (juego C)
@@ -119,6 +194,8 @@ class MyServerCallbacks: public BLEServerCallbacks {
     }
 };
 
+void actions(int);
+
 class MyCallbacks: public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) {
     std::string rxValue = pCharacteristic->getValue();
@@ -132,33 +209,39 @@ class MyCallbacks: public BLECharacteristicCallbacks {
       Serial.println();
       Serial.println("*********");
 
-      if (rxValue == "!B516") Kidsy.Move.MotorLeft(100);              // flecha adelante presionada
-      if (rxValue == "!B507") Kidsy.Move.MotorLeft(0);                    // flecha adelante suelta
-      if (rxValue == "!B615") Kidsy.Move.MotorLeft(-100);             // flecha atras presionada
-      if (rxValue == "!B606") Kidsy.Move.MotorLeft(0);                    // flecha atras suelta
-      if (rxValue == "!B714") Kidsy.Move.wideLeftFront(100, 20);      // flecha izquierda presionada
-      if (rxValue == "!B705") Kidsy.Move.stop();                          // flecha izquierda suelta
-      if (rxValue == "!B813") Kidsy.Move.wideRightFront(100, 20);     // flecha derecha presionada
-      if (rxValue == "!B804") Kidsy.Move.stop();                          // flecha derecha suelta
+      if (rxValue == "!B516") flag_left_forward = true;         // flecha adelante presionada
+      if (rxValue == "!B507") {                                 // flecha adelante suelta
+        flag_left_forward = false;        
+        Kidsy.Move.MotorLeft(0);
+      }
+      if (rxValue == "!B615") flag_left_backward = true;        // flecha atras presionada
+      if (rxValue == "!B606") {                                 // flecha atras suelta
+        flag_left_backward = false; 
+        Kidsy.Move.MotorLeft(0);     
+      }
+      if (rxValue == "!B714")                                   // flecha izquierda presionada
+      if (rxValue == "!B705")                                   // flecha izquierda suelta
+      if (rxValue == "!B813")                                   // flecha derecha presionada
+      if (rxValue == "!B804")                                   // flecha derecha suelta
 
       if (rxValue == "!B11:") {                                 // boton 1 presionado
-        if(speed_C < 255) speed_C+=5;     
-        Serial.print("Velocidad: ");
-        Serial.println(speed_C);
-        Kidsy.Buzzer.playTone(1000, 50);
+        
       }
       if (rxValue == "!B10:");                                  // boton 1 suelto
-      if (rxValue == "!B219") Kidsy.Move.MotorRight(100);   // boton 2 presionado
-      if (rxValue == "!B20:") Kidsy.Move.MotorRight(0);         // boton 2 suelto
+      if (rxValue == "!B219") flag_right_forward = true;        // boton 2 presionado
+      if (rxValue == "!B20:") {                                 // boton 2 suelto
+        flag_right_forward = false;
+        Kidsy.Move.MotorRight(0);
+      }
       if (rxValue == "!B318") {                                 // boton 3 presionado
-        if(speed_C > 0) speed_C-=5;       
-        Serial.print("Velocidad: ");
-        Serial.println(speed_C);
-        Kidsy.Buzzer.playTone(1000, 50);
+        
       }
       if (rxValue == "!B309");                                  // boton 3 suelto
-      if (rxValue == "!B417") Kidsy.Move.MotorRight(-100);  // boton 4 presionado
-      if (rxValue == "!B408") Kidsy.Move.MotorRight(0);         // boton 4 presionado
+      if (rxValue == "!B417") flag_right_backward = true;       // boton 4 presionado
+      if (rxValue == "!B408") {                                 // boton 4 presionado
+        flag_right_backward = false;      
+        Kidsy.Move.MotorRight(0);
+      }
     }
   }
 };
@@ -167,7 +250,6 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 void setup() {
   Serial.begin(115200);         // Inicializa comunicacion serial a 115200 baudios
   Kidsy.begin();                // Inicializa el hardware del Robbus Kidsy
-  //Kidsy.ColorSensor.enable();   // Habilita el sensor de color y el LED blanco
 
   // Si conectas tu Kidsy por USB y abres su terminal serial, podras ver que esta haciendo
   Serial.println("Hola, mi nombre es Robbus Kidsy, y tengo 3 juegos diferentes para ti:");
@@ -215,7 +297,9 @@ void manageLeds(bool l1, bool l2, bool l3, bool l4) {
  *  Las palabras que lleva la funcion pueden ser:
  *  
  *  READY
- *  INTERACT
+ *  INTERACT_SOUND
+ *  INTERACT_NEOP
+ *  INTERACT_BOTH
  *  INCORRECT
  *  CORRECT
  *  VICTORY
@@ -270,8 +354,20 @@ void actions(int action) {
       delay(1000);
       Kidsy.Neopixel.color(OFF);
       break;
-    case INTERACT:                        // indica una interaccion con las flechas tactiles
+    case INTERACT_SOUND:                  // indica una interaccion de usuario con sonido
       Kidsy.Buzzer.playTone(1000, 50);
+      break;
+    case INTERACT_NEOP:                   // indica una interaccion de usuario con neopixel
+      Kidsy.Neopixel.color(GREEN);
+      delay(25);
+      Kidsy.Neopixel.off();
+      break;
+    case INTERACT_BOTH:                   // indica una interaccion de usuario con sonido y neopixel
+      Kidsy.Buzzer.playTone(1000);
+      Kidsy.Neopixel.color(GREEN);
+      delay(25);
+      Kidsy.Buzzer.noTone();
+      Kidsy.Neopixel.off();
       break;
     case CORRECT:                         // indica que lo que se hizo fue correcto
       Kidsy.Buzzer.playTone(2000, 25);    // tono de accion correcta
@@ -407,15 +503,15 @@ void loop() {
     // caso IDDLE: Kidsy no esta haciendo nada, espera un boton.
     case IDDLE:
       if(Kidsy.ButtonA.read() == PRESSED) {
-        actions(INTERACT);                    // accion de interaccion con el boton
+        actions(INTERACT_SOUND);              // accion de interaccion con el boton
         kidsyStatus = GAME_A;                 // selecciona juego A
       }
       if(Kidsy.ButtonB.read() == PRESSED) {
-        actions(INTERACT);                    // accion de interaccion con el boton
+        actions(INTERACT_SOUND);                    // accion de interaccion con el boton
         kidsyStatus = GAME_B;                 // selecciona juego B
       }
       if(Kidsy.ButtonC.read() == PRESSED) {
-        actions(INTERACT);                    // accion de interaccion con el boton
+        actions(INTERACT_SOUND);                    // accion de interaccion con el boton
         kidsyStatus = GAME_C;                 // selecciona juego C
       }
       break;
@@ -501,7 +597,7 @@ void loop() {
       }
       
       if(Kidsy.ButtonA.read() == PRESSED) {   // evalua el boton A
-        actions(INTERACT);                    // reproduce accion interacion
+        actions(INTERACT_SOUND);                    // reproduce accion interacion
         if(flag_record == false) {            // si al presionar el boton la bandera esta inactiva
           Serial.println("Modo grabacion - Presiona las flechas que quieras guardar");
           arrowCounter = 0;                   // reinicia contador de direcciones
@@ -615,25 +711,137 @@ void loop() {
           pServer->startAdvertising();              // reinicia saludo
           oldDeviceConnected = deviceConnected;
           Kidsy.Neopixel.heartBeat(RED);
+          Kidsy.ColorSensor.enable();               // Deshabilita el sensor de color y el LED blanco
           Serial.println();
           Serial.println("Desconectado");
+          Serial.println("Sensor de color inhabilitado");
       }
       // connecting
       if (deviceConnected && !oldDeviceConnected) {
         oldDeviceConnected = deviceConnected;       // actualiza el estado de la conexion a conectado
         Kidsy.Led4.on();
         Kidsy.Neopixel.heartBeat(GREEN);
+        Kidsy.ColorSensor.enable();   // Habilita el sensor de color y el LED blanco
         Serial.println();
         Serial.println("Conectado correctamente");
+        Serial.println("Sensor de color habilitado");
       }
 
-      if(deviceConnected == false) {
-        Kidsy.Led4.off();
+      if(deviceConnected == false) {        // Kidsy no esta conectado por bluetooth
+        Kidsy.Led4.off();                   // Apaga LED4
         Serial.print(".");
-        Kidsy.Neopixel.heartBeat(YELLOW);
-        delay(3000);
+        Kidsy.Neopixel.heartBeat(YELLOW);   
+        delay(3000);                        // cada 3 segundos checa la conexion
       }
-      
+
+      // En esta seccion se lee el sensor de color
+      Kidsy.ColorSensor.read();
+      Kidsy.Neopixel.color(Kidsy.ColorSensor.value);
+      switch(Kidsy.ColorSensor.value) {
+        case RED:
+            // El negor se confunde facilmente con el rojo, por esto figura como parte del camino
+            if(flag_boost == false) Kidsy.Buzzer.noTone();  
+            if(random_tireFlat == 0 && flag_boost == false) speed_C_left = speed_C_right = NOMINAL_SPEED;
+          break;
+        // El verde es el color del turbo. Duracion: 5000 milisegundos
+        case GREEN:
+          if(random_tireFlat == 0 && flag_boost == false) {   // si no esta ya en turbo o ponchado
+            Serial.println("Boost speed");
+            flag_boost = true;                                // activa el turbo 
+            boost_timer = millis();                           // guarda el tiempo inicial
+            Kidsy.Buzzer.playTone(500);                       // reproduce tono
+          }
+          break;
+        case BLUE:
+          // Color del agua
+          if(random_tireFlat == 0 && flag_boost == false) {   // Si no esta ponchado o en turbo
+            speed_C_left = WATER_SPEED;                       // carga la velocidad del agua
+            speed_C_right = WATER_SPEED;
+            Serial.println("Water speed");
+            Kidsy.Buzzer.playTone(2000);                      // reproduce tono
+          }
+          break;
+        case MAGENTA:
+          // solo entra si no hay llanta ponchada y no hay turbo activo
+          if(random_tireFlat == NONE && flag_boost == false) {
+            actions(INCORRECT);               
+            randomSeed(millis());                     // determina cual llanta se ponchara aleatoriamente
+            random_tireFlat = random(LEFT,RIGHT+1);   // menor inclusivo, mayor exclusivo
+            Serial.print("Llanta ponchada: ");
+            Serial.println(random_tireFlat);
+            if(random_tireFlat == LEFT) {
+              speed_C_left = FLAT_SPEED;
+              Serial.println("Llanta izquierda");
+            }
+            else if(random_tireFlat == RIGHT) {
+              speed_C_right = FLAT_SPEED;
+              Serial.println("Llanta derecha");
+            }
+          }
+          break;
+        case YELLOW:
+          
+          break;
+        case CYAN:
+          // Color del agua
+          if(random_tireFlat == 0 && flag_boost == false) {   // Si no esta ponchado o en turbo
+            speed_C_left = WATER_SPEED;                       // carga la velocidad del agua
+            speed_C_right = WATER_SPEED;
+            Serial.println("Water speed");
+            Kidsy.Buzzer.playTone(2000);                      // reproduce tono
+          }
+          break;
+        case WHITE:
+          break;
+        case BLACK:
+          // El negro representa el asfalto del camino y la velocidad es la nominal
+          if(flag_boost == false) Kidsy.Buzzer.noTone();    // si no esta en turbo, silencia Buzzer        
+          if(random_tireFlat == 0 && flag_boost == false) { // si no esta ponchado o en turbo
+            speed_C_left = speed_C_right = NOMINAL_SPEED;   // restaura velocidad nominal
+          }
+          break;
+      }
+
+      if(flag_boost == true) {                        // Si se activa el turbo (color verde)
+        speed_C_left = BOOST_SPEED;                   // carga velocidad maxima
+        speed_C_right = BOOST_SPEED;
+        // si paso el tiempo del turbo, lo desactiva
+        if(millis() > boost_timer + BOOST_TIME) {     // si pasaron 5 segundos
+          flag_boost = false;                         // desactiva el turbo
+          Kidsy.Buzzer.noTone();                      // silencia el buzzer
+          Serial.println("Turbo agotado");
+        }
+      }
+
+      if(random_tireFlat != NONE) {             // Si se encuentra una llanta ponchada
+        arrowTouched = getArrow();              // lee las flechas
+        Serial.println(arrowTouched);
+        if(arrowTouched == random_tireFlat) {   // si la flecha es la misma que la llanta
+          random_tireFlat = 0;                  // arregla llanta
+          speed_C_left = NOMINAL_SPEED;         // restaura la velocidad en ambas llantas
+          speed_C_right = NOMINAL_SPEED;
+          actions(CORRECT);                     // reproduce accion correcta
+        }
+      }
+
+      // reproduce errores
+      if(flag_error == true) {
+        flag_error = false;
+        actions(INCORRECT);
+      }
+
+      // reproduce interacciones
+      if(flag_interact == true) {
+        flag_interact = false;
+        actions(INTERACT_BOTH);
+      }
+
+      // En esta seccion se cargan constantemente los valores de velocidad en las llantas
+      // dependiendo de los botones que se estan presionando
+      if(flag_left_forward == true) Kidsy.Move.MotorLeft(speed_C_left);
+      if(flag_left_backward == true) Kidsy.Move.MotorLeft(-speed_C_left);
+      if(flag_right_forward == true) Kidsy.Move.MotorRight(speed_C_right);
+      if(flag_right_backward == true) Kidsy.Move.MotorRight(-speed_C_right);
       break;
   }
 }

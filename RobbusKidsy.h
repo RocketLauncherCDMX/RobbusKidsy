@@ -121,7 +121,7 @@ public:
     #define PWM_CHANNEL_RIGHT_IN2   3
     
     uint8_t speed = 0;
-    bool direction = FORWARD;
+    uint direction = FORWARD;
     bool status = OFF;
     uint8_t pwm_channel;
     uint8_t dcm_in;
@@ -131,8 +131,6 @@ public:
     void backward(uint8_t);
     void turnLeft(uint8_t);
     void turnRight(uint8_t);
-    void closedLeft(uint8_t);
-    void closedRight(uint8_t);
     void wideLeftFront(uint8_t, float);
     void wideLeftBack(uint8_t, float);
     void wideRightFront(uint8_t, float);
