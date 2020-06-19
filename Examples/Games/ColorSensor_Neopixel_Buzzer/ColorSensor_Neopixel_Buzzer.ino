@@ -1,15 +1,12 @@
-// ------------------------------------------------ ROB.BIT KIDSY -----------------------------------------------
-//
-// Nivel de dificultad: FACIL
+// ------------------------------------------------ ROBBUS KIDSY ------------------------------------------------
 //
 // EJEMPLO DE USO DEL NEOPIXEL EN CONJUNTO CON EL SENSOR DE COLOR
-// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Rob.bit Kidsy.
-// Autor: Fabian Alfonso Flores
-// Empresa: Proyectil Mx
+// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robbus Kidsy.
+// Autor: Rocket Launcher
 // Fecha: 8 de febrero de 2020
 // --------------------------------------------------------------------------------------------------------------
 //
-// Rob.bit Kidsy cuenta con 1 sensor de color y un Neopixel:
+// Robbus Kidsy cuenta con 1 sensor de color y un Neopixel:
 // - ColorSensor
 // - Neopixel
 //
@@ -35,7 +32,7 @@
 //  ----------------------------
 //
 // Este mismo esquema de colores lo maneja el Neopixel, por lo que son compatibles. Para mostrar el color que
-// esta viendo Rob.bit Kidsy en el Neopixel basta con:
+// esta viendo Robbus Kidsy en el Neopixel basta con:
 //
 // 1. Leer el color con la funcion ColorSensor.read();
 // 2. Cargar ese color con la funcion:
@@ -45,9 +42,9 @@
 // una funcion del sensor.
 // --------------------------------------------------------------------------------------------------------------
 
-#include<Rob_bit_Kidsy.h>
+#include<RobbusKidsy.h>
 
-Rob_bit Kidsy;    // Declara una instancia tipo Rob.bit, llamada de igual forma
+RobbusKidsy Kidsy;            // Llama a Robbus Kidsy
 
 bool buzzer_state = false;    // Activa o desactiva el buzzer
 int new_color, old_color;     // identifica si el color ha cambiado

@@ -494,6 +494,25 @@ int getArrow() {
   else return(false);
 }
 
+/* --------------------------------------------------------------------------------------------
+ *  void sendString()
+ *  -------------------------------------------------------------------------------------------
+ *  Funcion que manda un arreglo de caracteres por bluetooth
+ *  Una vez que Kidsy está conectado a un dispositivo Bluetooth, con esta funcion se puede
+ *  mandar un arreglo de caracteres por notificacion. Se utiliza para mandar informacion
+ *  de los colores que va viendo.
+-------------------------------------------------------------------------------------------- */
+void sendString(String string) {
+  for(int i=0; i<string.length(); i++) {
+    txValue = (uint8_t)string.charAt(i);
+    pTxCharacteristic->setValue(&txValue, 1);
+    pTxCharacteristic->notify();
+  }
+  txValue = '\n';
+  pTxCharacteristic->setValue(&txValue, 1);
+  pTxCharacteristic->notify();
+}
+
 void loop() {
   // Lo primero que se hace es determinar el estado de Kidsy. A esto se le conoce como
   // "Maquina de estados" y no es otra cosa que una lista de pasos a seguir  para que
@@ -747,6 +766,7 @@ void loop() {
         case GREEN:
           if(random_tireFlat == 0 && flag_boost == false) {   // si no esta ya en turbo o ponchado
             Serial.println("Boost speed");
+            sendString("Zona Turbo");
             flag_boost = true;                                // activa el turbo 
             boost_timer = millis();                           // guarda el tiempo inicial
             Kidsy.Buzzer.playTone(500);                       // reproduce tono
@@ -757,6 +777,7 @@ void loop() {
           if(random_tireFlat == 0 && flag_boost == false) {   // Si no esta ponchado o en turbo
             speed_C_left = WATER_SPEED;                       // carga la velocidad del agua
             speed_C_right = WATER_SPEED;
+            sendString("Zona de agua");
             Serial.println("Water speed");
             Kidsy.Buzzer.playTone(2000);                      // reproduce tono
           }
@@ -771,10 +792,14 @@ void loop() {
             Serial.println(random_tireFlat);
             if(random_tireFlat == LEFT) {
               speed_C_left = FLAT_SPEED;
+              sendString("La llanta izquierda se poncho");
+              sendString("Para arreglar, toca por 2 segundos la flecha izquierda de Kidsy");
               Serial.println("Llanta izquierda");
             }
             else if(random_tireFlat == RIGHT) {
               speed_C_right = FLAT_SPEED;
+              sendString("La llanta derecha se poncho");
+              sendString("Para arreglar, toca por 2 segundos la flecha derecha de Kidsy");
               Serial.println("Llanta derecha");
             }
           }
@@ -787,6 +812,7 @@ void loop() {
           if(random_tireFlat == 0 && flag_boost == false) {   // Si no esta ponchado o en turbo
             speed_C_left = WATER_SPEED;                       // carga la velocidad del agua
             speed_C_right = WATER_SPEED;
+            sendString("Zona de agua");
             Serial.println("Water speed");
             Kidsy.Buzzer.playTone(2000);                      // reproduce tono
           }
@@ -809,6 +835,7 @@ void loop() {
         if(millis() > boost_timer + BOOST_TIME) {     // si pasaron 5 segundos
           flag_boost = false;                         // desactiva el turbo
           Kidsy.Buzzer.noTone();                      // silencia el buzzer
+          sendString("Turbo agotado");
           Serial.println("Turbo agotado");
         }
       }
@@ -817,6 +844,8 @@ void loop() {
         arrowTouched = getArrow();              // lee las flechas
         Serial.println(arrowTouched);
         if(arrowTouched == random_tireFlat) {   // si la flecha es la misma que la llanta
+          if(random_tireFlat == LEFT) sendString("Llanta izquierda arreglada");
+          else if(random_tireFlat == RIGHT) sendString("Llanta derecha arreglada");
           random_tireFlat = 0;                  // arregla llanta
           speed_C_left = NOMINAL_SPEED;         // restaura la velocidad en ambas llantas
           speed_C_right = NOMINAL_SPEED;

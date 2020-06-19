@@ -1,7 +1,7 @@
 /*
-    Video: https://www.youtube.com/watch?v=oCMOYS71NIU
-    Based on Neil Kolban example for IDF: https://github.com/nkolban/esp32-snippets/blob/master/cpp_utils/tests/BLE%20Tests/SampleNotify.cpp
-    Ported to Arduino ESP32 by Evandro Copercini
+   Video: https://www.youtube.com/watch?v=oCMOYS71NIU
+   Based on Neil Kolban example for IDF: https://github.com/nkolban/esp32-snippets/blob/master/cpp_utils/tests/BLE%20Tests/SampleNotify.cpp
+   Ported to Arduino ESP32 by Evandro Copercini
 
    Create a BLE server that, once we receive a connection, will send periodic notifications.
    The service advertises itself as: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
@@ -23,12 +23,12 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
-#include <Rob_bit_Kidsy.h>
+#include <RobbusKidsy.h>
 
-Rob_bit Kidsy;
+RobbusKidsy Kidsy;            // Llama a Robbus Kidsy
 
-#define MAX_SPEED     100     // Velocidad maxima de los motores
-#define TIMER_TIME    50000   // Tiempo del Timer0 en microSegundos
+#define MAX_SPEED     150     // Velocidad maxima de los motores
+#define TIMER_TIME    3000    // Tiempo del Timer0 en microSegundos
 
 // Declaramos un puntero tipo timer, compatible con ESP32
 hw_timer_t * timer = NULL;
@@ -42,8 +42,10 @@ portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
 //            0 es totalmente detenido.
 // Una velocidad muy baja (menor a +-25) puede que no sea suficiente para comenzar a mover el motor
 
-int motorSpeedLeft = 0;      // 100 hacia el FRENTE
-int motorSpeedRight = 0;    // 100 hacia ATRAS
+bool old_conexionStatus = false;
+bool new_conexionStatus = false;
+int motorSpeedLeft = 0;  
+int motorSpeedRight = 0;
 int setSpeedLeft = 0;
 int setSpeedRight = 0;
 
@@ -83,12 +85,10 @@ int txValue;
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
       deviceConnected = true;
-      Kidsy.Neopixel.heartBeat(RED);
     };
 
     void onDisconnect(BLEServer* pServer) {
       deviceConnected = false;
-      Kidsy.Neopixel.heartBeat(BLUE);
     }
 };
 
@@ -166,20 +166,20 @@ void setup() {
 
   // A continucacion configuramos el timer:
   
-  // 0       - Inicializa el Timer0, Rob.bit Kidsy dispone de 4 timers (0 al 3)
-  // 80      - Valor del preescaler para 80MHz / 80 = 1000000 veces por segundo
-  // true    - Cuenta ascendente, false: cuenta descendente
+  // 0            - Inicializa el Timer0, Robbus Kidsy dispone de 4 timers (0 al 3)
+  // 80           - Valor del preescaler para 80MHz / 80 = 1000000 veces por segundo
+  // true         - Cuenta ascendente, false: cuenta descendente
   timer = timerBegin(0, 80, true);
   
-  // timer    - Pasamos la variable timer creada
-  // &onTimer - funcion onTimer
-  // true     - la interrupcion generada sera ascendente, false: descendente
+  // timer        - Pasamos la variable timer creada
+  // &onTimer     - funcion onTimer
+  // true         - la interrupcion generada sera ascendente, false: descendente
   timerAttachInterrupt(timer, &onTimer, true);  
   
-  // timer   - Puntero al timer
-  // 5000    - Valor del contador en el cual el timer interrumpira (ms para un valor de preescaler de 80 y velocidad de 80MHz)
-  // true    - Interrupcion periodica, false: interrumpe una sola vez 
-  timerAlarmWrite(timer, 5000, true);
+  // timer        - Puntero al timer
+  // TIMER_TIME   - Valor del contador en el cual el timer interrumpira (ms para un valor de preescaler de 80 y velocidad de 80MHz)
+  // true         - Interrupcion periodica, false: interrumpe una sola vez 
+  timerAlarmWrite(timer, TIMER_TIME, true);
 
   //  Habilitamos el timer que acabamos de crear
   timerAlarmEnable(timer);               
@@ -187,7 +187,7 @@ void setup() {
   // ---------------------------------------------------------------------------------------------------------------------------
 
   // Create the BLE Device
-  BLEDevice::init("Rob.bit Kidsy");
+  BLEDevice::init("Robbus Kidsy");
 
   // Create the BLE Server
   pServer = BLEDevice::createServer();
@@ -220,6 +220,15 @@ void setup() {
 }
 
 void loop() {
+    new_conexionStatus = deviceConnected;     // examina el nuevo estado de la conexion
+    if(new_conexionStatus == true && old_conexionStatus == false) {       // se conecto
+      Kidsy.Neopixel.heartBeat(GREEN);
+    }
+    else if(new_conexionStatus == false && old_conexionStatus == true) {  // se desconecto
+      Kidsy.Neopixel.heartBeat(RED);
+    }
+    old_conexionStatus = new_conexionStatus;  // el nuevo valor se vuelve viejo
+  
     Kidsy.ColorSensor.read();
     Kidsy.Neopixel.color(Kidsy.ColorSensor.value);
     Serial.println(Kidsy.ColorSensor.name);

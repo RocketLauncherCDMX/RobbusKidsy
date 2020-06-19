@@ -1,5 +1,5 @@
 /*
-*   Este ejemplo crea una conexion basica entre Rob.bit Kidsy y un telefono, por bluetooth 4.2.
+*   Este ejemplo crea una conexion basica entre Robbus Kidsy y un telefono, por bluetooth 4.2.
 *   El presente ejemplo funciona hasta el día 02/03/2020 con la aplicación blueFruit de Adafruit
 *   para telefonos Android. https://play.google.com/store/apps/details?id=com.adafruit.bluefruit.le.connect&hl=es
 *   
@@ -8,7 +8,7 @@
 *   1.- Compilar y subir con la placa Adafruit ESP32 Feather.
 *   2.- Serciorarse que tu Rob.bit Kidsy tenga el interruptor en posicion ON.
 *   3.- Instalar la aplicacion bluefruit (enlace arriba) en dispositivos Android (No probado en iOs).
-*   4.- Abrir la aplicación. Aparecera la pantalla Select Device, escoger Rob.bit Kidsy.
+*   4.- Abrir la aplicación. Aparecera la pantalla Select Device, escoger Robbus Kidsy.
 *   5.- El Led1 se encendera, indicando que la conexion fue exitosa. Si no se enciende o marca error
 *       volver a intentar.
 *   6.- Seleccionar Controller en la siguiente pantalla.
@@ -18,15 +18,15 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
-#include <Rob_bit_Kidsy.h>
+#include <RobbusKidsy.h>
 
-Rob_bit Kidsy;
+RobbusKidsy Kidsy;
 
 BLEServer *pServer = NULL;
 BLECharacteristic * pTxCharacteristic;
 bool deviceConnected = false;
 bool oldDeviceConnected = false;
-int txValue;
+uint8_t txValue = 0;
 
 // See the following for generating UUIDs:
 // https://www.uuidgenerator.net/
@@ -96,7 +96,7 @@ void setup() {
   Kidsy.ColorSensor.enable();
 
   // Create the BLE Device
-  BLEDevice::init("Rob.bit Kidsy");
+  BLEDevice::init("Robbus Kidsy");
 
   // Create the BLE Server
   pServer = BLEDevice::createServer();
@@ -128,16 +128,26 @@ void setup() {
   Serial.println("Waiting a client connection to notify...");
 }
 
+void sendString(String string) {
+  for(int i=0; i<string.length(); i++) {
+    txValue = (uint8_t)string.charAt(i);
+    pTxCharacteristic->setValue(&txValue, 1);
+    pTxCharacteristic->notify();
+  }
+  txValue = '\n';
+  pTxCharacteristic->setValue(&txValue, 1);
+  pTxCharacteristic->notify();
+}
+
 void loop() {
     Kidsy.ColorSensor.read();
     Kidsy.Neopixel.color(Kidsy.ColorSensor.value);
     Serial.println(Kidsy.ColorSensor.name);
     
     if (deviceConnected) {
-        pTxCharacteristic->setValue(&Kidsy.ColorSensor.value, 1);
-        pTxCharacteristic->notify();
-    delay(10); // bluetooth stack will go into congestion, if too many packets are sent
-  }
+      sendString(Kidsy.ColorSensor.name);
+      delay(100); // bluetooth stack will go into congestion, if too many packets are sent
+    }
 
     // disconnecting
     if (!deviceConnected && oldDeviceConnected) {
