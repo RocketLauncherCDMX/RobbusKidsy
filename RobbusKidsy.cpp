@@ -76,9 +76,9 @@ void RobbusKidsy :: begin() {
 
 void RobbusKidsy :: begin(uint8_t mode) {
 
-  pinMode(BUTTON_A, INPUT_PULLUP);
-  pinMode(BUTTON_B, INPUT_PULLUP);
-  pinMode(BUTTON_C, INPUT_PULLUP);
+  pinMode(BUTTON_A, INPUT);
+  pinMode(BUTTON_B, INPUT);
+  pinMode(BUTTON_C, INPUT);
 
   pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
@@ -167,11 +167,11 @@ void RobbusKidsy :: begin(uint8_t mode) {
 
 uint8_t RobbusKidsy :: buttons :: read() {
   new_state = digitalRead(pin);
-  if(new_state == HIGH && old_state == HIGH) status = HOLD_RELEASED;  // button remains released
-  if(new_state == HIGH && old_state == LOW) status = RELEASED;        // button is pressed once
-  if(new_state == LOW && old_state == HIGH) status = PRESSED;         // button is released once
-  if(new_state == LOW && old_state == LOW) status = HOLD_PRESSED;     // button remains pressed
-  old_state = new_state;                                              // the last state gets old
+  if(new_state == HIGH && old_state == HIGH) status = HOLD_PRESSED;    // button remains released
+  if(new_state == HIGH && old_state == LOW) status = PRESSED;          // button is pressed once
+  if(new_state == LOW && old_state == HIGH) status = RELEASED;         // button is released once
+  if(new_state == LOW && old_state == LOW) status = HOLD_RELEASED;     // button remains pressed
+  old_state = new_state;                                               // the last state gets old
   if(status == RELEASED || status == PRESSED) {
     delay(50);
   }

@@ -45,9 +45,9 @@ public:
     #define RELEASED          0
     #define HOLD_RELEASED     2
     #define HOLD_PRESSED      3
-    #define BUTTON_A          39
-    #define BUTTON_B          34
-    #define BUTTON_C          35
+    #define BUTTON_A          34
+    #define BUTTON_B          35
+    #define BUTTON_C          36
     uint8_t pin;      
     uint8_t status;
     uint8_t read();
