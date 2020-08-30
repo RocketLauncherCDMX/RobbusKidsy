@@ -2,7 +2,6 @@
 #define _ROBBUSKIDSY_H_
 
 #include <Arduino.h>
-#include <Adafruit_NeoPixel.h>
 #include <Wire.h>
 #include "TCS34725.h"
 #include "pitches.h"
@@ -156,37 +155,36 @@ public:
     void r2d2(uint16_t);
   } Buzzer;
 
+  
+
   class Neopixel {
   private:
+    uint8_t value[3];  // GRB value
+    uint8_t col, bit;
+    uint8_t i;
   public:
-    #define BLACK         0 
+    #define OFF           0
     #define RED           1
     #define GREEN         2
     #define BLUE          3
     #define YELLOW        4
-    #define CYAN          6
-    #define MAGENTA       5
+    #define CYAN          5
+    #define MAGENTA       6
     #define WHITE         7
 
     #define BLACK_UMBRAL  50
     #define WHITE_UMBRAL  400
-
-    #define RAINBOW       0
-
     #define NONE          0
     #define ANY_BUTTON    5
     #define ANY_ARROW     6
 
-    void color(uint8_t, uint8_t, uint8_t);
-    void color(uint8_t, uint8_t);
+    void color(uint8_t,uint8_t,uint8_t);
     void color(uint8_t);
-    void off();
-    void fadeIn(uint8_t, uint16_t);
-    void fadeOut(uint8_t, uint16_t);
-    void fadeInOut(uint8_t, uint16_t, uint16_t, uint16_t);
+    void fadeInOut(uint8_t, uint16_t);
+    void fadeInOut(uint8_t);
     void heartBeat(uint8_t);
-    void rainbow(uint16_t);
-              
+    void off(void);
+
   } Neopixel;
 
   class ColorSensor {

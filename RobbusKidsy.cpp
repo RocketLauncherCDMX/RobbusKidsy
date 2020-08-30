@@ -4,7 +4,9 @@
 #ifndef _ROBBUSKIDSY_CPP_
 #define _ROBBUSKIDSY_CPP_
 
-Adafruit_NeoPixel dot(1, 19, NEO_GRB + NEO_KHZ800);  // 1 neopixel en pin19
+rmt_data_t led_data[24];
+rmt_obj_t* rmt_send = NULL;
+
 TCS34725 tcs = TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_1X);
 
 void RobbusKidsy :: begin() {
@@ -61,8 +63,6 @@ void RobbusKidsy :: begin() {
     ArrowRight.analogRead();
   }
 
-  dot.begin();
-  Neopixel.color(BLACK);
   tcs.begin();
 
   for (int i=0; i<256; i++) {
@@ -72,6 +72,11 @@ void RobbusKidsy :: begin() {
     x *= 255;
     ColorSensor.gammatable[i] = x;
   }
+
+  rmt_send = rmtInit(19, true, RMT_MEM_64);
+  rmtSetTick(rmt_send, 100);
+
+  Neopixel.off();
 }
 
 void RobbusKidsy :: begin(uint8_t mode) {
@@ -128,8 +133,6 @@ void RobbusKidsy :: begin(uint8_t mode) {
     ArrowRight.analogRead();
   }
 
-  dot.begin();
-  Neopixel.color(BLACK);
   tcs.begin();
 
   for (int i=0; i<256; i++) {
@@ -140,15 +143,17 @@ void RobbusKidsy :: begin(uint8_t mode) {
     ColorSensor.gammatable[i] = x;
   }
 
+  rmt_send = rmtInit(18, true, RMT_MEM_64);
+  rmtSetTick(rmt_send, 100);
+
+  Neopixel.off();
+
   switch(mode) {
     case BIP:
       delay(100);
       Buzzer.playTone(2000, 50);
       delay(100);
       Buzzer.playTone(2000, 50);
-      break;
-    case HEART:
-      Neopixel.heartBeat(RED);
       break;
     case L1:
       Led1.blink(2, 100);
@@ -431,87 +436,106 @@ void RobbusKidsy :: Buzzer :: r2d2(uint16_t time) {
 }
 
 void RobbusKidsy :: Neopixel :: color(uint8_t red, uint8_t green, uint8_t blue) {
-  if(red < 0) red = 0;
-  else if(red > 255) red = 255;
-  if(green < 0) green = 0;
-  else if(green > 255) green = 255;
-  if(blue < 0) blue = 0;
-  else if(blue > 255) blue = 255;
-  dot.setPixelColor(0, red, green, blue);
-  dot.show();
+  value[0] = green;
+  value[1] = red;
+  value[2] = blue;
+  i=0;
+
+  for (col=0; col<3; col++ ) {
+    for (bit=0; bit<8; bit++){
+      if ( (value[col] & (1<<(7-bit)))) {
+        led_data[i].level0 = 1;
+        led_data[i].duration0 = 8;
+        led_data[i].level1 = 0;
+        led_data[i].duration1 = 4;
+      } else {
+        led_data[i].level0 = 1;
+        led_data[i].duration0 = 4;
+        led_data[i].level1 = 0;
+        led_data[i].duration1 = 8;
+      }
+      i++;
+    }
+  }
+  // Send the data
+  rmtWrite(rmt_send, led_data, 24);
 }
 
-void RobbusKidsy :: Neopixel :: color(uint8_t color, uint8_t brightness) {
-  if(brightness < 1) brightness = 1;
-  else if(brightness > 255) brightness = 255;
-  switch(color) {
-    case BLACK:   off();                                                    break;
-    case RED:     dot.setPixelColor(0, brightness, 0, 0);                   break;
-    case GREEN:   dot.setPixelColor(0, 0, brightness, 0);                   break;
-    case BLUE:    dot.setPixelColor(0, 0, 0, brightness);                   break;
-    case YELLOW:  dot.setPixelColor(0, brightness, brightness, 0);          break;
-    case CYAN:    dot.setPixelColor(0, 0, brightness, brightness);          break;
-    case MAGENTA: dot.setPixelColor(0, brightness, 0, brightness);          break;
-    case WHITE:   dot.setPixelColor(0, brightness, brightness, brightness); break;
+void RobbusKidsy :: Neopixel :: color(uint8_t colorName) {
+  switch(colorName) {
+    case OFF:       color(0,0,0);        break;
+    case RED:       color(255,0,0);      break;
+    case GREEN:     color(0,255,0);      break;
+    case BLUE:      color(0,0,255);      break;
+    case YELLOW:    color(255,255,0);    break;
+    case CYAN:      color(0,255,255);    break;
+    case MAGENTA:   color(255,0,255);    break;
+    case WHITE:     color(255,255,255);  break;
   }
-  dot.show();
 }
 
-void RobbusKidsy :: Neopixel :: color(uint8_t color) {
-  switch(color) {
-    case BLACK:   off();                               break;
-    case RED:     dot.setPixelColor(0, 255, 0, 0);     break;
-    case GREEN:   dot.setPixelColor(0, 0, 255, 0);     break;
-    case BLUE:    dot.setPixelColor(0, 0, 0, 255);     break;
-    case YELLOW:  dot.setPixelColor(0, 255, 255, 0);   break;
-    case CYAN:    dot.setPixelColor(0, 0, 255, 255);   break;
-    case MAGENTA: dot.setPixelColor(0, 255, 0, 255);   break;
-    case WHITE:   dot.setPixelColor(0, 255, 255, 255); break;
+void RobbusKidsy :: Neopixel :: fadeInOut(uint8_t colorName, uint16_t speed) {
+  for(int i=0; i<=255; i++) {
+    switch(colorName) {
+      case RED:     color(i,0,0); break;
+      case GREEN:   color(0,i,0); break;
+      case BLUE:    color(0,0,i); break;
+      case YELLOW:  color(i,i,0); break;
+      case CYAN:    color(0,i,i); break;
+      case MAGENTA: color(i,0,i); break;
+      case WHITE:   color(i,i,i); break;
+    }
+    delayMicroseconds(speed);
   }
-  dot.show();
+  for(int i=255; i>=0; i--) {
+    switch(colorName) {
+      case RED:     color(i,0,0); break;
+      case GREEN:   color(0,i,0); break;
+      case BLUE:    color(0,0,i); break;
+      case YELLOW:  color(i,i,0); break;
+      case CYAN:    color(0,i,i); break;
+      case MAGENTA: color(i,0,i); break;
+      case WHITE:   color(i,i,i); break;
+    }
+    delayMicroseconds(speed);
+  }
+}
+
+void RobbusKidsy :: Neopixel :: fadeInOut(uint8_t colorName) {
+  for(int i=0; i<=255; i++) {
+    switch(colorName) {
+      case RED:     color(i,0,0); break;
+      case GREEN:   color(0,i,0); break;
+      case BLUE:    color(0,0,i); break;
+      case YELLOW:  color(i,i,0); break;
+      case CYAN:    color(0,i,i); break;
+      case MAGENTA: color(i,0,i); break;
+      case WHITE:   color(i,i,i); break;
+    }
+    delay(1);
+  }
+  for(int i=255; i>=0; i--) {
+    switch(colorName) {
+      case RED:     color(i,0,0); break;
+      case GREEN:   color(0,i,0); break;
+      case BLUE:    color(0,0,i); break;
+      case YELLOW:  color(i,i,0); break;
+      case CYAN:    color(0,i,i); break;
+      case MAGENTA: color(i,0,i); break;
+      case WHITE:   color(i,i,i); break;
+    }
+    delay(1);
+  }
+}
+
+void RobbusKidsy :: Neopixel :: heartBeat(uint8_t colorName) {
+  fadeInOut(colorName, 750);
+  delay(100);
+  fadeInOut(colorName, 750);
 }
 
 void RobbusKidsy :: Neopixel :: off() {
-  dot.setPixelColor(0, 0, 0, 0);
-  dot.show();
-}
-
-void RobbusKidsy :: Neopixel :: fadeIn(uint8_t col, uint16_t speed) {
-  for(int i=0; i<255; i++) {
-    color(col, i);
-    delay(speed);
-  }
-}
-
-void RobbusKidsy :: Neopixel :: fadeOut(uint8_t col, uint16_t speed) {
-  for(int i=255; i>=0; i--) {
-    color(col, i);
-    delay(speed);
-  }
-  off();
-}
-
-void RobbusKidsy :: Neopixel :: fadeInOut(uint8_t col, uint16_t speed, uint16_t time_between, uint16_t time_end) {
-  fadeIn(col, speed);
-  delay(time_between);
-  fadeOut(col, speed);
-  delay(time_end);
-  off();
-}
-
-void RobbusKidsy :: Neopixel :: heartBeat(uint8_t col) {
-  fadeInOut(col, 1, 0, 0);
-  fadeInOut(col, 1, 0, 500);
-}
-
-void RobbusKidsy :: Neopixel :: rainbow(uint16_t speed) {
-  for(long firstPixelHue = 0; firstPixelHue < 65536; firstPixelHue += 256) {
-    int pixelHue = firstPixelHue + (65536L / 1);
-    dot.setPixelColor(0, dot.gamma32(dot.ColorHSV(pixelHue)));
-    dot.show(); // Update strip with new contents
-    delay(speed);  // Pause for a moment
-  }
-  off();
+  color(0,0,0);
 }
 
 uint8_t RobbusKidsy :: ColorSensor :: read() {
@@ -562,7 +586,7 @@ uint8_t RobbusKidsy :: ColorSensor :: read() {
   }
   else if(white <= BLACK_UMBRAL) {
     name = "black";
-    value = BLACK;
+    value = OFF;
   }
   else if(white >= WHITE_UMBRAL) {
     name = "white";
