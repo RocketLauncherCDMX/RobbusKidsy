@@ -49,14 +49,12 @@ RobbusKidsy Kidsy;     // Llama a Robbus Kidsy
 
 void setup() {
   Kidsy.begin();       // Inicializa el hardware de Robbus Kidsy
+  Kidsy.Neopixel.heartBeat(GREEN);  // efecto de latido en rojo
 }
 
 void loop() {
   // Si se presiona boton A, Neopixel en modo arcoiris con una separacion de 15ms entre cada cambio de tono
   if(Kidsy.ButtonA.read() == PRESSED) {
-    Kidsy.Neopixel.rainbow(15);
-    Kidsy.Neopixel.off();           // despues del efecto apaga Neopixel
-    delay(500);
     Kidsy.Neopixel.heartBeat(RED);  // efecto de latido en rojo
   }
 

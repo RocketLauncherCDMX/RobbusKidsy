@@ -41,32 +41,71 @@ void setup() {
 }
 
 void loop() {
+  // ------------------------------------------------------------------------
+  // FLECHA ADELANTE
+  // ------------------------------------------------------------------------
+  // Al presionar
   if(Kidsy.ArrowForward.read() == TOUCHED) {   // tono de 300Hz durante 50ms
     Kidsy.Led1.on();
     Kidsy.Buzzer.playTone(300, 50);
-    Serial.println("TOUCHED");
-    Kidsy.Led1.off();
+    Serial.println("Forward touched");
   }
+  // ------------------------------------------------------------------------
+  // Al soltar
+  if(Kidsy.ArrowForward.read() == RELEASED) {   // tono de 400Hz durante 50ms
+    Kidsy.Led1.off();
+    Kidsy.Buzzer.playTone(400, 50);
+    Serial.println("Forward released");
+  }
+  // ------------------------------------------------------------------------
+
+  // FLECHA ATRAS
+  // ------------------------------------------------------------------------
+  // Al presionar
   if(Kidsy.ArrowBackward.read() == TOUCHED) {  // tono de 500Hz durante 50ms
     Kidsy.Led2.on();
     Kidsy.Buzzer.playTone(500, 50);
-    Serial.println("TOUCHED");
-    Kidsy.Led2.off();
+    Serial.println("Backward touched");
   }
+  // ------------------------------------------------------------------------
+  // Al soltar
+  if(Kidsy.ArrowBackward.read() == RELEASED) {  // tono de 600Hz durante 50ms
+    Kidsy.Led2.off();
+    Kidsy.Buzzer.playTone(600, 50);
+    Serial.println("Backward released");
+  }
+
+  // FLECHA IZQUIERDA
+  // ------------------------------------------------------------------------
+  // Al presionar
   if(Kidsy.ArrowLeft.read() == TOUCHED) {      // tono de 700Hz durante 50ms
     Kidsy.Led3.on();
     Kidsy.Buzzer.playTone(700, 50);
-    Serial.println("TOUCHED");
-    Kidsy.Led3.off();
+    Serial.println("Left touched");
   }
+  // ------------------------------------------------------------------------
+  // Al soltar
+  if(Kidsy.ArrowLeft.read() == RELEASED) {      // tono de 800Hz durante 50ms
+    Kidsy.Led3.off();
+    Kidsy.Buzzer.playTone(800, 50);
+    Serial.println("Left released");
+  }
+  // ------------------------------------------------------------------------
+
+  // FLECHA DERECHA
+  // ------------------------------------------------------------------------
+  // Al presionar
   if(Kidsy.ArrowRight.read() == TOUCHED) {     // tono de 900Hz durante 50ms
     Kidsy.Led4.on();
     Kidsy.Buzzer.playTone(900, 50);
-    Serial.println("TOUCHED");
-    Kidsy.Led4.off();
+    Serial.println("Right Touched");
   }
-
-  // Boton A reproduce un tono de 900Hz y Boton B lo detiene
-  if(Kidsy.ButtonA.read() == PRESSED) Kidsy.Buzzer.playTone(900);
-  if(Kidsy.ButtonB.read() == PRESSED) Kidsy.Buzzer.noTone();
+  // --------------------------------------------------------------------------
+  // Al soltar
+  if(Kidsy.ArrowRight.read() == RELEASED) {     // tono de 1000Hz durante 50ms
+    Kidsy.Led4.off();
+    Kidsy.Buzzer.playTone(1000, 50);
+    Serial.println("Right Released");
+  }
+  // --------------------------------------------------------------------------
 }

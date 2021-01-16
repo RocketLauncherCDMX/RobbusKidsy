@@ -77,13 +77,14 @@ void RobbusKidsy :: begin() {
   rmtSetTick(rmt_send, 100);
 
   Neopixel.off();
+  delay(1);
 }
 
 void RobbusKidsy :: begin(uint8_t mode) {
 
-  pinMode(BUTTON_A, INPUT);
-  pinMode(BUTTON_B, INPUT);
-  pinMode(BUTTON_C, INPUT);
+  pinMode(BUTTON_A, INPUT_PULLUP);
+  pinMode(BUTTON_B, INPUT_PULLUP);
+  pinMode(BUTTON_C, INPUT_PULLUP);
 
   pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
@@ -143,19 +144,21 @@ void RobbusKidsy :: begin(uint8_t mode) {
     ColorSensor.gammatable[i] = x;
   }
 
-  rmt_send = rmtInit(18, true, RMT_MEM_64);
+  rmt_send = rmtInit(19, true, RMT_MEM_64);
   rmtSetTick(rmt_send, 100);
 
   Neopixel.off();
+  delay(1);
 
   switch(mode) {
-    case BIP:
+    case BUZZER:
       delay(100);
       Buzzer.playTone(2000, 50);
       delay(100);
       Buzzer.playTone(2000, 50);
       break;
     case L1:
+      
       Led1.blink(2, 100);
       break;
     case L2:
@@ -166,6 +169,9 @@ void RobbusKidsy :: begin(uint8_t mode) {
       break;
     case L4:
       Led4.blink(2, 100);
+      break;
+    case NEOPIXEL:
+      Neopixel.heartBeat(GREEN);
       break;
   }
 }
@@ -220,13 +226,14 @@ void RobbusKidsy :: movement :: MotorLeft(int16_t vel) {
   else direction = BACKWARD;
   speed = abs(vel);
   if(direction == FORWARD) {
-    ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - speed);
+    adjusted_leftSpeed = map(speed, 0, 255, 0, top_leftSpeed);
+    ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - adjusted_leftSpeed);
     ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
   }
   else {
+    adjusted_leftSpeed = map(speed, 0, 255, 0, top_leftSpeed);
     ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
-    ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - speed);
-  
+    ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - adjusted_leftSpeed);
   }
 }
 
@@ -237,12 +244,14 @@ void RobbusKidsy :: movement :: MotorRight(int16_t vel) {
   else direction = BACKWARD;
   speed = abs(vel);
   if(direction == FORWARD) {
-    ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - speed);
+    adjusted_rightSpeed = map(speed, 0, 255, 0, top_rightSpeed);
+    ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - adjusted_rightSpeed);
     ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
   }
   else {
+    adjusted_rightSpeed = map(speed, 0, 255, 0, top_rightSpeed);
     ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
-    ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - speed);
+    ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - adjusted_rightSpeed);
   }
 }
 
@@ -250,9 +259,11 @@ void RobbusKidsy :: movement :: forward(uint8_t vel) {
   if(vel > 255) vel = 255;
   else if(vel < 0) vel = 0;
   speed = vel;
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - speed);
+  adjusted_leftSpeed = map(speed, 0, 255, 0, top_leftSpeed);
+  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - adjusted_leftSpeed);
   ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - speed);
+  adjusted_rightSpeed = map(speed, 0, 255, 0, top_rightSpeed);
+  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - adjusted_rightSpeed);
   ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
 }
 
@@ -260,93 +271,30 @@ void RobbusKidsy :: movement :: backward(uint8_t vel) {
   if(vel > 255) vel = 255;
   else if(vel < 0) vel = 0;
   speed = vel;
-
+  adjusted_leftSpeed = map(speed, 0, 255, 0, top_leftSpeed);
   ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - speed);
+  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - adjusted_leftSpeed);
+  adjusted_rightSpeed = map(speed, 0, 255, 0, top_rightSpeed);
   ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - speed);
+  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - adjusted_rightSpeed);
 }
 
 void RobbusKidsy :: movement :: turnLeft(uint8_t speed) {
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - speed);
+  adjusted_rightSpeed = map(speed, 0, 255, 0, top_rightSpeed);
+  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - adjusted_rightSpeed);
   ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
+  adjusted_leftSpeed = map(speed, 0, 255, 0, top_leftSpeed);
   ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - speed);
+  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - adjusted_leftSpeed);
 }
 
 void RobbusKidsy :: movement :: turnRight(uint8_t speed) {
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - speed);
+  adjusted_leftSpeed = map(speed, 0, 255, 0, top_leftSpeed);
+  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - adjusted_leftSpeed);
   ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
+  adjusted_rightSpeed = map(speed, 0, 255, 0, top_rightSpeed);
   ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - speed);
-}
-
-void RobbusKidsy :: movement :: wideLeftFront(uint8_t speed, float factor) {
-  float speed_div;
-  if(factor > 0 && factor < 12) {
-    // ecuation 1
-    speed_div = -0.22*factor + 5.8;
-  }
-  else if(factor >= 12) {
-    // ecuation 2
-    speed_div = -0.0384*factor + 2.3;
-  }
-  
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - speed);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - (int)(speed/speed_div));
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
-}
-
-void RobbusKidsy :: movement :: wideLeftBack(uint8_t speed, float factor) {
-  float speed_div;
-  if(factor > 0 && factor < 12) {
-    // ecuation 1
-    speed_div = -0.22*factor + 4.66;
-  }
-  else if(factor >= 12) {
-    // ecuation 2
-    speed_div = -0.0384*factor + 2.46;
-  }
-  
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - speed);
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - (int)(speed/speed_div));
-}
-
-void RobbusKidsy :: movement :: wideRightFront(uint8_t speed, float factor) {
-  float speed_div;
-  if(factor > 0 && factor < 12) {
-    // ecuation 1
-    speed_div = -0.22*factor + 5.8;
-  }
-  else if(factor >= 12) {
-    // ecuation 2
-    speed_div = -0.0384*factor + 2.3;
-  }
-
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - (int)(speed/speed_div));
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - speed);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
-}
-
-void RobbusKidsy :: movement :: wideRightBack(uint8_t speed, float factor) {
-  float speed_div;
-  if(factor > 0 && factor < 12) {
-    // ecuation 1
-    speed_div = -0.22*factor + 4.66;
-  }
-  else if(factor >= 12) {
-    // ecuation 2
-    speed_div = -0.0384*factor + 2.46;
-  }
-  
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - (int)(speed/speed_div));
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - speed);
+  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - adjusted_rightSpeed);
 }
 
 void RobbusKidsy :: movement :: stop() {
@@ -383,7 +331,6 @@ void RobbusKidsy :: Arrows :: calibrate(bool state) {
     noTouchCalibrate = analogRead();
   }
   else touchCalibrate = analogRead();
-
   thresshold = (noTouchCalibrate - touchCalibrate) / 2;
 }
 
@@ -395,6 +342,7 @@ uint8_t RobbusKidsy :: Arrows :: read() {
   if(new_state == LOW && old_state == HIGH) status = NOTOUCHED;
   if(new_state == HIGH && old_state == LOW) status = TOUCHED;
   if(new_state == HIGH && old_state == HIGH) status = HOLD_TOUCHED;
+  if(old_state != new_state) delay(25);
   old_state = new_state;
   return(status);
 }
@@ -554,32 +502,38 @@ uint8_t RobbusKidsy :: ColorSensor :: read() {
   ColorConverter::RgbToHsv(static_cast<uint8_t>(r), static_cast<uint8_t>(g), static_cast<uint8_t>(b), hue, saturation, sat_value);
   hue360 = hue * 360;
 
-  if ((hue360 < 50 || hue360 >= 330) && white > BLACK_UMBRAL && white < WHITE_UMBRAL)
+  if (hue360 >= (red_hue - offset_hue) && hue360 < (red_hue + offset_hue) && 
+                white > BLACK_UMBRAL && white < WHITE_UMBRAL)
   {
     name = "red";
     value = RED;
   }
-  else if ((hue360 >= 31 && hue360 < 90) && white > BLACK_UMBRAL && white < WHITE_UMBRAL)
+  else if (hue360 >= (yellow_hue - offset_hue) && hue360 < (yellow_hue + offset_hue) && 
+          white > BLACK_UMBRAL && white < WHITE_UMBRAL)
   {
     name = "yellow";
     value = YELLOW;
   }
-  else if ((hue360 >= 91 && hue360 < 150) && white > BLACK_UMBRAL && white < WHITE_UMBRAL)
+  else if (hue360 >= (green_hue - offset_hue) && hue360 < (green_hue + offset_hue) && 
+          white > BLACK_UMBRAL && white < WHITE_UMBRAL)
   {
     name = "green";
     value = GREEN;
   }
-  else if ((hue360 >= 151 && hue360 < 210) && white > BLACK_UMBRAL && white < WHITE_UMBRAL)
+  else if (hue360 >= (cyan_hue - offset_hue) && hue360 < (cyan_hue + offset_hue) && 
+          white > BLACK_UMBRAL && white < WHITE_UMBRAL)
   {
     name = "cyan";
     value = CYAN;
   }
-  else if ((hue360 >= 210 && hue360 < 270) && white > BLACK_UMBRAL && white < WHITE_UMBRAL)
+  else if (hue360 >= (blue_hue - offset_hue) && hue360 < (blue_hue + offset_hue) && 
+          white > BLACK_UMBRAL && white < WHITE_UMBRAL)
   {
     name = "blue";
     value = BLUE;
   }
-  else if ((hue360 >= 270 && hue360 < 330) && white > BLACK_UMBRAL && white < WHITE_UMBRAL)
+  else if (hue360 >= (magenta_hue - offset_hue) && hue360 < (magenta_hue + offset_hue) && 
+          white > BLACK_UMBRAL && white < WHITE_UMBRAL)
   {
     name = "magenta";
     value = MAGENTA;
@@ -603,6 +557,19 @@ void RobbusKidsy :: ColorSensor :: enable() {
 void RobbusKidsy :: ColorSensor :: disable() {
     tcs.disable();
     digitalWrite(LEDW, LOW);
+}
+
+String RobbusKidsy :: ColorSensor :: getName(uint8_t name) {
+  switch(name) {
+    case BLACK:   return("black");    break;
+    case RED:     return("red");      break;
+    case GREEN:   return("gren");     break;
+    case BLUE:    return("blue");     break;
+    case YELLOW:  return("yellow");   break;
+    case CYAN:    return("cyan");     break;
+    case MAGENTA: return("magenta");  break;
+    case WHITE:   return("white");    break;
+  }
 }
 
 void ColorConverter :: RgbToHsv(uint8_t red, uint8_t green, uint8_t blue, double& hue, double& saturation, double& sat_value) {

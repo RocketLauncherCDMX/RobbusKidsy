@@ -16,6 +16,16 @@ private:
   #define ARROW_BUFFER_LENGHT   25      // large of buffer for smooth arrow's touch
 public:
   // Global public constants
+  #define BLACK         0
+  #define OFF           0
+  #define RED           1
+  #define GREEN         2
+  #define BLUE          3
+  #define YELLOW        4
+  #define CYAN          5
+  #define MAGENTA       6
+  #define WHITE         7
+
   #define FORWARD    1     
   #define BACKWARD  2
   #define LEFT  3
@@ -24,9 +34,9 @@ public:
   #define OFF   0
   #define NONE  0
 
-  #define LEDW  16
-  #define BIP   0
-  #define HEART 1
+  #define LEDW      16
+  #define BUZZER    0
+  #define NEOPIXEL  1
   #define L1  2
   #define L2  3
   #define L3  4
@@ -44,9 +54,17 @@ public:
     #define RELEASED          0
     #define HOLD_RELEASED     2
     #define HOLD_PRESSED      3
+    
+    // Version 3.2
+    //#define BUTTON_A          34
+    //#define BUTTON_B          35
+    //#define BUTTON_C          36
+
+    // Version 3.1
     #define BUTTON_A          34
     #define BUTTON_B          35
     #define BUTTON_C          36
+    
     uint8_t pin;      
     uint8_t status;
     uint8_t read();
@@ -81,7 +99,7 @@ public:
     #define AN_RIGHT          T3
     #define ARROW_BUFFER_SIZE 25
     uint8_t buffer[ARROW_BUFFER_SIZE];
-    uint8_t thresshold = 30;
+    uint8_t thresshold = 50;
     uint8_t readIndex = 0;  // the index of the current reading
     uint16_t total = 0;     // the running total
     uint8_t average = 0;    // the average
@@ -108,8 +126,6 @@ public:
 
   class movement {
   private:
-    
-  public:
     #define DCM_LEFT_IN1            2
     #define DCM_LEFT_IN2            18
     #define DCM_RIGHT_IN1           4
@@ -118,22 +134,26 @@ public:
     #define PWM_CHANNEL_LEFT_IN2    1
     #define PWM_CHANNEL_RIGHT_IN1   2
     #define PWM_CHANNEL_RIGHT_IN2   3
-    
+
+    uint8_t adjusted_leftSpeed;
+    uint8_t adjusted_rightSpeed;
     uint8_t speed = 0;
     uint direction = FORWARD;
     bool status = OFF;
     uint8_t pwm_channel;
     uint8_t dcm_in;
+    uint8_t top_leftSpeed = 255;
+    uint8_t top_rightSpeed = 255;
+
+  public:
+    #define STOP   0
+
     void MotorLeft(int16_t);
     void MotorRight(int16_t);
     void forward(uint8_t);
     void backward(uint8_t);
     void turnLeft(uint8_t);
     void turnRight(uint8_t);
-    void wideLeftFront(uint8_t, float);
-    void wideLeftBack(uint8_t, float);
-    void wideRightFront(uint8_t, float);
-    void wideRightBack(uint8_t, float);
     void stop();
 
   } Move;
@@ -163,20 +183,11 @@ public:
     uint8_t col, bit;
     uint8_t i;
   public:
-    #define OFF           0
-    #define RED           1
-    #define GREEN         2
-    #define BLUE          3
-    #define YELLOW        4
-    #define CYAN          5
-    #define MAGENTA       6
-    #define WHITE         7
-
-    #define BLACK_UMBRAL  50
-    #define WHITE_UMBRAL  400
     #define NONE          0
     #define ANY_BUTTON    5
     #define ANY_ARROW     6
+
+    int tempo;
 
     void color(uint8_t,uint8_t,uint8_t);
     void color(uint8_t);
@@ -189,20 +200,39 @@ public:
 
   class ColorSensor {
   private:
+    #define BLACK_UMBRAL  150
+    #define WHITE_UMBRAL  350
     double hue, saturation, sat_value;
     uint32_t sum;
     float r, g, b;
-    uint16_t hue360;
+    
   public:
+    uint16_t hue360;
     bool LedW = LOW, :1;
-
     uint8_t value;
     String name;
     byte gammatable[256];
     uint16_t white, red, green, blue;
+    /*uint16_t red_hue = 65;
+    uint16_t green_hue = 135;
+    uint16_t blue_hue = 200;
+    uint16_t yellow_hue = 95;
+    uint16_t cyan_hue = 175;
+    uint16_t magenta_hue = 220;*/
+    uint16_t red_hue = 10;
+    uint16_t green_hue = 80;
+    uint16_t blue_hue = 200;
+    uint16_t yellow_hue = 45;
+    uint16_t cyan_hue = 230;
+    uint16_t magenta_hue = 350;
+
+
+    uint8_t offset_hue = 15;
+
     uint8_t read();
     void enable();
     void disable();
+    String getName(uint8_t);
     
   } ColorSensor;
 };
