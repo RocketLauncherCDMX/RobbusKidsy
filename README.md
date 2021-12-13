@@ -1,34 +1,24 @@
 # RobbusKidsy
 
-Robbus Kidsy es un pequeño robot móvil de 9cm de diametro, completamente programable en Arduino, el cuál tiene:
+Robbus Kidsy es un pequeño robot móvil de 9cm de diametro, completamente programable en Arduino, sus funciones son:
 
-Flechas táctiles
-4 flechas táctiles, que podrás programar para realizar cualquier acción en tu Robbus, moverse, hacer un sonido, prender un LED, o varias al mismo tiempo.
 ![image](https://user-images.githubusercontent.com/66702091/145869150-3855ad0f-0682-41c4-980b-14dd0e8dc90d.png)
 
-Sensor de Color
-Puede identificar 8 colores, pero lo puedes enseñar a ver muchos más, y si quieres saber que está viendo, puedes mostrarlo a través del LED multicolor.
+![image](https://user-images.githubusercontent.com/66702091/145869299-53fb21c7-4e49-4c9f-98d1-e9d57f57b66f.png)
 
-Motores
-Precisos pero poderosos, llantas de goma para moverse suavemente con un gasto de energía mínimo, para que no se quede varado fácilmente, y la diversión dure horas.
+![image](https://user-images.githubusercontent.com/66702091/145869331-16988e07-13c6-4bbd-96e6-351cbe7f83e8.png)
 
-Batería
-Gracias a una poderosa batería de Litio de 3.7v, 260mAh, podrá moverse por horas y activar todas sus funciones. Y lo mejor, es que es recargable por USB.
+![image](https://user-images.githubusercontent.com/66702091/145869358-d012a7b4-3752-4c62-b166-6bef9a051054.png)
 
-Buzzer
-Podrás escuchar lo que Kidsy tiene que decir, reproduciendo un sonido al tocar una flecha, aprietar un botón o llegado a un cuadro de un color en específico.
+![image](https://user-images.githubusercontent.com/66702091/145869386-f35299df-ad3f-4dbe-8017-a79e31a8c8d5.png)
 
-Botones y LEDs
-Interactua con tu robot a través de 3 botones y 4 LEDs rojos, además del LED de colores. Puedes configuralos para realizar o expresar cualquier acción.
+![image](https://user-images.githubusercontent.com/66702091/145869434-906a6d9c-d229-42b6-bee7-48d747e5ef91.png)
 
-Conexión USB
-Si deseas reprogramar o recargar tu Robbus, lo podrás hacer a través de su conexión micro USB y cable incorporado, con solo conectarlo a tu computadora o cargador.
+![image](https://user-images.githubusercontent.com/66702091/145869504-96add70b-390a-4dd5-a867-73d13011e40e.png)
 
-Wifi y Bluetooth
-Podrás controlarlo mediante bluetooth con tu teléfono, o con otros accesorios e incluso podrás conectarlo directo a internet, para manejarlo, leer sus sensores y mucho más.
+![image](https://user-images.githubusercontent.com/66702091/145869538-a4926910-51c1-45ce-994c-cbfac394b9f8.png)
 
-ESP32
-Robbus puede llegar a ser muy listo y correr programas muy interesantes. Es totalmente compatible con Arduino, si ya conoces esta herramienta, programarlo será pan comido.
+![image](https://user-images.githubusercontent.com/66702091/145869585-83d75bd4-a8ce-484b-82f3-857966d38479.png)
 
 Está basado en un microcontrolador ESP32 de 32 bits de doble núcleo, un cortex M4 y otro M0, corriendo a 240MHz, cuenta con una SRAM de 520KiB. Sus características y perifericos son:
 
