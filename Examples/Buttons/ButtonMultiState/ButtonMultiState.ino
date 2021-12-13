@@ -4,6 +4,7 @@
 // Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware de Robbus Kidsy.
 // Autor: Rocket Launcher
 // Fecha: 17 de febrero de 2020
+// Visita www.robbus.mx/kidsy para mas informacion
 // ------------------------------------------------------------------------------------------------------------
 // Robbus Kidsy cuenta con 3 Botones de usuario:
 // - ButtonA

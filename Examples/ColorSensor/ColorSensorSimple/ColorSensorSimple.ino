@@ -4,6 +4,7 @@
 // Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware de Robbus Kidsy.
 // Autor: Rocket Launcher
 // Fecha: 8 de febrero de 2020
+// Visita www.robbus.mx/kidsy para mas informacion
 // --------------------------------------------------------------------------------------------------------------
 //
 // Robbus Kidsy cuenta con 1 sensor de color:
@@ -51,25 +52,28 @@
 // --------------------------------------------------------------------------------------------------------------
 
 #include<RobbusKidsy.h>
-
 RobbusKidsy Kidsy;                // Llama a Robbus Kidsy
 
 void setup() {
   Serial.begin(115200);           // Inicializa comunicacion serial a 115200 baudios
   Kidsy.begin();                  // Inicializa el hardware del Robbus Kidsy
-  Kidsy.ColorSensor.enable();     // Habilita el sensor de color y enciende el LED blanco
+  Kidsy.ColorSensor.enable();     // Habilita el sensor de color, enciende el LED blanco, y carga calibracion
   //Kidsy.ColorSensor.disable();    // Si quieres deshabilitar el sensor y apagar el LED blanco, usa esta funcion
+
+  // MUY IMPORTANTE:
+  // SI EL SENSOR DE COLOR NO DA MEDICIONES CORRECTAS, DEBERAS RECALIBRARLO. PUEDES USAR EL EJEMPLO
+  // colorSensorCalibration DENTRO DE LA CARPETA ColorSensor PARA SABER COMO HACERLO, MIRAR EL MANUAL DE USUARIO,
+  // O VISITAR LA PAGINA www.robbus.mx/kidsy
 }
 
 void loop() {
-  Kidsy.ColorSensor.read();                     // Obtiene el color
+  Kidsy.ColorSensor.read();                     // Lee el color
   Serial.print("Color: ");
   Serial.print(Kidsy.ColorSensor.name);         // Imprime el nombre del color
   Serial.print(", Numero: ");
   Serial.print(Kidsy.ColorSensor.value);        // Valor entre 0 y 7
-  Serial.print(", Luz blanca: ");
+  Serial.print(", Hue360: ");
+  Serial.print(Kidsy.ColorSensor.hue360);       // Obtiene el valor numerico del circulo cromatico
+  Serial.print(", White: ");                    
   Serial.println(Kidsy.ColorSensor.white);      // Imprime la cantidad de luz blanca
-
-  if(Kidsy.ColorSensor.value == GREEN) Kidsy.Led1.on();       // Si el color es verde, enciende LED1
-  else if(Kidsy.ColorSensor.value == BLUE) Kidsy.Led1.off();  // Si el color es azul, apaga LED1
 }

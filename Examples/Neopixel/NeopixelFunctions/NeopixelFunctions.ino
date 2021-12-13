@@ -27,7 +27,17 @@
 //   fadeOut(color, speed);               // apaga el neopixel lentamente en un color, con intervalos de ms
 //   fadeInOut(color,speed,between,end);  // enciende el led en un color, espera un tiempo, apaga, espera otro tiempo
 //   heartBeat(color);                    // efecto de corazon latiendo en un color
-//   rainbow(wait);                       // efecto arcoiris con un retardo en ms entre un paso y el siguiente
+//
+// Tambien cuenta con 8 colores predefinidos, enumerados del 0 al 7
+//
+// BLACK         0
+// RED           1
+// GREEN         2
+// BLUE          3
+// YELLOW        4
+// CYAN          5
+// MAGENTA       6
+// WHITE         7
 // 
 // Nota importante: Todos los efectos del Neopixel tardan un tiempo en completarse, durante el cual, el programa
 // esperara a que termine, no pudiendo hacer otra cosa, esto no aplica a las funciones basicas.
@@ -47,20 +57,27 @@
 
 RobbusKidsy Kidsy;     // Llama a Robbus Kidsy
 
+int speed = 255;
+
 void setup() {
   Kidsy.begin();       // Inicializa el hardware de Robbus Kidsy
-  Kidsy.Neopixel.heartBeat(GREEN);  // efecto de latido en rojo
 }
 
 void loop() {
   // Si se presiona boton A, Neopixel en modo arcoiris con una separacion de 15ms entre cada cambio de tono
   if(Kidsy.ButtonA.read() == PRESSED) {
-    Kidsy.Neopixel.heartBeat(RED);  // efecto de latido en rojo
+    Kidsy.Neopixel.heartBeat(RED);            // efecto de latido en rojo
   }
 
-  // Si se presiona boton B, Neopixel en color aleatorio      rojo            verde          azul
-  if(Kidsy.ButtonB.read() == PRESSED) Kidsy.Neopixel.color(random(0,255), random(0,255), random(0,255));
+  // Si se presiona boton B, Neopixel en color aleatorio rojo, verde, azul
+  if(Kidsy.ButtonB.read() == PRESSED) {
+    Kidsy.Neopixel.color(random(0,255), random(0,255), random(0,255));    // asigna los valores rojo, verd y azul
+    delay(500);                                                           // espera medio segundo
+    Kidsy.Neopixel.off();                                                 // apaga Neopixel
+  }
 
   // Apaga el Neopixel con boton C
-  if(Kidsy.ButtonC.read() == PRESSED) Kidsy.Neopixel.off();
+  if(Kidsy.ButtonC.read() == PRESSED) {
+    Kidsy.Neopixel.fadeInOut(random(1,8));    // enciende y apaga el neopixel lentamente en un color aleatorio
+  }
 }

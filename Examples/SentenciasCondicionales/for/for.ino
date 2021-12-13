@@ -31,15 +31,16 @@
 // Obtenemos exactamente el mismo resultado, pero con solo 3 líneas de codigo. conveniente ¿No?
 // Examinemos la forma que tiene un for:
 //
-// for(     ;       ;      ) {} <- Este es el cuerpo, consta de la palabra for y un par de ; dentro de parentesis
+// for(     ;       ;      ) {} <- Este es el cuerpo, consta de la palabra for y un par de ; dentro de parentesis.
 //      i=0                     <- Este es el valor inicial que tendra tu variable a utilizar.
-//            i<255             <- Este es el valor final que alcanzara tu variable
+//            i<255             <- Este es el valor final que alcanzara tu variable.
 //                    i++       <- Este es el incremento que hara cada que avance. Un ++ indica un incremento de 1.
+//                           {} <- Estas llaves forman el cuerpo del ciclo y todo lo que este entre ellas se ejecutara.
 
 // Es decir: INICIO, FIN e INCREMENTO.
 //
 // Como pudiste ver, para realizar la cuenta usamos una variable, la cual requiere ser entera (int) y puedes
-// usar una que ya hayas usado amtes, ya que dentro del for se inicializa al valor que es requerido. Tambien podriamos
+// usar una que ya hayas usado antes, ya que dentro del for se inicializa al valor que es requerido. Tambien podriamos
 // definir una variable nueva dentro del mismo ciclo, la cual solamente existiria durante la cuenta:
 // for(int i=0; i<255; i++)     <- Aqui la variable i es declara e inicializada, al salir del for, dejara de existir.
 //

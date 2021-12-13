@@ -24,22 +24,27 @@
 #include<WiFi.h>
 
 // Configura el acceso a tu red Wifi cambiandolo en los siguientes Strings
-const char* ssid     = "Tu red Wifi";
-const char* password = "Tu contraseña";
+const char* ssid     = "ssid";
+const char* password = "password";
 
 WiFiServer server(80);    // Crea una instancia de servidor Web
 
 RobbusKidsy Kidsy;        // Llama a Robbus Kidsy
 
 void setup() {
-  Serial.begin(115200);               // Comunicacion serial
-  Kidsy.begin(BIP);                   // Inicializa el hardware con un pitido del Buzzer
+  Serial.begin(115200);   // Comunicacion serial
+  Kidsy.begin();          // Inicializa el hardware
+
+  if(ssid == "ssid") {
+    Serial.println("Por favor pon el nombre de tu red en ssid, y la contraseña en password");
+    while(1);
+  }
 
   Serial.println();
   Serial.print("Conectandose a ");
   Serial.println(ssid);
 
-  WiFi.begin(ssid, password);               // proporciona credenciales para la conexion
+  WiFi.begin(ssid, password);     // proporciona credenciales para la conexion
 
   while (WiFi.status() != WL_CONNECTED) {   // permanece aqui hasta conectarse
     delay(500);
@@ -50,6 +55,7 @@ void setup() {
   Serial.println("WiFi connected.");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());           // IP local, esta sera la IP que busques en tu navegador
+  Serial.println("Introduce esta direccion en el navegador de cualquier dispositivo conectado a la misma red");
 
   server.begin();                           // inicializa el servidor de Kidsy
 }

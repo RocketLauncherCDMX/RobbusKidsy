@@ -4,6 +4,7 @@
 // Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robbus Kidsy.
 // Autor: Rocket Launcher
 // Fecha: 03 de marzo de 2020
+// Visita www.robbus.mx/kidsy para mas informacion
 // ------------------------------------------------------------------------------------------------------------
 //
 // Robbus Kidsy cuenta con 1 buzzer:

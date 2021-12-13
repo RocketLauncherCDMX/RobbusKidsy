@@ -11,7 +11,7 @@
 // Robbus Kidsy cuenta con un Modulo de comunicacion Wifi, por medio de el, es posible conectarlo a
 // internet, para lo cual solo es necesario contar con un router inalambrico.
 //
-// En este ejemplo, se cargara una pequeña pagina web en la memoria de Kidsy, la cual se podra descargar
+// A continuacion, se cargara una pequeña pagina web en la memoria de Kidsy, la cual se podra descargar
 // desde cualquier dispositivo conectado al mismo router. Este ejemplo solamente funciona con redes privadas
 // por lo que no es posible conectarse con Kidsy desde otra IP. En ejemplos mas avanzados se conectara a
 // internet para poder acceder a el desde cualquier parte.
@@ -31,16 +31,21 @@
 ///// CAMBIAR A TU RED
 
 // Configura el acceso a tu red Wifi cambiandolo en los siguientes Strings
-const char* ssid     = "ProyectilMx";
-const char* password = "PR0Y3CT1L-mx";
+const char* ssid     = "ssid";
+const char* password = "password";
 
 WiFiServer server(80);    // Crea una instancia de servidor Web
 
 RobbusKidsy Kidsy;        // Llama a Robbus Kidsy
 
 void setup() {
-  Serial.begin(115200);               // Comunicacion serial
-  Kidsy.begin(BIP);                   // Inicializa el hardware con un pitido del Buzzer
+  Serial.begin(115200);   // Comunicacion serial
+  Kidsy.begin();          // Inicializa el hardware de Kidsy
+
+  if(ssid == "ssid") {
+    Serial.println("Por favor pon el nombre de tu red en ssid, y la contraseña en password");
+    while(1);
+  }
 
   Serial.println();
   Serial.print("Conectandose a ");
@@ -53,10 +58,12 @@ void setup() {
     Serial.print(".");
   }
 
+  Kidsy.Led1.on();
   Serial.println("");
   Serial.println("WiFi connected.");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());           // IP local, esta sera la IP que busques en tu navegador
+  Serial.println("Introduce esta direccion en el navegador de cualquier dispositivo conectado a la misma red");
 
   server.begin();                           // inicializa el servidor de Kidsy
 }

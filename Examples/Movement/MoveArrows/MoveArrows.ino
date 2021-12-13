@@ -22,7 +22,7 @@
 // de la flecha en cuestion, por ejemplo:
 // 
 // Kidsy.ArrowForward.read();                 // Lee la flecha Adelante
-// if(Kidsy.ArrowForward.status == PRESSED)   // Usando el valor obtenido en un if
+// if(Kidsy.ArrowForward.status == TOUCHED)   // Sera verdadero al tocar la flecha
 // 
 // Para mover las llantas de tu robot, puedes hacerlo con las funciones:
 //
@@ -71,39 +71,43 @@ void loop() {
   // ----------------------
   if(Kidsy.ArrowForward.status == TOUCHED) {
     Kidsy.Move.forward(speed);                  // Si el boton se presiono, avanza hacia ADELANTE
-    delay(1000);
+    delay(1000);                                // espera 1 segundo
+    Kidsy.Move.stop();                          //detiene el Robbus
   }
   if(Kidsy.ArrowForward.status == NOTOUCHED) {
-    Kidsy.Move.stop();                          // Si el boton se solto, detiene el Robbus
+    // Puedes decirle que hacer al soltar la flecha                          
   }
 
   // REVISION DE LA FLECHA ATRAS
   // ----------------------
   if(Kidsy.ArrowBackward.status == TOUCHED) {
     Kidsy.Move.backward(speed);                 // Si el boton se presiono, avanza hacia ATRAS
-    delay(1000);
+    delay(1000);                                // espera 1 segundo
+    Kidsy.Move.stop();                          //detiene el Robbus
   }
   if(Kidsy.ArrowBackward.status == NOTOUCHED) {
-    Kidsy.Move.stop();                          // Si el boton se solto, detiene el Robbus
+    // Puedes decirle que hacer al soltar la flecha  
   }
 
   // REVISION DE LA FLECHA IZQUIERDA
   // ----------------------
   if(Kidsy.ArrowLeft.status == TOUCHED) {
     Kidsy.Move.turnLeft(speed);                 // Si el boton se presiono, avanza gira a la IZQUIERDA
-    delay(1000);
+    delay(1000);                                // espera 1 segundo
+    Kidsy.Move.stop();                          //detiene el Robbus
   }
   if(Kidsy.ArrowLeft.status == NOTOUCHED) {
-    Kidsy.Move.stop();                          // Si el boton se solto, detiene el Robbus
+    // Puedes decirle que hacer al soltar la flecha  
   }
 
   // REVISION DE LA FLECHA DERECHA
   // ----------------------
   if(Kidsy.ArrowRight.status == TOUCHED) {
     Kidsy.Move.turnRight(speed);                // Si el boton se presiono, gira a la DERECHA
-    delay(1000);
+    delay(1000);                                // espera 1 segundo
+    Kidsy.Move.stop();                          //detiene el Robbus
   }
   if(Kidsy.ArrowRight.status == NOTOUCHED) {
-    Kidsy.Move.stop();                          // Si el boton se solto, detiene el Robbus
+    // Puedes decirle que hacer al soltar la flecha  
   }
 } 

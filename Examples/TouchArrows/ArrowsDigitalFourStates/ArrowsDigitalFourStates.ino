@@ -31,7 +31,7 @@
 // Los 2 primeros casos son utiles para muchos programas, pero los siguientes dos, nos daran acceso
 // a funcionalidades mas complejas, por ejemplo, hacer que una flecha tenga 2 comportamientos, toque
 // corto y toque sostenido (como la tecla de una computadora), repetir mientras no se suelte,
-// hacer algo mienstras no se toque y un largo etcetera.
+// hacer algo mientras no se toque y un largo etcetera.
 //
 // En este ejemplo, haremos que Kidsy acelere y desacelere adelante y atras con las flechas correspondientes
 // a traves de pulsaciones rapidas, el nivel de velocidad subira 1 unidad, y con la pulsacion mantenida,

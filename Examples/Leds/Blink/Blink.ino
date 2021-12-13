@@ -25,16 +25,16 @@ void setup() {
 }
 
 void loop() {
-  Kidsy.Led1.on();    // Alterna los LEDs 1 y 2 entre apagado y prendido cada segundo
+  Kidsy.Led1.on();    // Enciende LED 1
+  Kidsy.Led4.off();   // Apaga LED 4
+  delay(100);         // Espera 100 mili segundos
+  Kidsy.Led2.on();    // Repite la secuencia para el siguiente par de LEDs...
+  Kidsy.Led1.off();   
+  delay(100);
+  Kidsy.Led3.on();    
   Kidsy.Led2.off();  
-  delay(1000);
-  Kidsy.Led3.off();   // Alterna los LEDs 3 y 4 entre apagado y prendido cada segundo
-  Kidsy.Led4.on();   
-  delay(1000);
-  Kidsy.Led1.off();    
-  Kidsy.Led2.on();  
-  delay(1000);
-  Kidsy.Led3.on();  
-  Kidsy.Led4.off();   
-  delay(1000);
+  delay(100);
+  Kidsy.Led4.on();  
+  Kidsy.Led3.off();   
+  delay(100);
 } 

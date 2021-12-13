@@ -5,6 +5,9 @@
 // Autor: Rocket Launcher
 // Fecha: 03 de marzo de 2020
 // ------------------------------------------------------------------------------------------------------------
+// Importante: Este ejemplo es avanzado, recomendable solamente si ya sabes programar en C y si tienes nociones
+// del hardware interno del ESP32.
+
 // Robbus Kidsy cuenta con 4 timers:
 // Timer0
 // Timer1
@@ -13,13 +16,19 @@
 //
 // Para mas informacion sobre el Hardware, puedes consultar la hoja de datos WROOM32.
 // ------------------------------------------------------------------------------------------------------------
+//
+// En este ejemplo se utilizara el Timer 0 para hacer una temporizacion de 50ms, dentro de la cual, cargaremos
+// la velocidad de las llantas, pudiendo de esta forma incrementar o decrementar su valor de forma suave y sin
+// robarle procesamiento al loop principal. Por ejemplo, si la velocidad actual es 0, y nosotros le asignamos 100,
+// cada 50ms la velocidad se incrementara en 1 hasta llegar al 100. Esta forma tambien nos permite utilizar la
+// instruccion delay sin que el loop se bloquee.
 
 #include<RobbusKidsy.h>
 
 RobbusKidsy Kidsy;            // Llama a Robbus Kidsy
 
 #define MAX_SPEED     100     // Velocidad maxima de los motores
-#define TIMER_TIME    50000   // Tiempo del Timer0 en microSegundos
+#define TIMER_TIME    50000   // Tiempo del Timer0 en microSegundos (50 ms)
 
 // Declaramos un puntero tipo timer, compatible con ESP32
 hw_timer_t * timer = NULL;
@@ -34,7 +43,7 @@ portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
 // Una velocidad muy baja (menor a +-25) puede que no sea suficiente para comenzar a mover el motor
 
 int motorSpeedLeft = 0;      // 100 hacia el FRENTE
-int motorSpeedRight = 0;    // 100 hacia ATRAS
+int motorSpeedRight = 0;     // 100 hacia ATRAS
 int setSpeedLeft = 0;
 int setSpeedRight = 0;
 
@@ -127,16 +136,25 @@ void loop() {
     Kidsy.Neopixel.color(BLACK);              // Apaga el Neopixel
   }
   else if(Kidsy.ButtonA.status == RELEASED) {
-    
+    // Coloca lo que quieres que ejecute al soltar el boton
   }
   
   // REVISION DEL BOTON B
   // ----------------------
   if(Kidsy.ButtonB.status == PRESSED) { 
-    
+    // Coloca lo que quieres que ejecute al presionar el boton
   }
   else if(Kidsy.ButtonB.status == RELEASED) { 
-    
+    // Coloca lo que quieres que ejecute al soltar el boton
+  }
+
+  // REVISION DEL BOTON C
+  // ----------------------
+  if(Kidsy.ButtonC.status == PRESSED) { 
+    // Coloca lo que quieres que ejecute al presionar el boton
+  }
+  else if(Kidsy.ButtonC.status == RELEASED) { 
+    // Coloca lo que quieres que ejecute al soltar el boton
   }
 
   Serial.print("MotorIzq = ");

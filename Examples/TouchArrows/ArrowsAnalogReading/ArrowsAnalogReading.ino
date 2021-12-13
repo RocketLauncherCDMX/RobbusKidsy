@@ -37,11 +37,11 @@ void loop() {
   int analogRight = Kidsy.ArrowRight.analogRead();         // Lee la flecha Derecha
   
   Serial.print("Forward: ");
-  Serial.print(analogForward);
+  Serial.print(analogForward);    // Imprime el valor analogico de la flecha adelante
   Serial.print(", Backward: ");
-  Serial.print(analogBackward);
+  Serial.print(analogBackward);   // Imprime el valor analogico de la flecha atras
   Serial.print(", Left: ");
-  Serial.print(analogLeft);
+  Serial.print(analogLeft);       // Imprime el valor analogico de la flecha izquierda
   Serial.print(", Right: ");
-  Serial.println(analogRight);
+  Serial.println(analogRight);    // Imprime el valor analogico de la flecha derecha
 }

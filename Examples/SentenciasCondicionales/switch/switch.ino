@@ -72,7 +72,7 @@ void loop() {
   kidsyColor = Kidsy.ColorSensor.value;  // guarda el valor del color en la variable color (0 - 7)
   Kidsy.Neopixel.color(kidsyColor);      // muestra el color en el Neopixel
 
-  // se escribe la palabra switch, y entre parentesis lo que quieres evaluar, seguido de {} llaves
+  // Se escribe la palabra switch, y entre parentesis lo que quieres evaluar, seguido de {} llaves
   switch(kidsyColor) {
     // estamos entre las llaves, el cuerpo del switch y aqui es donde se hara la evaluacion.
     

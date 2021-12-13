@@ -4,6 +4,7 @@
 // Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robbus Kidsy.
 // Autor: Rocket Launcher
 // Fecha: 03 de marzo de 2020
+// Visita www.robbus.mx/kidsy para mas informacion
 // ------------------------------------------------------------------------------------------------------------
 //
 // Antes de continuar, te recomendamos que primero pruebes el programa BuzzerSimple.
@@ -30,7 +31,7 @@
 
 RobbusKidsy Kidsy;    // Llama a Robbus Kidsy
 
-// Arrelgo con las notas de la melodia
+// Arreglo con las notas de la melodia
 int melody[] = {
   NOTE_AS4, NOTE_AS4, NOTE_AS4, NOTE_AS4, NOTE_AS4, NOTE_AS4, NOTE_AS4, NOTE_AS4,
   NOTE_AS4, NOTE_AS4, NOTE_AS4, NOTE_AS4, NOTE_AS4, NOTE_AS4, NOTE_AS4, NOTE_AS4,

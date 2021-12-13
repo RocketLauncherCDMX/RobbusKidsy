@@ -23,12 +23,12 @@
 //                         ==                   <- Tipo de operacion
 //                            HOLD_PRESSED      <- Valor con el que sera comparado
 //
-// De esta forma, para que lo que esta dentro de las llaves puede ejecutarse, el resultado de la
+// De esta forma, para que lo que esta dentro de las llaves pueda ejecutarse, el resultado de la
 // condicion if debe ser verdadero, es decir, el valor leido del boton debe ser igual a PRESSED, el 
 // boton debe presionarse para que el LED encienda.
 //
 // Los tipos de operacion que pueden ser evaluados en un if son:
-// ==  igual que (si, es el signo igual 2 veces, no confundir con un solo signo de igual)
+// ==  igual que (signo igual 2 veces, no confundir con un solo signo de igual)
 // <   menor que
 // >   mayor que
 // <=  menor o igual
@@ -42,7 +42,7 @@
 // if(Kidsy.ButtonA.read() == HOLD_PRESSED) Kidsy.Led1.on();
 // else Kidsy.Led1.off();
 //
-// "Si el boton esta presionado, entonces enciende el LED, de lo contrario, apaga el LED"
+// "SI el boton esta presionado, entonces enciende el LED, SI NO, apaga el LED"
 //
 // Y con estas dos palabras ya podemos tomar una decision en funcion de una entrada. Veamos como se
 // puede sacar provecho de esta condicional en tu Robbus Kidsy para encender o apagar los LEDs

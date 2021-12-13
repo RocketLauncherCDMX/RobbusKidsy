@@ -1,19 +1,32 @@
-/*
-*   Este ejemplo crea una conexion basica entre Robbus Kidsy y un telefono, por bluetooth 4.2.
-*   El presente ejemplo funciona hasta el día 02/03/2020 con la aplicación blueFruit de Adafruit
-*   para telefonos Android. https://play.google.com/store/apps/details?id=com.adafruit.bluefruit.le.connect&hl=es
-*   
-*   Pasos para probar este ejemplo (modo Beta):
-*
-*   1.- Compilar y subir con la placa Adafruit ESP32 Feather.
-*   2.- Serciorarse que tu Rob.bit Kidsy tenga el interruptor en posicion ON.
-*   3.- Instalar la aplicacion bluefruit (enlace arriba) en dispositivos Android (No probado en iOs).
-*   4.- Abrir la aplicación. Aparecera la pantalla Select Device, escoger Robbus Kidsy.
-*   5.- El Led1 se encendera, indicando que la conexion fue exitosa. Si no se enciende o marca error
-*       volver a intentar.
-*   6.- Seleccionar Controller en la siguiente pantalla.
-*   7.- Dentro de Available Pins, seleccionar Control Pad.   
-*/
+// ------------------------------------------------ ROBBUS KIDSY ----------------------------------------------------
+//
+// EJEMPLO DE CONTROL DE ROBBUS KIDSY POR MEDIO DE LA APLICACION BLUEFRUIT
+// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware de Robbus Kidsy.
+// Autor: Rocket Launcher
+// Fecha: 12 de diciembre de 2021
+// Visita www.robbus.mx/kidsy para mas informacion
+// ------------------------------------------------------------------------------------------------------------------
+//
+//   Este ejemplo crea una conexion basica entre Robbus Kidsy y un telefono, por bluetooth 4.2.
+//   El presente ejemplo funciona hasta el día 12/12/2021 con la aplicación blueFruit de Adafruit
+//   para telefonos Android. https://play.google.com/store/apps/details?id=com.adafruit.bluefruit.le.connect&hl=es
+//
+//   NOTA: Esta aplicacion es de un tercero y su uso puede variar, no obstante, cualquier cambio se vera reflejado
+//         en futuras actualizaciones. Rocket Launcher trabajara arduamente para tener su aplicacion propia en un
+//         futuro cercano. Apoyanos comprando nuestros productos :)
+//   
+//   Pasos para probar este ejemplo:
+//
+//   1.- Compilar y subir el ejemplo.
+//   2.- Serciorarse que tu Robbus Kidsy tenga el interruptor en posicion ON.
+//   3.- Instalar la aplicacion bluefruit (enlace arriba).
+//   4.- Abrir la aplicación. Aparecera la pantalla Select Device, escoger Robbus Kidsy.
+//   5.- El Led1 se encendera, indicando que la conexion fue exitosa. Si no se enciende o marca error
+//       volver a intentar.
+//   6.- Seleccionar Controller en la siguiente pantalla.
+//   7.- Dentro de Available Pins, seleccionar Control Pad.
+// ------------------------------------------------------------------------------------------------------------------
+
 #include <BLEDevice.h>
 #include <BLEServer.h>
 #include <BLEUtils.h>
@@ -34,7 +47,6 @@ uint8_t txValue = 0;
 #define SERVICE_UUID           "6E400001-B5A3-F393-E0A9-E50E24DCCA9E" // UART service UUID
 #define CHARACTERISTIC_UUID_RX "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
 #define CHARACTERISTIC_UUID_TX "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
-
 
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {

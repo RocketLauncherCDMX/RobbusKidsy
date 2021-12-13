@@ -23,6 +23,8 @@
 // -255 -> Velocidad maxima hacia atras en ese motor
 //  255 -> Velocidad maxima hacia adelante en ese motor
 //    0 -> Motor detenido
+//
+// Lo que se hara en el ciclo for es ir aumentando y disminuyendo el valor de speed de forma constante.
 // 
 // Considera que valores cercanos a 0 ya sean positivos o negativos, pueden no generar la fuerza
 // suficiente para comenzar a girar las ruedas.

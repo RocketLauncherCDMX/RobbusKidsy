@@ -19,6 +19,9 @@
 // encendido, al usar toggle se apagara, y si esta apagado, se encendera. Al hacerlo, indirectamente se cambia 
 // el estado de su variable status, por lo que, consultando esa variable, se puede saber el estado actual 
 // del LED.
+//
+// Cabe mencionar que el uso de Toggle es una mejor forma de controlar LEDs que el ejemplo set, el cual requiere
+// de una variable para cambiar el estado.
 // ------------------------------------------------------------------------------------------------------------
 
 #include<RobbusKidsy.h>
@@ -34,6 +37,8 @@ void loop() {
   if(Kidsy.ButtonA.read() == PRESSED) {
     Kidsy.Led1.toggle();  // Al presionar el boton, el LED1 cambia de estado
     Serial.print("El Led1 que estaba ");
+
+    // Ahora, revisamos el estado del LED...
     if(Kidsy.Led1.status == 1) Serial.println("apagado pasa a estar encendido");
     else Serial.println("encendido pasa a estar apagado");
   }
