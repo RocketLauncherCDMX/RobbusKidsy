@@ -1,9 +1,10 @@
 # RobbusKidsy
 
-Robbus Kidsy es un robot móvil donde podrás escoger si quieres jugar, aprender, o aprender jugando. Sus principales características son:
+Robbus Kidsy es un pequeño robot móvil de 9cm de diametro, completamente programable en Arduino, el cuál tiene:
 
 Flechas táctiles
 4 flechas táctiles, que podrás programar para realizar cualquier acción en tu Robbus, moverse, hacer un sonido, prender un LED, o varias al mismo tiempo.
+![image](https://user-images.githubusercontent.com/66702091/145869150-3855ad0f-0682-41c4-980b-14dd0e8dc90d.png)
 
 Sensor de Color
 Puede identificar 8 colores, pero lo puedes enseñar a ver muchos más, y si quieres saber que está viendo, puedes mostrarlo a través del LED multicolor.
