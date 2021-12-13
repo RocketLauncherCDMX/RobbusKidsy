@@ -9,6 +9,8 @@ rmt_obj_t* rmt_send = NULL;
 
 TCS34725 tcs = TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_1X);
 
+Preferences FlashMemory;
+
 void RobbusKidsy :: begin() {
 
   pinMode(BUTTON_A, INPUT_PULLUP);
@@ -63,6 +65,37 @@ void RobbusKidsy :: begin() {
     ArrowRight.analogRead();
   }
 
+  // Flash memory reading
+  // -----------------------------------------------------------------------
+  FlashMemory.begin("kidsy_memory", false);
+  ArrowForward.touchedCalibrate = FlashMemory.getUInt("t_forward", 0);
+  ArrowBackward.touchedCalibrate = FlashMemory.getUInt("t_backward", 0);
+  ArrowLeft.touchedCalibrate = FlashMemory.getUInt("t_left", 0);
+  ArrowRight.touchedCalibrate = FlashMemory.getUInt("t_right", 0);
+  ArrowForward.untouchedCalibrate = FlashMemory.getUInt("unt_forward", 0);
+  ArrowBackward.untouchedCalibrate = FlashMemory.getUInt("unt_backward", 0);
+  ArrowLeft.untouchedCalibrate = FlashMemory.getUInt("unt_left", 0);
+  ArrowRight.untouchedCalibrate = FlashMemory.getUInt("unt_right", 0);
+
+  ColorSensor.red_hue = FlashMemory.getUInt("red_hue", 0);
+  ColorSensor.green_hue = FlashMemory.getUInt("green_hue", 0);
+  ColorSensor.blue_hue = FlashMemory.getUInt("blue_hue", 0);
+  ColorSensor.yellow_hue = FlashMemory.getUInt("yellow_hue", 0);
+  ColorSensor.cyan_hue = FlashMemory.getUInt("cyan_hue", 0);
+  ColorSensor.magenta_hue = FlashMemory.getUInt("magenta_hue", 0);
+  ColorSensor.white_umbral = FlashMemory.getUInt("white_umbral", 0);
+  ColorSensor.black_umbral = FlashMemory.getUInt("black_umbral", 0);
+
+  Move.top_leftSpeed = FlashMemory.getUInt("left_maxSpeed", 0);
+  Move.top_rightSpeed = FlashMemory.getUInt("right_maxSpeed", 0);
+  FlashMemory.end();
+  // ------------------------------------------------------------------------
+
+  ArrowForward.thresshold   =  ((ArrowForward.untouchedCalibrate - ArrowForward.touchedCalibrate) / 2) + ArrowForward.touchedCalibrate;
+  ArrowBackward.thresshold  =  ((ArrowBackward.untouchedCalibrate - ArrowBackward.touchedCalibrate) / 2) + ArrowBackward.touchedCalibrate;
+  ArrowLeft.thresshold      =  ((ArrowLeft.untouchedCalibrate - ArrowLeft.touchedCalibrate) / 2) + ArrowLeft.touchedCalibrate;
+  ArrowRight.thresshold     =  ((ArrowRight.untouchedCalibrate - ArrowRight.touchedCalibrate) / 2) + ArrowRight.touchedCalibrate;
+
   tcs.begin();
 
   for (int i=0; i<256; i++) {
@@ -78,102 +111,370 @@ void RobbusKidsy :: begin() {
 
   Neopixel.off();
   delay(1);
+
+  calibrateSensor();
+  calibrateArrows();
+  calibrateMotors();
 }
 
-void RobbusKidsy :: begin(uint8_t mode) {
+void RobbusKidsy :: calibrateSensor() {
+  if(ButtonA.read() == HOLD_PRESSED) {
+    Buzzer.playTone(2000, 50);
+    delay(100);
+    Buzzer.playTone(2000, 50);
+    ColorSensor.enable();
+    Neopixel.heartBeat(RED, 50);
 
-  pinMode(BUTTON_A, INPUT_PULLUP);
-  pinMode(BUTTON_B, INPUT_PULLUP);
-  pinMode(BUTTON_C, INPUT_PULLUP);
+    Serial.println("Calibracion del sensor de color");
+    Serial.println("Posiciona a Kidsy sobre el color rojo y presiona A");
+    Neopixel.color(RED, 50);
+    do ColorSensor.read();
+    while(ButtonA.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    ColorSensor.red_hue = ColorSensor.hue360;
 
-  pinMode(LED1, OUTPUT);
-  pinMode(LED2, OUTPUT);
-  pinMode(LED3, OUTPUT);
-  pinMode(LED4, OUTPUT);
-  pinMode(LEDW, OUTPUT);
-  
-  pinMode(DCM_LEFT_IN1, OUTPUT);
-  pinMode(DCM_LEFT_IN2, OUTPUT);
-  pinMode(DCM_RIGHT_IN1, OUTPUT);
-  pinMode(DCM_RIGHT_IN2, OUTPUT);
+    Serial.println("Posiciona a Kidsy sobre el color verde y presiona A");
+    Neopixel.color(GREEN, 50);
+    do ColorSensor.read();
+    while(ButtonA.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    ColorSensor.green_hue = ColorSensor.hue360;
 
-  pinMode(BUZZER, OUTPUT);
+    Serial.println("Posiciona a Kidsy sobre el color azul y presiona A");
+    Neopixel.color(BLUE, 50);
+    do ColorSensor.read();
+    while(ButtonA.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    ColorSensor.blue_hue = ColorSensor.hue360;
 
-  ledcSetup(PWM_CHANNEL_LEFT_IN1, PWM_MOTOR_FREQ, PWM_RESOUTION);
-  ledcAttachPin(DCM_LEFT_IN1, PWM_CHANNEL_LEFT_IN1);
-  ledcSetup(PWM_CHANNEL_LEFT_IN2, PWM_MOTOR_FREQ, PWM_RESOUTION);
-  ledcAttachPin(DCM_LEFT_IN2, PWM_CHANNEL_LEFT_IN2);
+    Serial.println("Posiciona a Kidsy sobre el color amarillo y presiona A");
+    Neopixel.color(YELLOW, 50);
+    do ColorSensor.read();
+    while(ButtonA.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    ColorSensor.yellow_hue = ColorSensor.hue360;
 
-  ledcSetup(PWM_CHANNEL_RIGHT_IN1, PWM_MOTOR_FREQ, PWM_RESOUTION);
-  ledcAttachPin(DCM_RIGHT_IN1, PWM_CHANNEL_RIGHT_IN1);
-  ledcSetup(PWM_CHANNEL_RIGHT_IN2, PWM_MOTOR_FREQ, PWM_RESOUTION);
-  ledcAttachPin(DCM_RIGHT_IN2, PWM_CHANNEL_RIGHT_IN2);
+    Serial.println("Posiciona a Kidsy sobre el color cyan y presiona A");
+    Neopixel.color(CYAN, 50);
+    do ColorSensor.read();
+    while(ButtonA.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    ColorSensor.cyan_hue = ColorSensor.hue360;
 
-  ledcSetup(PWM_CHANNEL_BUZZER, 0, PWM_RESOUTION);
-  ledcAttachPin(BUZZER, PWM_CHANNEL_BUZZER);
-  ledcWrite(BUZZER, 128);
+    Serial.println("Posiciona a Kidsy sobre el color magenta y presiona A");
+    Neopixel.color(MAGENTA, 50);
+    do ColorSensor.read();
+    while(ButtonA.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    ColorSensor.magenta_hue = ColorSensor.hue360;
 
-  ButtonA.pin = BUTTON_A;
-  ButtonB.pin = BUTTON_B;
-  ButtonC.pin = BUTTON_C;
+    Serial.println("Posiciona a Kidsy sobre el color negro y presiona A");
+    Neopixel.color(BLACK);
+    do ColorSensor.read();
+    while(ButtonA.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    ColorSensor.black_umbral = ColorSensor.white * 1.2;
 
-  Led1.pin = LED1;
-  Led2.pin = LED2;
-  Led3.pin = LED3;
-  Led4.pin = LED4;
+    Serial.println("Posiciona a Kidsy sobre el color white y presiona A");
+    Neopixel.color(WHITE, 50);
+    do ColorSensor.read();
+    while(ButtonA.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    ColorSensor.white_umbral = ColorSensor.white * 0.8;
 
-  ArrowForward.pin = AN_UP;
-  ArrowBackward.pin = AN_DOWN;
-  ArrowLeft.pin = AN_LEFT;
-  ArrowRight.pin = AN_RIGHT;
+    Buzzer.playTone(2000, 50);
+    delay(100);
+    Buzzer.playTone(2000, 50);
+    Neopixel.heartBeat(GREEN, 50);
 
-  for(int i=0; i<ARROW_BUFFER_SIZE; i++) {
+    Serial.println("Calibracion completa!, guardando en memoria...");
+
+    FlashMemory.begin("kidsy_memory", false);
+    FlashMemory.putUInt("red_hue", ColorSensor.red_hue);
+    FlashMemory.putUInt("green_hue", ColorSensor.green_hue);
+    FlashMemory.putUInt("blue_hue", ColorSensor.blue_hue);
+    FlashMemory.putUInt("yellow_hue", ColorSensor.yellow_hue);
+    FlashMemory.putUInt("cyan_hue", ColorSensor.cyan_hue);
+    FlashMemory.putUInt("magenta_hue", ColorSensor.magenta_hue);
+    FlashMemory.putUInt("white_umbral", ColorSensor.white_umbral);
+    FlashMemory.putUInt("black_umbral", ColorSensor.black_umbral);
+    FlashMemory.end();
+
+    while(ButtonA.read() != PRESSED) {
+      ColorSensor.read();
+      Serial.println(ColorSensor.name);
+      Neopixel.color(ColorSensor.value, 50);
+    }
+    ColorSensor.disable();
+    Buzzer.playTone(2000, 50);
+    delay(100);
+    Buzzer.playTone(2000, 50);
+    Neopixel.heartBeat(GREEN, 50);
+
+    ESP.restart();
+  }
+}
+
+void RobbusKidsy :: calibrateArrows() {
+  if(ButtonB.read() == HOLD_PRESSED) {
+    Buzzer.playTone(2000, 50);
+    delay(100);
+    Buzzer.playTone(2000, 50);
+    Neopixel.heartBeat(GREEN, 50);
+    Serial.println("Calibracion de las flechas tactiles");
+    Serial.println("Sin presionar ninguna flecha, presiona el boton B");
+    Led1.on();
+    Led2.on();
+    Led3.on();
+    Led4.on();
+    while(ButtonB.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    Led1.off();
+    Led2.off();
+    Led3.off();
+    Led4.off();
     ArrowForward.analogRead();
     ArrowBackward.analogRead();
     ArrowLeft.analogRead();
     ArrowRight.analogRead();
+    Serial.println("Lecturas de las flechas sin tocar:");
+    Serial.println("Forward: " + String(ArrowForward.analogRead()));
+    Serial.println("Backward: " + String(ArrowBackward.analogRead()));
+    Serial.println("Left: " + String(ArrowLeft.analogRead()));
+    Serial.println("Right: " + String(ArrowRight.analogRead()));
+    Serial.println();
+
+    FlashMemory.begin("kidsy_memory", false);
+    FlashMemory.putUInt("unt_forward", ArrowForward.analog);
+    FlashMemory.putUInt("unt_backward", ArrowBackward.analog);
+    FlashMemory.putUInt("unt_left", ArrowLeft.analog);
+    FlashMemory.putUInt("unt_right", ArrowRight.analog);
+    FlashMemory.end();
+
+    Neopixel.heartBeat(GREEN, 50);
+    Serial.println("Mientras presionas la flecha Forward, presiona el boton B");
+    Led1.on();
+    do ArrowForward.analogRead();
+    while(ButtonB.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    Serial.println("Lectura: " + String(ArrowForward.analogRead()));
+    Neopixel.heartBeat(MAGENTA, 50);
+    Serial.println("Mientras presionas la flecha Backward, presiona el boton B");
+    Led2.on();
+    do ArrowBackward.analogRead();
+    while(ButtonB.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    Serial.println("Lectura: " + String(ArrowBackward.analogRead()));
+    Neopixel.heartBeat(YELLOW, 50);
+    Serial.println("Mientras presionas la flecha Left, presiona el boton B");
+    Led3.on();
+    do ArrowLeft.analogRead();
+    while(ButtonB.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    Serial.println("Lectura: " + String(ArrowLeft.analogRead()));
+    Neopixel.heartBeat(CYAN, 50);
+    Serial.println("Mientras presionas la flecha Right, presiona el boton B");
+    Led4.on();
+    do ArrowRight.analogRead();
+    while(ButtonB.read() != PRESSED);
+    Buzzer.playTone(200, 20);
+    Serial.println("Lectura: " + String(ArrowRight.analogRead()));
+    Serial.println();
+    Neopixel.heartBeat(BLUE, 50);
+    Led1.off();
+    Led2.off();
+    Led3.off();
+    Led4.off();
+
+    FlashMemory.begin("kidsy_memory", false);
+    FlashMemory.putUInt("t_forward", ArrowForward.analog);
+    FlashMemory.putUInt("t_backward", ArrowBackward.analog);
+    FlashMemory.putUInt("t_left", ArrowLeft.analog);
+    FlashMemory.putUInt("t_right", ArrowRight.analog);
+    FlashMemory.end();
+
+    Buzzer.playTone(2000, 50);
+    delay(100);
+    Buzzer.playTone(2000, 50);
+    Neopixel.heartBeat(GREEN, 50);
+    Serial.println("Calibracion completa!, guardando en memoria...");
+    delay(1000);
+    ESP.restart();
   }
+}
 
-  tcs.begin();
+void RobbusKidsy :: calibrateMotors() {
+  if(ButtonC.read() == HOLD_PRESSED) {
+    Buzzer.playTone(2000, 50);
+    delay(100);
+    Buzzer.playTone(2000, 50);
+    Neopixel.heartBeat(BLUE, 50);
+    Serial.println();
+    Serial.println("Calibracion de la maxima velocidad de los motores.");
+    Serial.println("Los motores giraran hacia el frente. Si notas que Kidsy se va de lado");
+    Serial.println("presiona la flecha hacia el lado que quieres corregir, hasta que notes que");
+    Serial.println("se va recto. Si quieres aumentar o disminuir la velocidad maxima, presiona");
+    Serial.println("las flechas Forward o Backward respectivamente.");
+    Serial.println("Presiona C para terminar la calibracion");
+    Move.forward(255);
+    do {
+      if(ArrowLeft.read() == TOUCHED) {
+        if(Move.top_leftSpeed > 100 || Move.top_leftSpeed == 0) {
+          Move.top_leftSpeed--;
+          Serial.println("TopLeftSpeed: " + String(Move.top_leftSpeed));
+          Led1.blink(1, 10);
+          Buzzer.playTone(200, 20);
+          Move.forward(255);
+          timeStamp = millis();
+          repeatCounter = 0;
+        } else {
+          Serial.println("Velocidad Izquierda al minimo");
+          Buzzer.playTone(500, 200);
+          Neopixel.heartBeat(RED, 50);
+        }
+      }
+      else if(ArrowLeft.status == HOLD_TOUCHED && millis() > timeStamp + 500) {
+        repeatCounter++;
+        if(Move.top_leftSpeed > 100 || Move.top_leftSpeed == 0) {
+          Move.top_leftSpeed--;
+          Serial.println("TopLeftSpeed: " + String(Move.top_leftSpeed));
+          Led1.blink(1, 10);
+          Buzzer.playTone(200, 20);
+          Move.forward(255);
+          if(repeatCounter < 10) delay(75);
+          else delay(10);
+        } else {
+          Serial.println("Velocidad Izquierda al minimo");
+          Buzzer.playTone(500, 200);
+          Neopixel.heartBeat(RED, 50);
+        }
+      }
+      if(ArrowRight.read() == TOUCHED) {
+        if(Move.top_rightSpeed > 100 || Move.top_rightSpeed == 0) {
+          Move.top_rightSpeed--;
+          Serial.println("TopRightSpeed: " + String(Move.top_rightSpeed));
+          Led4.blink(1, 10);
+          Buzzer.playTone(250, 20);
+          Move.forward(255);
+          timeStamp = millis();
+          repeatCounter = 0;
+        } else {
+          Serial.println("Velocidad Derecha al minimo");
+          Buzzer.playTone(500, 200);
+          Neopixel.heartBeat(RED, 50);
+        }
+      }
+      else if(ArrowRight.status == HOLD_TOUCHED && millis() > timeStamp + 500) {
+        repeatCounter++;
+        if(Move.top_rightSpeed > 100 || Move.top_rightSpeed == 0) {
+          Move.top_rightSpeed--;
+          Serial.println("TopRightSpeed: " + String(Move.top_rightSpeed));
+          Led4.blink(1, 10);
+          Buzzer.playTone(250, 20);
+          Move.forward(255);
+          if(repeatCounter < 10) delay(75);
+          else delay(10);
+        } else {
+          Serial.println("Velocidad Derecha al minimo");
+          Buzzer.playTone(500, 200);
+          Neopixel.heartBeat(RED, 50);
+        }
+      }
+      if(ArrowForward.read() == TOUCHED) {
+        if(Move.top_leftSpeed < 255 || Move.top_rightSpeed < 255) {
+          if(Move.top_leftSpeed < 255) Move.top_leftSpeed++;
+          if(Move.top_rightSpeed < 255) Move.top_rightSpeed++;
+          Serial.println("TopLeftSpeed: " + String(Move.top_rightSpeed));
+          Serial.println("TopRightSpeed: " + String(Move.top_leftSpeed));
+          Led2.blink(1, 10);
+          Buzzer.playTone(300, 20);
+          Move.forward(255);
+          timeStamp = millis();
+          repeatCounter = 0;
+        } else {
+          Serial.println("Velocidad de al menos un motor al maximo");
+          Buzzer.playTone(500, 200);
+          Neopixel.heartBeat(RED, 50);
+        }
+      }
+      else if(ArrowForward.status == HOLD_TOUCHED && millis() > timeStamp + 500) {
+        repeatCounter++;
+        if(Move.top_leftSpeed < 255 || Move.top_rightSpeed < 255) {
+          if(Move.top_leftSpeed < 255) Move.top_leftSpeed++;
+          if(Move.top_rightSpeed < 255) Move.top_rightSpeed++;
+          Serial.println("TopLeftSpeed: " + String(Move.top_rightSpeed));
+          Serial.println("TopRightSpeed: " + String(Move.top_leftSpeed));
+          Led2.blink(1, 10);
+          Buzzer.playTone(200, 20);
+          Move.forward(255);
+          if(repeatCounter < 10) delay(75);
+          else delay(10);
+        } else {
+          Serial.println("Velocidad de ambos motores al maximo");
+          Buzzer.playTone(500, 200);
+          Neopixel.heartBeat(RED, 50);
+        }
+      }
+      if(ArrowBackward.read() == TOUCHED) {
+        if(Move.top_leftSpeed > 100 && Move.top_rightSpeed > 100) {
+          Move.top_leftSpeed--;
+          Move.top_rightSpeed--;
+          Serial.println("TopLeftSpeed: " + String(Move.top_rightSpeed));
+          Serial.println("TopRightSpeed: " + String(Move.top_leftSpeed));
+          Led3.blink(1, 10);
+          Buzzer.playTone(350, 20);
+          Move.forward(255);
+          timeStamp = millis();
+          repeatCounter = 0;
+        } else {
+          Serial.println("Velocidad de al menos un motor al minimo");
+          Buzzer.playTone(500, 200);
+          Neopixel.heartBeat(RED, 50);
+        }
+      }
+      else if(ArrowBackward.status == HOLD_TOUCHED && millis() > timeStamp + 500) {
+        repeatCounter++;
+        if(Move.top_leftSpeed > 100 && Move.top_rightSpeed > 100) {
+          Move.top_leftSpeed--;
+          Move.top_rightSpeed--;
+          Serial.println("TopLeftSpeed: " + String(Move.top_rightSpeed));
+          Serial.println("TopRightSpeed: " + String(Move.top_leftSpeed));
+          Led2.blink(1, 10);
+          Buzzer.playTone(200, 20);
+          Move.forward(255);
+          if(repeatCounter < 10) delay(75);
+          else delay(10);
+        } else {
+          Serial.println("Velocidad de al menos un motor al minimo");
+          Buzzer.playTone(500, 200);
+          Neopixel.heartBeat(RED, 50);
+        }
+      }
+    }
+    while(ButtonC.read() != PRESSED);
+    Move.stop();
+    Buzzer.playTone(2000, 50);
+    delay(100);
+    Buzzer.playTone(2000, 50);
+    Neopixel.heartBeat(GREEN, 50);
+    Serial.println("Calibracion completa!, guardando en memoria...");
 
-  for (int i=0; i<256; i++) {
-    float x = i;
-    x /= 255;
-    x = pow(x, 2.5);
-    x *= 255;
-    ColorSensor.gammatable[i] = x;
+    FlashMemory.begin("kidsy_memory", false);
+    FlashMemory.putUInt("left_maxSpeed", Move.top_leftSpeed);
+    FlashMemory.putUInt("right_maxSpeed", Move.top_rightSpeed);
+    FlashMemory.end();
+
+    delay(1000);
+    ESP.restart();
   }
+}
 
-  rmt_send = rmtInit(19, true, RMT_MEM_64);
-  rmtSetTick(rmt_send, 100);
-
-  Neopixel.off();
-  delay(1);
-
-  switch(mode) {
-    case BUZZER:
-      delay(100);
-      Buzzer.playTone(2000, 50);
-      delay(100);
-      Buzzer.playTone(2000, 50);
-      break;
-    case L1:
-      
-      Led1.blink(2, 100);
-      break;
-    case L2:
-      Led2.blink(2, 100);
-      break;
-    case L3:
-      Led3.blink(2, 100);
-      break;
-    case L4:
-      Led4.blink(2, 100);
-      break;
-    case NEOPIXEL:
-      Neopixel.heartBeat(GREEN);
-      break;
-  }
+uint8_t RobbusKidsy :: getArrowPad() {
+  if(ArrowForward.read() == TOUCHED) return(FORWARD);
+  else if(ArrowBackward.read() == TOUCHED) return(BACKWARD);
+  else if(ArrowLeft.read() == TOUCHED) return(LEFT);
+  else if(ArrowRight.read() == TOUCHED) return(RIGHT);
+  else return(NONE);
 }
 
 uint8_t RobbusKidsy :: buttons :: read() {
@@ -223,78 +524,99 @@ void RobbusKidsy :: movement :: MotorLeft(int16_t vel) {
   if(vel > 255) vel = 255;
   else if(vel < -255) vel = -255;
   if(vel > 0) direction = FORWARD;
-  else direction = BACKWARD;
+  else if(vel < 0) direction = BACKWARD;
+  else direction = STOP;
   speed = abs(vel);
   if(direction == FORWARD) {
-    adjusted_leftSpeed = map(speed, 0, 255, 0, top_leftSpeed);
+    adjusted_leftSpeed = map(speed, 0, 255, 50, top_leftSpeed);
     ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - adjusted_leftSpeed);
     ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
   }
-  else {
-    adjusted_leftSpeed = map(speed, 0, 255, 0, top_leftSpeed);
+  else if(direction == BACKWARD){
+    adjusted_leftSpeed = map(speed, 0, 255, 50, top_leftSpeed);
     ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
     ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - adjusted_leftSpeed);
   }
+  else stop();
 }
 
 void RobbusKidsy :: movement :: MotorRight(int16_t vel) {
   if(vel > 255) vel = 255;
   else if(vel < -255) vel = -255;
   if(vel > 0) direction = FORWARD;
-  else direction = BACKWARD;
+  else if(vel < 0) direction = BACKWARD;
+  else direction = STOP;
   speed = abs(vel);
   if(direction == FORWARD) {
-    adjusted_rightSpeed = map(speed, 0, 255, 0, top_rightSpeed);
+    adjusted_rightSpeed = map(speed, 0, 255, 50, top_rightSpeed);
     ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - adjusted_rightSpeed);
     ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
   }
-  else {
-    adjusted_rightSpeed = map(speed, 0, 255, 0, top_rightSpeed);
+  else if(direction == BACKWARD){
+    adjusted_rightSpeed = map(speed, 0, 255, 50, top_rightSpeed);
     ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
     ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - adjusted_rightSpeed);
   }
 }
 
-void RobbusKidsy :: movement :: forward(uint8_t vel) {
+void RobbusKidsy :: movement :: forward(uint16_t vel) {
   if(vel > 255) vel = 255;
   else if(vel < 0) vel = 0;
   speed = vel;
-  adjusted_leftSpeed = map(speed, 0, 255, 0, top_leftSpeed);
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - adjusted_leftSpeed);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
-  adjusted_rightSpeed = map(speed, 0, 255, 0, top_rightSpeed);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - adjusted_rightSpeed);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
+  if(speed > 0) {
+    adjusted_leftSpeed = map(speed, 0, 255, 50, top_leftSpeed);
+    ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - adjusted_leftSpeed);
+    ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
+    adjusted_rightSpeed = map(speed, 0, 255, 50, top_rightSpeed);
+    ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - adjusted_rightSpeed);
+    ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
+  }
+  else stop();
 }
 
-void RobbusKidsy :: movement :: backward(uint8_t vel) {
+void RobbusKidsy :: movement :: backward(uint16_t vel) {
   if(vel > 255) vel = 255;
   else if(vel < 0) vel = 0;
   speed = vel;
-  adjusted_leftSpeed = map(speed, 0, 255, 0, top_leftSpeed);
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - adjusted_leftSpeed);
-  adjusted_rightSpeed = map(speed, 0, 255, 0, top_rightSpeed);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - adjusted_rightSpeed);
+  if(speed > 0) {
+    adjusted_leftSpeed = map(speed, 0, 255, 50, top_leftSpeed);
+    ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
+    ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - adjusted_leftSpeed);
+    adjusted_rightSpeed = map(speed, 0, 255, 50, top_rightSpeed);
+    ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
+    ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - adjusted_rightSpeed);
+  }
+  else stop();
 }
 
-void RobbusKidsy :: movement :: turnLeft(uint8_t speed) {
-  adjusted_rightSpeed = map(speed, 0, 255, 0, top_rightSpeed);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - adjusted_rightSpeed);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
-  adjusted_leftSpeed = map(speed, 0, 255, 0, top_leftSpeed);
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - adjusted_leftSpeed);
+void RobbusKidsy :: movement :: turnLeft(uint16_t vel) {
+  if(vel > 255) vel = 255;
+  else if(vel < 0) vel = 0;
+  speed = vel;
+  if(speed > 0) {
+    adjusted_rightSpeed = map(speed, 0, 255, 50, top_rightSpeed);
+    ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255 - adjusted_rightSpeed);
+    ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
+    adjusted_leftSpeed = map(speed, 0, 255, 50, top_leftSpeed);
+    ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
+    ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - adjusted_leftSpeed);
+  }
+  else stop();
 }
 
-void RobbusKidsy :: movement :: turnRight(uint8_t speed) {
-  adjusted_leftSpeed = map(speed, 0, 255, 0, top_leftSpeed);
-  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - adjusted_leftSpeed);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
-  adjusted_rightSpeed = map(speed, 0, 255, 0, top_rightSpeed);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - adjusted_rightSpeed);
+void RobbusKidsy :: movement :: turnRight(uint16_t vel) {
+  if(vel > 255) vel = 255;
+  else if(vel < 0) vel = 0;
+  speed = vel;
+  if(speed > 0) {
+    adjusted_leftSpeed = map(speed, 0, 255, 50, top_leftSpeed);
+    ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - adjusted_leftSpeed);
+    ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
+    adjusted_rightSpeed = map(speed, 0, 255, 50, top_rightSpeed);
+    ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
+    ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - adjusted_rightSpeed);
+  }
+  else stop();
 }
 
 void RobbusKidsy :: movement :: stop() {
@@ -305,33 +627,14 @@ void RobbusKidsy :: movement :: stop() {
 }
 
 uint8_t RobbusKidsy :: Arrows :: analogRead() {
-  // subtract the last reading:
-  total = total - buffer[readIndex];
-  // read from the sensor:
-  buffer[readIndex] = touchRead(pin);
-  // add the reading to the total:
-  total = total + buffer[readIndex];
-  // advance to the next position in the array:
-  readIndex = readIndex + 1;
-
-  // if we're at the end of the array...
-  if (readIndex >= ARROW_BUFFER_LENGHT) {
-    // ...wrap around to the beginning:
-    readIndex = 0;
-  }
-
-  // calculate the average:
+  total = 0;
+  for(int i=0; i<ARROW_BUFFER_SIZE; i++) {
+    buffer[readIndex] = touchRead(pin);
+    total = total + buffer[readIndex];
+  }  
   average = total / ARROW_BUFFER_LENGHT;
   analog = average;
   return(average);
-}
-
-void RobbusKidsy :: Arrows :: calibrate(bool state) {
-  if(state == NOTOUCHED) {
-    noTouchCalibrate = analogRead();
-  }
-  else touchCalibrate = analogRead();
-  thresshold = (noTouchCalibrate - touchCalibrate) / 2;
 }
 
 uint8_t RobbusKidsy :: Arrows :: read() {
@@ -342,7 +645,6 @@ uint8_t RobbusKidsy :: Arrows :: read() {
   if(new_state == LOW && old_state == HIGH) status = NOTOUCHED;
   if(new_state == HIGH && old_state == LOW) status = TOUCHED;
   if(new_state == HIGH && old_state == HIGH) status = HOLD_TOUCHED;
-  if(old_state != new_state) delay(25);
   old_state = new_state;
   return(status);
 }
@@ -422,6 +724,21 @@ void RobbusKidsy :: Neopixel :: color(uint8_t colorName) {
   }
 }
 
+void RobbusKidsy :: Neopixel :: color(uint8_t colorName, uint8_t brightness) {
+  if(brightness < 1) brightness = 1;
+  else if(brightness > 255) brightness = 255;
+  switch(colorName) {
+    case BLACK:   off();                                     break;
+    case RED:     color(brightness, 0, 0);                   break;
+    case GREEN:   color(0, brightness, 0);                   break;
+    case BLUE:    color(0, 0, brightness);                   break;
+    case YELLOW:  color(brightness, brightness, 0);          break;
+    case CYAN:    color(0, brightness, brightness);          break;
+    case MAGENTA: color(brightness, 0, brightness);          break;
+    case WHITE:   color(brightness, brightness, brightness); break;
+  }
+}
+
 void RobbusKidsy :: Neopixel :: fadeInOut(uint8_t colorName, uint16_t speed) {
   for(int i=0; i<=255; i++) {
     switch(colorName) {
@@ -482,11 +799,52 @@ void RobbusKidsy :: Neopixel :: heartBeat(uint8_t colorName) {
   fadeInOut(colorName, 750);
 }
 
+void RobbusKidsy :: Neopixel :: heartBeat(uint8_t colorName, uint8_t brightness) {
+  for(uint8_t j=0; j<2; j++) {
+    for(uint8_t i=0; i<=brightness; i++) {
+      switch(colorName) {
+        case RED:     color(i,0,0); break;
+        case GREEN:   color(0,i,0); break;
+        case BLUE:    color(0,0,i); break;
+        case YELLOW:  color(i,i,0); break;
+        case CYAN:    color(0,i,i); break;
+        case MAGENTA: color(i,0,i); break;
+        case WHITE:   color(i,i,i); break;
+      }
+      delay((uint8_t)255/brightness);
+    }
+    for(int i=brightness; i>=0; i--) {
+      switch(colorName) {
+        case RED:     color(i,0,0); break;
+        case GREEN:   color(0,i,0); break;
+        case BLUE:    color(0,0,i); break;
+        case YELLOW:  color(i,i,0); break;
+        case CYAN:    color(0,i,i); break;
+        case MAGENTA: color(i,0,i); break;
+        case WHITE:   color(i,i,i); break;
+      }
+      delay((uint8_t)255/brightness);
+    }
+    delay(100);
+  }
+}
+
 void RobbusKidsy :: Neopixel :: off() {
   color(0,0,0);
 }
 
-uint8_t RobbusKidsy :: ColorSensor :: read() {
+uint8_t RobbusKidsy :: ColorSensor :: readProm() {
+  for(uint8_t i=0; i<3; i++) {
+    valueMatrix[i] = read();
+    //Serial.println("Val" + String(i) + ": " + String(valueMatrix[i]));
+  }
+  if(valueMatrix[0] == valueMatrix[1] && 
+     valueMatrix[2] == valueMatrix[1] )
+  return(valueMatrix[0]);
+  else return(-1);
+}
+
+int8_t RobbusKidsy :: ColorSensor :: read() {
   tcs.getRawData(&red, &green, &blue, &white);
   
   // Hacer rgb medición relativa
@@ -502,50 +860,45 @@ uint8_t RobbusKidsy :: ColorSensor :: read() {
   ColorConverter::RgbToHsv(static_cast<uint8_t>(r), static_cast<uint8_t>(g), static_cast<uint8_t>(b), hue, saturation, sat_value);
   hue360 = hue * 360;
 
-  if (hue360 >= (red_hue - offset_hue) && hue360 < (red_hue + offset_hue) && 
-                white > BLACK_UMBRAL && white < WHITE_UMBRAL)
+  if (hue360 >= (red_hue - offset_hue) && hue360 < (red_hue + offset_hue) && (white > black_umbral && white < white_umbral))
   {
     name = "red";
     value = RED;
   }
-  else if (hue360 >= (yellow_hue - offset_hue) && hue360 < (yellow_hue + offset_hue) && 
-          white > BLACK_UMBRAL && white < WHITE_UMBRAL)
+  else if (hue360 >= (yellow_hue - offset_hue) && hue360 < (yellow_hue + offset_hue) && (white > black_umbral && white < white_umbral))
   {
     name = "yellow";
     value = YELLOW;
   }
-  else if (hue360 >= (green_hue - offset_hue) && hue360 < (green_hue + offset_hue) && 
-          white > BLACK_UMBRAL && white < WHITE_UMBRAL)
+  else if (hue360 >= (green_hue - offset_hue) && hue360 < (green_hue + offset_hue) && (white > black_umbral && white < white_umbral))
   {
     name = "green";
     value = GREEN;
   }
-  else if (hue360 >= (cyan_hue - offset_hue) && hue360 < (cyan_hue + offset_hue) && 
-          white > BLACK_UMBRAL && white < WHITE_UMBRAL)
+  else if (hue360 >= (cyan_hue - offset_hue) && hue360 < (cyan_hue + offset_hue) && (white > black_umbral && white < white_umbral))
   {
     name = "cyan";
     value = CYAN;
   }
-  else if (hue360 >= (blue_hue - offset_hue) && hue360 < (blue_hue + offset_hue) && 
-          white > BLACK_UMBRAL && white < WHITE_UMBRAL)
+  else if (hue360 >= (blue_hue - offset_hue) && hue360 < (blue_hue + offset_hue) && (white > black_umbral && white < white_umbral))
   {
     name = "blue";
     value = BLUE;
   }
-  else if (hue360 >= (magenta_hue - offset_hue) && hue360 < (magenta_hue + offset_hue) && 
-          white > BLACK_UMBRAL && white < WHITE_UMBRAL)
+  else if (hue360 >= (magenta_hue - offset_hue) && hue360 < (magenta_hue + offset_hue) && (white > black_umbral && white < white_umbral))
   {
     name = "magenta";
     value = MAGENTA;
   }
-  else if(white <= BLACK_UMBRAL) {
+  else if(white <= black_umbral) {
     name = "black";
     value = OFF;
   }
-  else if(white >= WHITE_UMBRAL) {
+  else if(white >= white_umbral) {
     name = "white";
     value = WHITE;
   }
+  else value = -1;
   return(value);
 }
 

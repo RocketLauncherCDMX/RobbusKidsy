@@ -5,6 +5,7 @@
 #include <Wire.h>
 #include "TCS34725.h"
 #include "pitches.h"
+#include "Preferences.h"
 
 // -------------------------------------------------------------------------------------------------------------
 // RobbusKidsy Classes
@@ -14,6 +15,9 @@ private:
   #define PWM_MOTOR_FREQ        30000   // this variable is used to define the time period 
   #define PWM_RESOUTION         8       // this will define the resolution of the signal which is 8 in this case
   #define ARROW_BUFFER_LENGHT   25      // large of buffer for smooth arrow's touch
+
+  uint64_t timeStamp;
+  uint8_t repeatCounter = 0;
 public:
   // Global public constants
   #define BLACK         0
@@ -43,7 +47,10 @@ public:
   #define L4  5
 
   void begin();
-  void begin(uint8_t);
+  void calibrateSensor();
+  void calibrateArrows();
+  void calibrateMotors();
+  uint8_t getArrowPad();
   
   class buttons {
   private:
@@ -56,11 +63,6 @@ public:
     #define HOLD_PRESSED      3
     
     // Version 3.2
-    //#define BUTTON_A          34
-    //#define BUTTON_B          35
-    //#define BUTTON_C          36
-
-    // Version 3.1
     #define BUTTON_A          34
     #define BUTTON_B          35
     #define BUTTON_C          36
@@ -99,12 +101,9 @@ public:
     #define AN_RIGHT          T3
     #define ARROW_BUFFER_SIZE 25
     uint8_t buffer[ARROW_BUFFER_SIZE];
-    uint8_t thresshold = 50;
     uint8_t readIndex = 0;  // the index of the current reading
     uint16_t total = 0;     // the running total
     uint8_t average = 0;    // the average
-    uint8_t noTouchCalibrate = 70;
-    uint8_t touchCalibrate = 3;
     bool new_state = LOW, :1;
     bool old_state = LOW, :1;
         
@@ -115,9 +114,11 @@ public:
     #define HOLD_NOTOUCHED    3
     uint8_t pin;
     // variables and function for analog reading
+    uint8_t thresshold = 100;
+    uint8_t untouchedCalibrate = 70;
+    uint8_t touchedCalibrate = 3;
     uint8_t analog;
     uint8_t analogRead();
-    void calibrate(bool);
     // variables and function for digital reading
     uint8_t status;
     uint8_t read();
@@ -142,18 +143,18 @@ public:
     bool status = OFF;
     uint8_t pwm_channel;
     uint8_t dcm_in;
-    uint8_t top_leftSpeed = 255;
-    uint8_t top_rightSpeed = 255;
 
   public:
     #define STOP   0
+    uint8_t top_leftSpeed;
+    uint8_t top_rightSpeed;
 
     void MotorLeft(int16_t);
     void MotorRight(int16_t);
-    void forward(uint8_t);
-    void backward(uint8_t);
-    void turnLeft(uint8_t);
-    void turnRight(uint8_t);
+    void forward(uint16_t);
+    void backward(uint16_t);
+    void turnLeft(uint16_t);
+    void turnRight(uint16_t);
     void stop();
 
   } Move;
@@ -190,18 +191,18 @@ public:
     int tempo;
 
     void color(uint8_t,uint8_t,uint8_t);
+    void color(uint8_t,uint8_t);
     void color(uint8_t);
     void fadeInOut(uint8_t, uint16_t);
     void fadeInOut(uint8_t);
     void heartBeat(uint8_t);
+    void heartBeat(uint8_t, uint8_t);
     void off(void);
 
   } Neopixel;
 
   class ColorSensor {
   private:
-    #define BLACK_UMBRAL  150
-    #define WHITE_UMBRAL  350
     double hue, saturation, sat_value;
     uint32_t sum;
     float r, g, b;
@@ -210,26 +211,25 @@ public:
     uint16_t hue360;
     bool LedW = LOW, :1;
     uint8_t value;
+    uint8_t valueMatrix[3];
     String name;
     byte gammatable[256];
     uint16_t white, red, green, blue;
-    /*uint16_t red_hue = 65;
-    uint16_t green_hue = 135;
-    uint16_t blue_hue = 200;
-    uint16_t yellow_hue = 95;
-    uint16_t cyan_hue = 175;
-    uint16_t magenta_hue = 220;*/
-    uint16_t red_hue = 10;
-    uint16_t green_hue = 80;
-    uint16_t blue_hue = 200;
-    uint16_t yellow_hue = 45;
-    uint16_t cyan_hue = 230;
-    uint16_t magenta_hue = 350;
 
+    uint16_t black_umbral;
+    uint16_t white_umbral;
+
+    uint16_t red_hue;
+    uint16_t green_hue;
+    uint16_t blue_hue;
+    uint16_t yellow_hue;
+    uint16_t cyan_hue;
+    uint16_t magenta_hue;
 
     uint8_t offset_hue = 15;
 
-    uint8_t read();
+    int8_t read();
+    uint8_t readProm();
     void enable();
     void disable();
     String getName(uint8_t);
