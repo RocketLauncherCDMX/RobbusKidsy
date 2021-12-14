@@ -1,5 +1,7 @@
 # Robbus Kidsy V3.2
 
+Puedes bajar e instalar por tu cuenta la biblioteca para Arduino, para ello, da click en CODE, luego en DOWNLOAD ZIP y copia el archivo ZIP a tu carpeta libraries en Documents/Arduino.
+
 Robbus Kidsy es un pequeño robot móvil capaz de moverse por si mismo. Es completamente programable en Arduino. Los elementos que lo componen son:
 
 ![image](https://user-images.githubusercontent.com/66702091/145869150-3855ad0f-0682-41c4-980b-14dd0e8dc90d.png)![image](https://user-images.githubusercontent.com/66702091/145869299-53fb21c7-4e49-4c9f-98d1-e9d57f57b66f.png)
