@@ -12,7 +12,7 @@ jobs:
           compliance: strict
           library-manager: submit
           project-type: library
-          recursive: true
+          recursive: false
           # report-file:
-          verbose: false
+          verbose: true
           token: GITHUB_TOKEN
