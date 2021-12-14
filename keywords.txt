@@ -1,0 +1,87 @@
+############################################################
+# Syntax Coloring Map For Rocket Launcher - Robbus Kidsy
+############################################################
+# Class
+############################################################
+
+#RobbusKidsy	KEYWORD1
+
+############################################################
+# Methods and Functions
+############################################################
+
+begin							KEYWORD2
+calibrateSensor		KEYWORD2
+calibrateArrows		KEYWORD2
+calibrateMotors		KEYWORD2
+getArrowPad				KEYWORD2
+read 							KEYWORD2
+set 							KEYWORD2
+on 								KEYWORD2
+off 							KEYWORD2
+toggle 						KEYWORD2
+blink 						KEYWORD2
+analogRead 				KEYWORD2
+MotorLeft 				KEYWORD2
+MotorRight 				KEYWORD2
+forward 					KEYWORD2
+backward 					KEYWORD2
+turnLeft 					KEYWORD2
+turnRight 				KEYWORD2
+stop 							KEYWORD2
+playTone 					KEYWORD2
+noTone 						KEYWORD2
+r2d2 							KEYWORD2
+color 						KEYWORD2
+fadeInOut 				KEYWORD2
+heartBeat 				KEYWORD2
+readProm 					KEYWORD2
+enable 						KEYWORD2
+disable 					KEYWORD2
+getName 					KEYWORD2
+
+Led1 							KEYWORD2
+Led2 							KEYWORD2
+Led3 							KEYWORD2
+Led4							KEYWORD2
+ButtonA						KEYWORD2
+ButtonB						KEYWORD2
+ButtonC						KEYWORD2
+ArrowForward			KEYWORD2
+ArrowBackward			KEYWORD2
+ArrowLeft					KEYWORD2
+ArrowRight				KEYWORD2
+Move							KEYWORD2
+Buzzer						KEYWORD2
+Neopixel					KEYWORD2
+ColorSensor				KEYWORD2
+Move							KEYWORD2
+ColorSensor				KEYWORD2
+
+############################################################
+# Constants
+############################################################
+
+BLACK         		LITERAL2
+OFF           		LITERAL2
+RED           		LITERAL2
+GREEN         		LITERAL2
+BLUE          		LITERAL2
+YELLOW        		LITERAL2
+CYAN          		LITERAL2
+MAGENTA       		LITERAL2
+WHITE         		LITERAL2
+FORWARD         	LITERAL1
+BACKWARD  				LITERAL1
+LEFT  						LITERAL1
+RIGHT 						LITERAL1
+ON    						LITERAL1
+OFF   						LITERAL1
+NONE  						LITERAL1
+LEDW      				LITERAL1
+BUZZER    				LITERAL1
+NEOPIXEL  				LITERAL1
+PRESSED 					LITERAL1
+RELEASED          LITERAL1
+HOLD_RELEASED     LITERAL1
+HOLD_PRESSED			LITERAL1
