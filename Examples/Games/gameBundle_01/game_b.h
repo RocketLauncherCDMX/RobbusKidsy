@@ -11,7 +11,7 @@ int arrowCounter = 0;           // contador de direcciones guardadas
 void call_game_b() {
   if(flag_configureB == false) {          // bandera para acceder a alaconfiguracion del juego B
     flag_configureB = true;               // solo accede una vez al entrar a este juego
-    manageLeds(0,1,0,0);                  // LED2 encendido, LED1, LED3, LED4 apagados
+    manageLeds(0,ON,0,0);                  // LED2 encendido, LED1, LED3, LED4 apagados
     Serial.println("Juguemos: GUIA A KIDSY");
     Serial.println("Dejare que tu me guies por donde tengo que ir.");
     Serial.println("Para hacerlo, deberas grabar una lista de instrucciones presionando las flechas.");
@@ -74,7 +74,7 @@ void call_game_b() {
         Serial.print(i);
         Serial.print(": ");
         makeMove(arrowBuffer[i], SPEED_B, DURATION_B);
-        delay(350);
+        delay(PAUSE_TIME_B);
       }
       actions(CORRECT);
       Serial.println("Fin de la secuencia. Presiona B para repetir, o A para grabar una nueva");

@@ -146,8 +146,8 @@ public:
 
   public:
     #define STOP   0
-    uint8_t top_leftSpeed;
-    uint8_t top_rightSpeed;
+    uint8_t top_leftSpeed = 255;
+    uint8_t top_rightSpeed = 255;
 
     void MotorLeft(int16_t);
     void MotorRight(int16_t);

@@ -1,6 +1,6 @@
 #define CUSTOM_SETTINGS
 #define INCLUDE_GAMEPAD_MODULE
-#include <DabbleESP32.h>
+#include "DabbleApp\DabbleESP32.h"
 #include "KidsyDabbleJoystick.h"
 
 #define FLAT_SPEED            90        // velocidad de una llanta ponchada (magenta)
@@ -39,6 +39,8 @@ double speedMod_timer = 0;            // contador de la duracion de un modificad
 
 void call_game_c() {
   Dabble.begin("Robbus Kidsy");      // Enter baudrate of your bluetooth.Connect bluetooth on Bluetooth port present on evive.
+  manageLeds(0,0,ON,0);
+  
 
   while(kidsyStatus != GAMEOVER) {
     Dabble.processInput();             //this function is used to refresh data obtained from smartphone.Hence calling this function is mandatory in order to get data properly from your mobile.
@@ -50,26 +52,32 @@ void call_game_c() {
     // Process the arrows in the dabble app
     // --------------------------------------------------------------------------------
     if(button_triangle == PRESSED) {
+      actions(INTERACT_SOUND);
       Serial.println("Triangle");
       Kidsy.Led1.toggle();
     }
     if(button_cross == PRESSED) {
+      actions(INTERACT_SOUND);
       Serial.println("Cross");
       Kidsy.Led2.toggle();
     }
     if(button_square == PRESSED) {
+      actions(INTERACT_SOUND);
       Serial.println("Square");
       Kidsy.Led3.toggle();
     }
     if(button_circle == PRESSED) {
+      actions(INTERACT_SOUND);
       Serial.println("Circle");
       Kidsy.Led4.toggle();
     }
     if(button_select == PRESSED) {
+      actions(INTERACT_SOUND);
       Serial.println("Select - Sensor de color desabilitado");
       Kidsy.ColorSensor.disable();
     }
     if(button_start == PRESSED) {
+      actions(INTERACT_SOUND);
       Serial.println("Start - Sensor de color habilitado");
       Kidsy.ColorSensor.enable();
     }

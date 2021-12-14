@@ -4,6 +4,7 @@
 // Este es el firmware que trae tu Robbus Kidsy por defecto cuando lo recibes por primera vez.
 // Autor: Rocket Launcher
 // Fecha: 06 de Junio de 2020
+// Para mas informacion, visita www.robbus.mx/kidsy
 // ------------------------------------------------------------------------------------------------------------
 //
 // El presente firmware fue pensado en una funcionalidad multiple que integrara todas las caracteristicas
@@ -110,15 +111,16 @@ uint8_t acceleration = 30;           // aceleracion de las llantas (1 - 255);
                                     
 // ----------------------------------------------------------------------------------------------
 // GAME A
-#define MAX_MOVES   10          // numero maximo de movimientos
-#define SPEED_A     100         // velocidad de los movimientos de kidsy (minimo 1, maximo 255)
-#define DURATION_A  300         // tiempo que mantendra cada movimiento en ms
-#define PAUSE_TIME  100         // pausa entre un movimiento y el siguiente en milisegundos
+#define MAX_MOVES     10          // numero maximo de movimientos
+#define SPEED_A       100         // velocidad de los movimientos de kidsy (minimo 1, maximo 255)
+#define DURATION_A    300         // tiempo que mantendra cada movimiento en ms
+#define PAUSE_TIME_A  100         // pausa entre un movimiento y el siguiente en milisegundos
 // ----------------------------------------------------------------------------------------------
 // GAME B
-#define MAX_ARROWS  100         // limite de memoria para guardar direcciones
-#define SPEED_B     150         // velocidad de los movimientos de kidsy
-#define DURATION_B  250         // tiempo que mantendra cada movimiento
+#define MAX_ARROWS    100         // limite de memoria para guardar direcciones
+#define SPEED_B       150         // velocidad de los movimientos de kidsy
+#define DURATION_B    250         // tiempo que mantendra cada movimiento
+#define PAUSE_TIME_B  100         // pausa entre un movimiento y el siguiente en milisegundos
 //
 // ----------------------------------------------------------------------------------------------
 // GAME C

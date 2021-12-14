@@ -9,7 +9,7 @@ int movesNumber = 0;            // numero de movimientos por ronda
 // -------------------------------------------------------------------------------------
 
 void call_game_a() {
-  manageLeds(1,0,0,0);                    // LED1 ON, LED2-LED4 OFF
+  manageLeds(ON,0,0,0);                    // LED1 ON, LED2-LED4 OFF
   Serial.println("Juguemos: KIDSY DICE");
   Serial.println("Me movere " + String(MAX_MOVES) + " veces, y tienes que recordar mis movimientos, luego, presionar las flechas");
   Serial.println("conforme los fui haciendo. ¡Ganaras si recuerdas los " + String(MAX_MOVES) + " movimientos");
@@ -29,7 +29,7 @@ void call_game_a() {
     Serial.println(": ");
     for(int i=0; i<movesNumber; i++) {  // ciclo de movimientos por ronda, si aciertas, aumenta en 1
       makeMove(moves[i], SPEED_A, DURATION_A);      // llama la funcion para moverse, con el valor del siguiente mov.
-      delay(PAUSE_TIME);
+      delay(PAUSE_TIME_A);
     }
     Serial.println();
     Serial.println("Tu turno...");
