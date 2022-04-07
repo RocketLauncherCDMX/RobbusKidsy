@@ -39,7 +39,6 @@ public:
   #define NONE  0
 
   #define LEDW      16
-  #define BUZZER    0
   #define NEOPIXEL  1
   #define L1  2
   #define L2  3
@@ -165,8 +164,6 @@ public:
   public:
     #define BUZZER  25
     #define PWM_CHANNEL_BUZZER  4
-    char names[];
-    uint16_t tones[];
 
     void playTone(int16_t, uint16_t);
     void playTone(int16_t);
