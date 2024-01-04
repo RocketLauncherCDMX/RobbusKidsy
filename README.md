@@ -4,6 +4,8 @@
 
 La biblioteca compatible para arduino, se encuentra en el library manager, buscando Robbus Kidsy la podrás descargar directamente dentro de Arduino. de lo contrario, puedes bajar e instalar por tu cuenta la biblioteca para Arduino, para ello, da click en CODE, luego en DOWNLOAD ZIP y copia el archivo ZIP a tu carpeta libraries en Documents/Arduino.
 
+Puedes comenzar a divertirte con tu Robbus Kidsy desde que lo sacas de su empaque, ya que trae 3 funcionalidades muy divertidas, estas las encontrarás explicadas en la carpeta **Documents**
+
 ## IMPORTANTE
 Si estás intentando programarlo pero al subir el programa marca un error, asegurate de que el interruptor de encendido esté en la posición ON y el LED verde encendido.
 
