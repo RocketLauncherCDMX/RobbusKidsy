@@ -2,6 +2,8 @@
 
 ![Robbus Kidsy V3 2 _05](https://user-images.githubusercontent.com/66702091/145946298-4dbe1ca9-e56b-4169-b76a-487cefa96395.png)
 
+La versión de la fotografía es la 3.1 y es solo para fines ilustrativos.
+
 La biblioteca compatible para arduino, se encuentra en el library manager, buscando Robbus Kidsy la podrás descargar directamente dentro de Arduino. de lo contrario, puedes bajar e instalar por tu cuenta la biblioteca para Arduino, para ello, da click en CODE, luego en DOWNLOAD ZIP y copia el archivo ZIP a tu carpeta libraries en Documents/Arduino.
 
 Puedes comenzar a divertirte con tu Robbus Kidsy desde que lo sacas de su empaque, ya que trae 3 funcionalidades muy divertidas, estas las encontrarás explicadas en la carpeta **Documents**
