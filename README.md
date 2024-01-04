@@ -6,6 +6,8 @@ La versión de la fotografía es la 3.2 y es solo para fines ilustrativos.
 
 La biblioteca compatible para arduino, se encuentra en el library manager, buscando **RobbusKidsy** la podrás descargar directamente dentro de Arduino. de lo contrario, puedes bajar e instalar por tu cuenta la biblioteca para Arduino, para ello, da click en CODE, luego en DOWNLOAD ZIP y copia el archivo ZIP a tu carpeta libraries en Documents/Arduino.
 
+La tarjeta que deberás seleccionar es la Adafruit ESP32 Feather. 
+
 Puedes comenzar a divertirte con tu Robbus Kidsy desde que lo sacas de su empaque, ya que trae 3 funcionalidades muy divertidas, estas las encontrarás explicadas en la carpeta **Documents**
 
 ## IMPORTANTE
