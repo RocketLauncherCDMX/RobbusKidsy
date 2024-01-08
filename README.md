@@ -2,8 +2,6 @@
 
 ![Render_008](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/cb009d29-da85-4506-91f8-fa9c1f5d87fb)
 
-La versión de la fotografía es la 3.2 y es solo para fines ilustrativos.
-
 La biblioteca compatible para arduino, se encuentra en el library manager, buscando **RobbusKidsy** la podrás descargar directamente dentro de Arduino. de lo contrario, puedes bajar e instalar por tu cuenta la biblioteca para Arduino, para ello, da click en CODE, luego en DOWNLOAD ZIP y copia el archivo ZIP a tu carpeta libraries en Documents/Arduino.
 
 La tarjeta que deberás seleccionar es la Adafruit ESP32 Feather. 
