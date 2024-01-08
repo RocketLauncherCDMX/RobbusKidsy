@@ -1,6 +1,6 @@
 # Robbus Kidsy V4.1
 
-![Robbus Kidsy V3 2 _05](https://user-images.githubusercontent.com/66702091/145946298-4dbe1ca9-e56b-4169-b76a-487cefa96395.png)
+![Render_008](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/cb009d29-da85-4506-91f8-fa9c1f5d87fb)
 
 La versión de la fotografía es la 3.2 y es solo para fines ilustrativos.
 
