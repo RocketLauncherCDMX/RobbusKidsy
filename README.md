@@ -14,7 +14,7 @@ La biblioteca compatible para arduino, se encuentra en el library manager, busca
 
 ## Instalación del core ESP32
 
-Como se ha comentado, el corazón de Kidsy es el ESP32, por lo que, además de la biblioteca, también necesitarás instalar este núcleo. Si ya has usado anteriormente alguna tarjeta compatible, seguramente ya lo tendrás instalado, de lo contrario, bastará con dar click en la pestaña **Herramientas**, **placa** y **Gestor de tarjetas**.
+Como se ha comentado, el corazón de Kidsy es el ESP32, por lo que, además de la biblioteca, también necesitarás instalar este núcleo. Si ya has usado anteriormente alguna tarjeta compatible, seguramente ya lo tendrás instalado, de lo contrario, bastará con dar click en la pestaña **Herramientas/placa/Gestor de tarjetas**.
 
 ![Intalacion de biblioteca 04](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/3cff5535-1b8b-4468-9b44-99068947c277)
 
@@ -32,7 +32,7 @@ Puedes comenzar a divertirte con tu Robbus Kidsy desde que lo sacas de su empaqu
 ```bash
 https://github.com/RocketLauncherCDMX/RobbusKidsy/tree/master/documents/Spanish
 ```
-Si quieres programar por tu cuenta a Kidsy, puedes apoyarte de la gran variedad de ejemplos que la biblioteca tiene incluidos para Arduino, yendo a la pestaña **Archivo/Ejemplos**
+Si quieres programar por tu cuenta a Kidsy, puedes apoyarte de la gran variedad de ejemplos que la biblioteca tiene incluidos para Arduino, yendo a la pestaña **Archivo/Ejemplos/Robbus Kidsy**
 
 ![Intalacion de biblioteca 06](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/9bad4976-1dda-4eb1-b8d6-46310e29f636)
 
