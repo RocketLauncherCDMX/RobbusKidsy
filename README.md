@@ -56,7 +56,7 @@ Si alguna función de tu Kidsy no funciona adecuadamente (sensor de color, flech
 
 ## Calibración del sensor de color
 
-Si tu Kidsy no está detectando los colores correctamente, puedes volver a calibrar el sensor. Para hacerlo, deberás hacer es mantener presionado el boton A mientras das un pulso al botón reset. Después de un par de segundos, se escuchará un pitido doble y el neopixel parpadeará en color verde, indicando que la calibración comenzó. Puedes auxiliarte de la comunicación serial (115200 baudios) para seguir las indicaciones, o hacerlo basandote en el color del neopixel.
+Si tu Kidsy no está detectando los colores correctamente, puedes volver a calibrar el sensor. Para hacerlo, deberás mantener presionado el boton A mientras das un pulso al botón reset. Después de un par de segundos, se escuchará un pitido doble y el neopixel parpadeará en color verde, indicando que la calibración comenzó. Puedes auxiliarte de la comunicación serial (115200 baudios) para seguir las indicaciones, o hacerlo basandote en el color del neopixel.
 
 Los colores a calibrar, en el orden que el neopixel enciende son: rojo, verde, azul, amarillo, cyan, magenta, negro y blanco. Cada que el neopixel encienda, posiciona tu Kidsy sobre el color correspondiente (el sensor de color se encuentra justo por debajo del Neopixel) y presiona el botón A, se escuchará un click y el neopixel cambiará al siguiente color.
 
