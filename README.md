@@ -10,7 +10,7 @@ La biblioteca compatible para arduino, se encuentra en el library manager, busca
 
 ![Instalacion de biblioteca 01](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/ec3a71b2-8fbb-4516-a508-2c1b0934a355)
 
-![Instalacion de biblioteca 02](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/264a6d1a-a3a5-4a7c-ab8e-515b189867d3)
+![Instalacion de biblioteca 02](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/b91858a9-d555-414a-b7b6-d24503788e34)
 
 La tarjeta que deberás seleccionar es la Adafruit ESP32 Feather. 
 
