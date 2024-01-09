@@ -42,15 +42,17 @@ Si estás intentando programarlo pero al subir el programa marca un error, asegu
 
 Robbus Kidsy es un pequeño robot móvil capaz de moverse por si mismo. Es completamente programable en Arduino. Los elementos que lo componen son:
 
-![image](https://user-images.githubusercontent.com/66702091/145869150-3855ad0f-0682-41c4-980b-14dd0e8dc90d.png)![image](https://user-images.githubusercontent.com/66702091/145869299-53fb21c7-4e49-4c9f-98d1-e9d57f57b66f.png)
-
-![image](https://user-images.githubusercontent.com/66702091/145869331-16988e07-13c6-4bbd-96e6-351cbe7f83e8.png)![image](https://user-images.githubusercontent.com/66702091/145869358-d012a7b4-3752-4c62-b166-6bef9a051054.png)
-
-![image](https://user-images.githubusercontent.com/66702091/145869386-f35299df-ad3f-4dbe-8017-a79e31a8c8d5.png)![image](https://user-images.githubusercontent.com/66702091/145869434-906a6d9c-d229-42b6-bee7-48d747e5ef91.png)
-
-![image](https://user-images.githubusercontent.com/66702091/145869504-96add70b-390a-4dd5-a867-73d13011e40e.png)![image](https://user-images.githubusercontent.com/66702091/145869538-a4926910-51c1-45ce-994c-cbfac394b9f8.png)
-
-![image](https://user-images.githubusercontent.com/66702091/145869585-83d75bd4-a8ce-484b-82f3-857966d38479.png)
+![ESP32](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/956a8e2b-0bc8-47f0-b943-5fe1e5716796)
+![Buzzer](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/5b88f9cc-4ea7-428d-adfb-a090469dd411)
+![Botones](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/ec72acf6-b07a-4995-b1b1-9a56104ac7d1)
+![Bateria](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/16339d74-18dd-4649-a19b-190dd0c4b5c3)
+![Sensor de color](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/123740aa-97cd-491e-ab19-78ac253ac578)
+![Rueda loca](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a2d80f1d-e995-468f-8941-0ff8e2202ec0)
+![Neopixel](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/76b3b142-1ed3-4c87-8cec-fa712049e3b6)
+![Motores](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/82143307-7465-4405-a299-63a45df3be5b)
+![LLantas](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/1f1456f0-910b-4839-81fd-82cbadde4d08)
+![LEDs](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/469c5822-4c97-40aa-b89e-ccec023538a2)
+![Flechas tactiles](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/23051c86-ab6e-4be9-8c49-918efdcf57c1)
 
 Si alguna función de tu Kidsy no funciona adecuadamente (sensor de color, flechas táctiles o motores), puedes hacer una calibración de cada uno siguiendo los siguientes pasos:
 
