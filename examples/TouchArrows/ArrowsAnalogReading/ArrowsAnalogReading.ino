@@ -15,7 +15,7 @@
 // Estas flechas son sensibles al tacto. Para leer su valor analogico se usa la funcion AnalogRead() la cual
 // leera un valor entre 0 y 255 (8 bits) del convertidor ADC
 //
-// Y posteriormente usar la variable analog para saber su valor, por ejemplo:
+// Y posteriormente puedes usar la variable analog para saber su valor, por ejemplo:
 //
 // Kidsy.ArrowForward.analogRead();             // Lee la flecha Adelante en formato analogico
 // Serial.println(Kidsy.ArrowForward.analog);   // Imprime el valor obtenido
@@ -31,17 +31,18 @@ void setup() {
 }
 
 void loop() {
+  // Se declaran variables enteras para guardar cada valor
   int analogForward = Kidsy.ArrowForward.analogRead();     // Lee la flecha Adelante
   int analogBackward = Kidsy.ArrowBackward.analogRead();   // Lee la flecha Atras
   int analogLeft = Kidsy.ArrowLeft.analogRead();           // Lee la flecha Izquierda
   int analogRight = Kidsy.ArrowRight.analogRead();         // Lee la flecha Derecha
   
   Serial.print("Forward: ");
-  Serial.print(analogForward);    // Imprime el valor analogico de la flecha adelante
+  Serial.print(analogForward);    // Imprime el valor analogico guardado de la flecha adelante
   Serial.print(", Backward: ");
-  Serial.print(analogBackward);   // Imprime el valor analogico de la flecha atras
+  Serial.print(analogBackward);   // Imprime el valor analogico guardado de la flecha atras
   Serial.print(", Left: ");
-  Serial.print(analogLeft);       // Imprime el valor analogico de la flecha izquierda
+  Serial.print(analogLeft);       // Imprime el valor analogico guardado de la flecha izquierda
   Serial.print(", Right: ");
-  Serial.println(analogRight);    // Imprime el valor analogico de la flecha derecha
+  Serial.println(analogRight);    // Imprime el valor analogico guardado de la flecha derecha
 }

@@ -92,13 +92,13 @@ void setup() {
 }
 
 void loop() {
-  Kidsy.ButtonA.read();   // captura estado nuevo del boton A
-  Kidsy.ButtonB.read();   // captura estado nuevo del boton B
+  Kidsy.ButtonA.read();                       // captura estado nuevo del boton A
+  Kidsy.ButtonB.read();                       // captura estado nuevo del boton B
 
-  Kidsy.ArrowForward.read();  // Captura el valor digital de la flecha arriba
-  Kidsy.ArrowBackward.read();  // Captura el valor digital de la flecha abajo
-  Kidsy.ArrowLeft.read();  // Captura el valor digital de la flecha izquierda
-  Kidsy.ArrowRight.read();  // Captura el valor digital de la flecha derecha
+  Kidsy.ArrowForward.read();                  // Captura el valor digital de la flecha arriba
+  Kidsy.ArrowBackward.read();                 // Captura el valor digital de la flecha abajo
+  Kidsy.ArrowLeft.read();                     // Captura el valor digital de la flecha izquierda
+  Kidsy.ArrowRight.read();                    // Captura el valor digital de la flecha derecha
 
   if(Kidsy.ArrowForward.status == TOUCHED) {  // Si se toca flecha adelante...
     setSpeedLeft = MAX_SPEED;                 // motor izquierdo al maximo adelante

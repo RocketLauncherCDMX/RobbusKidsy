@@ -48,6 +48,7 @@
 // suficiente para comenzar a girar las ruedas.
 //
 // El siguiente codigo accionara las llantas de Robbus dependiendo que flecha se toque.
+// Cada movimiento durara 1 segundo.
 // ------------------------------------------------------------------------------------------------------------
 
 #include<RobbusKidsy.h>
@@ -57,7 +58,6 @@ RobbusKidsy Kidsy;    // Llama a Robbus Kidsy
 int speed = 100;      // velocidad para las distintas funciones de movimiento
 
 void setup() {
-  Serial.begin(115200);   // Inicializa la comunicacion serial por USB a 115200 baudios
   Kidsy.begin();          // Inicializa el hardware del Robbus Kidsy
 }
 

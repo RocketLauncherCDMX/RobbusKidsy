@@ -20,6 +20,7 @@
 //
 // Kisdy.Buzzer.playTone(100, 50);    // Robbus reproduce un sonido grave durante 50 milisegundos
 // Kidsy.Buzzer.playTone(1000);       // Robbus reproduce un sonido agudo de forma indefinida
+// Kidsy.Buzzer.noTone();             // Robbus detiene un sonido si esta en reproduccion
 // 
 // El odio humano puede escuchar sonidos en el rango de los 20Hz a los 20000Hz
 // Los valores cercanos a 20 son sonidos graves, y los valores cercanos a 20000 son sonidos agudos, aunque

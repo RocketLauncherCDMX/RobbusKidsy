@@ -21,7 +21,7 @@
 //  255 -> Velocidad maxima hacia adelante en ese motor
 //    0 -> Motor detenido
 //
-// Y si quieres mover a tu robot puedes usar las funciones:
+// Y si quieres mover a tu Robot como unidad, puedes usar las funciones:
 //
 // Kidsy.Move.forward(speed);   -> Avanza hacia el frente con la velocidad de speed
 // Kidsy.Move.backward(speed);  -> Avanza hacia atras con la velocidad de speed
@@ -29,7 +29,7 @@
 // Kidsy.Move.turnRight(speed); -> Vuelta a la derecha con velocidad de speed
 // Kidsy.Move.stop();           -> Detiene ambas llantas
 //
-// Cuando usas las funcones de movimiento del robot (no de las llantas), el valor de speed solamente
+// Cuando usas las funciones de movimiento del Robot (no de las llantas), el valor de speed solamente
 // puede ser positivo, puesto que la direccion ya esta dada en la funcion
 // speed sera la velocidad que quieres darle al movimiento del robot y puede ser desde 0 a 255.
 // 255 -> Velocidad maxima del robot hacia un lado especifico
@@ -38,9 +38,10 @@
 // Considera que valores cercanos a 0 ya sean positivos o negativos, pueden no generar la fuerza
 // suficiente para comenzar a girar las ruedas.
 //
-// En conclusion, las funciones para mover las llantas, requieren velocidad con signo para saber la direccion, 
-// y las funciones para mover el robot no requiere velocidad con signo, puesto que la direccion ya esta dicha.
-// ------------------------------------------------------------------------------------------------------------
+// En conclusion:
+// Funciones para mover las llantas  -->   Velocidad negativa o positiva:   Kidsy.Move.MotorRight(-speed);
+// Funciones para mover el Robot     -->   Velocidad solamente positiva:    Kidsy.Move.turnRight(speed);
+// --------------------------------------------------------------------------------------------------------------------------------
 
 #include<RobbusKidsy.h>
 
@@ -65,7 +66,7 @@ void loop() {
   if(Kidsy.ButtonA.status == PRESSED) {
     Kidsy.Move.MotorLeft(speedLeft);        // Si el boton se presiono, acciona motor izquierdo
   }
-  if(Kidsy.ButtonA.status == RELEASED) {
+  else if(Kidsy.ButtonA.status == RELEASED) {
     Kidsy.Move.MotorLeft(0);                // Si el boton se solto, llanta izquierda detenida
   }
 
@@ -74,7 +75,7 @@ void loop() {
   if(Kidsy.ButtonB.status == PRESSED) {
     Kidsy.Move.forward(speedForward);       // Si el boton se presiono, robot hacia el frente
   }
-  if(Kidsy.ButtonB.status == RELEASED) {
+  else if(Kidsy.ButtonB.status == RELEASED) {
     Kidsy.Move.stop();                      // Si el boton se solto, robot detenido
   }
   
@@ -83,7 +84,7 @@ void loop() {
   if(Kidsy.ButtonC.status == PRESSED) { 
     Kidsy.Move.MotorRight(speedRight);       // Si el boton se presiono, acciona ambos motores
   }
-  if(Kidsy.ButtonC.status == RELEASED) { 
+  else if(Kidsy.ButtonC.status == RELEASED) { 
     Kidsy.Move.MotorRight(0);                // Si el boton se solto, llanta derecha detenida
   }
 } 

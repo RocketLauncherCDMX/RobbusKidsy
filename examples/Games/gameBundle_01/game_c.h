@@ -1,6 +1,6 @@
 #define CUSTOM_SETTINGS
 #define INCLUDE_GAMEPAD_MODULE
-#include "DabbleApp\DabbleESP32.h"
+#include <DabbleESP32.h>
 #include "KidsyDabbleJoystick.h"
 
 #define FLAT_SPEED            90        // velocidad de una llanta ponchada (magenta)
@@ -16,14 +16,14 @@
 #define STOP_TONE             200
 #define MAGENTA_TONE          6000
 #define STOP                  0         // Velocidad de alto
-#define NONE                  0         // Sin elejir
+#define NONE                  0         // Sin elegir
 #define LEFT                  1         // llanta izquierda
 #define RIGHT                 2         // llanta derecha
 
-bool flag_speedMod = false;         // bandera de modificador de velocidad al pasar por un color
-bool flag_boost = false;            // bandera de duracion de un boost
-bool flag_boostCollect = false;     // bandera para colectar un boost, 5 segundos en poder agarrar otro
-bool flag_flatTire = false;         // bandera de llanta ponchada
+bool flag_speedMod = false;           // bandera de modificador de velocidad al pasar por un color
+bool flag_boost = false;              // bandera de duracion de un boost
+bool flag_boostCollect = false;       // bandera para colectar un boost, 5 segundos en poder agarrar otro
+bool flag_flatTire = false;           // bandera de llanta ponchada
 bool flag_direction_buttons = false;  // bandera para saber si algun boton de direccion se pulso o no
 
 int leftTireStatus = STOP;            // control de llanta izquierda
@@ -38,7 +38,10 @@ double boost_timer = 0;               // contador de duracion del boost
 double speedMod_timer = 0;            // contador de la duracion de un modificador de velocidad
 
 void call_game_c() {
-  Dabble.begin("Robbus Kidsy");      // Enter baudrate of your bluetooth.Connect bluetooth on Bluetooth port present on evive.
+  Serial.println("Juguemos a Kidsy Kart!");
+  Serial.println("Para este juego es necesario que descargues la app Dabble desde tu tienda de applicaciones.");
+  Serial.println("Dentro, escoge Gamepad, y dale al ícono de conectar. Estarás listo para controlarme :)");
+  Dabble.begin("Robbus Kidsy");       // Enter baudrate of your bluetooth.Connect bluetooth on Bluetooth port present on evive.
   manageLeds(0,0,ON,0);
   
 

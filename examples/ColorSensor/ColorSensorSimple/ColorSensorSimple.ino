@@ -66,14 +66,40 @@ void setup() {
   // O VISITAR LA PAGINA www.robbus.mx/kidsy
 }
 
+unsigned int red;             // componente de rojo
+unsigned int green;           // componente de verde
+unsigned int blue;            // componente de azul
+unsigned int white;           // componente de blanco
+unsigned int color_sense;     // Valor del color leido (0 - 7)
+
+
 void loop() {
-  Kidsy.ColorSensor.read();                     // Lee el color
+  // Lee cada componente del color por separado.
+  red = Kidsy.ColorSensor.getRed();
+  green = Kidsy.ColorSensor.getGreen();
+  blue = Kidsy.ColorSensor.getBlue();
+  white = Kidsy.ColorSensor.getWhite();
+
+  // Imprime los componentes de cada color.
+  Serial.print("R:");
+  Serial.print(red);
+  Serial.print(" G:");
+  Serial.print(green);
+  Serial.print(" B:");
+  Serial.print(blue);
+  Serial.print(", W:");
+  Serial.print(white);
+  Serial.print("\t");
+
+  // Al usar la funcion read, primero lee los valores de los componentes rojo, verde, azul y blanco,
+  // por lo que no es necesario usar los componentes para obtener el color que esta sensando.
+  color_sense = Kidsy.ColorSensor.read();
   Serial.print("Color: ");
-  Serial.print(Kidsy.ColorSensor.name);         // Imprime el nombre del color
-  Serial.print(", Numero: ");
-  Serial.print(Kidsy.ColorSensor.value);        // Valor entre 0 y 7
-  Serial.print(", Hue360: ");
-  Serial.print(Kidsy.ColorSensor.hue360);       // Obtiene el valor numerico del circulo cromatico
-  Serial.print(", White: ");                    
-  Serial.println(Kidsy.ColorSensor.white);      // Imprime la cantidad de luz blanca
+  Serial.print(color_sense);
+  Serial.print(" - ");
+
+  // Para imprimir el nombre del color, se usa la propiedad name de ColorSensor 
+  Serial.println(Kidsy.ColorSensor.name);
+  
+  delay(10);
 }

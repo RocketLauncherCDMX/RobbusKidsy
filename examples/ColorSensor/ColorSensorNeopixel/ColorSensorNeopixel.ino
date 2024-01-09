@@ -39,7 +39,10 @@
 // 2. Cargar ese color con la funcion Neopixel.color(ColorSensor.value, brightness);
 //
 // En resumen, a una funcion del Neopixel, se le carga el valor de una funcion del sensor y el brillo (1 - 255).
-// --------------------------------------------------------------------------------------------------------------
+//
+// Notas: El color negro se muestra con el Neopixel apagado.
+//        Si los colores no se muestran adecuadamente, deberas calibrarlo, siguiendo el ejemplo ColorSensorCalibration
+// -----------------------------------------------------------------------------------------------------------------------------
 
 #include<RobbusKidsy.h>
 

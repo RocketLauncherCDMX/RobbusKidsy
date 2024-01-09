@@ -7,15 +7,16 @@
 rmt_data_t led_data[24];
 rmt_obj_t* rmt_send = NULL;
 
-TCS34725 tcs = TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_1X);
+VEML6040 RGBWSensor;
 
 Preferences FlashMemory;
 
 void RobbusKidsy :: begin() {
-
-  pinMode(BUTTON_A, INPUT_PULLUP);
-  pinMode(BUTTON_B, INPUT_PULLUP);
-  pinMode(BUTTON_C, INPUT_PULLUP);
+  // ---------------------------------------------------------------
+  // IOs
+  pinMode(BUTTON_A, INPUT);
+  pinMode(BUTTON_B, INPUT);
+  pinMode(BUTTON_C, INPUT);
 
   pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
@@ -29,6 +30,9 @@ void RobbusKidsy :: begin() {
   pinMode(DCM_RIGHT_IN2, OUTPUT);
 
   pinMode(BUZZER, OUTPUT);
+  // ----------------------------------------------------------------
+  // MOTORS
+  pinMode(DCM_SLEEP, OUTPUT);
 
   ledcSetup(PWM_CHANNEL_LEFT_IN1, PWM_MOTOR_FREQ, PWM_RESOUTION);
   ledcAttachPin(DCM_LEFT_IN1, PWM_CHANNEL_LEFT_IN1);
@@ -40,19 +44,24 @@ void RobbusKidsy :: begin() {
   ledcSetup(PWM_CHANNEL_RIGHT_IN2, PWM_MOTOR_FREQ, PWM_RESOUTION);
   ledcAttachPin(DCM_RIGHT_IN2, PWM_CHANNEL_RIGHT_IN2);
 
-  ledcSetup(PWM_CHANNEL_BUZZER, PWM_MOTOR_FREQ, PWM_RESOUTION);
+  ledcSetup(PWM_CHANNEL_BUZZER, 0, PWM_RESOUTION);
   ledcAttachPin(BUZZER, PWM_CHANNEL_BUZZER);
   ledcWrite(BUZZER, 128);
 
+  Move.enableMotors();
+  // ----------------------------------------------------------------
+  // BUTTONS
   ButtonA.pin = BUTTON_A;
   ButtonB.pin = BUTTON_B;
   ButtonC.pin = BUTTON_C;
-
+  // ----------------------------------------------------------------
+  // LEDS
   Led1.pin = LED1;
   Led2.pin = LED2;
   Led3.pin = LED3;
   Led4.pin = LED4;
-
+  // ----------------------------------------------------------------
+  // ARROW INITIALIZATION
   ArrowForward.pin = AN_UP;
   ArrowBackward.pin = AN_DOWN;
   ArrowLeft.pin = AN_LEFT;
@@ -64,9 +73,8 @@ void RobbusKidsy :: begin() {
     ArrowLeft.analogRead();
     ArrowRight.analogRead();
   }
-
-  // Flash memory reading
   // -----------------------------------------------------------------------
+  // FLASH MEMORY READING
   FlashMemory.begin("kidsy_memory", false);
   ArrowForward.touchedCalibrate = FlashMemory.getUInt("t_forward", 0);
   ArrowBackward.touchedCalibrate = FlashMemory.getUInt("t_backward", 0);
@@ -89,14 +97,20 @@ void RobbusKidsy :: begin() {
   Move.top_leftSpeed = FlashMemory.getUInt("left_maxSpeed", 0);
   Move.top_rightSpeed = FlashMemory.getUInt("right_maxSpeed", 0);
   FlashMemory.end();
-  // ------------------------------------------------------------------------
-
+  // ---------------------------------------------------------------------------------------------------------------------------------------
+  // ARROW CALIBRATION
   ArrowForward.thresshold   =  ((ArrowForward.untouchedCalibrate - ArrowForward.touchedCalibrate) / 2) + ArrowForward.touchedCalibrate;
   ArrowBackward.thresshold  =  ((ArrowBackward.untouchedCalibrate - ArrowBackward.touchedCalibrate) / 2) + ArrowBackward.touchedCalibrate;
   ArrowLeft.thresshold      =  ((ArrowLeft.untouchedCalibrate - ArrowLeft.touchedCalibrate) / 2) + ArrowLeft.touchedCalibrate;
   ArrowRight.thresshold     =  ((ArrowRight.untouchedCalibrate - ArrowRight.touchedCalibrate) / 2) + ArrowRight.touchedCalibrate;
+  // ---------------------------------------------------------------------------------------------------------------------------------------
+  // COLOR SENSOR INITIALIZATION
 
-  tcs.begin();
+  Wire.begin(); 
+  if(!RGBWSensor.begin()) {
+    Serial.println("ERROR: couldn't detect the sensor");
+  }
+  RGBWSensor.setConfiguration(VEML6040_IT_40MS + VEML6040_TRIG_ENABLE + VEML6040_AF_AUTO + VEML6040_SD_ENABLE);
 
   for (int i=0; i<256; i++) {
     float x = i;
@@ -106,12 +120,16 @@ void RobbusKidsy :: begin() {
     ColorSensor.gammatable[i] = x;
   }
 
+
+  // NEOPIXEL INITIALIZATION
   rmt_send = rmtInit(19, true, RMT_MEM_64);
   rmtSetTick(rmt_send, 100);
 
   Neopixel.off();
   delay(1);
 
+  // ---------------------------------------------------------------------------
+  // CALIBRATION
   calibrateSensor();
   calibrateArrows();
   calibrateMotors();
@@ -260,6 +278,7 @@ void RobbusKidsy :: calibrateArrows() {
     Serial.println("Lectura: " + String(ArrowForward.analogRead()));
     Neopixel.heartBeat(MAGENTA, 50);
     Serial.println("Mientras presionas la flecha Backward, presiona el boton B");
+    Led1.off();
     Led2.on();
     do ArrowBackward.analogRead();
     while(ButtonB.read() != PRESSED);
@@ -267,6 +286,7 @@ void RobbusKidsy :: calibrateArrows() {
     Serial.println("Lectura: " + String(ArrowBackward.analogRead()));
     Neopixel.heartBeat(YELLOW, 50);
     Serial.println("Mientras presionas la flecha Left, presiona el boton B");
+    Led2.off();
     Led3.on();
     do ArrowLeft.analogRead();
     while(ButtonB.read() != PRESSED);
@@ -274,6 +294,7 @@ void RobbusKidsy :: calibrateArrows() {
     Serial.println("Lectura: " + String(ArrowLeft.analogRead()));
     Neopixel.heartBeat(CYAN, 50);
     Serial.println("Mientras presionas la flecha Right, presiona el boton B");
+    Led3.off();
     Led4.on();
     do ArrowRight.analogRead();
     while(ButtonB.read() != PRESSED);
@@ -520,6 +541,14 @@ void RobbusKidsy :: Led :: blink(uint8_t times, uint16_t time) {
   }
 }
 
+void RobbusKidsy :: movement :: enableMotors() {
+  digitalWrite(DCM_SLEEP, HIGH);
+}
+
+void RobbusKidsy :: movement :: disableMotors() {
+  digitalWrite(DCM_SLEEP, LOW);
+}
+
 void RobbusKidsy :: movement :: MotorLeft(int16_t vel) {
   if(vel > 255) vel = 255;
   else if(vel < -255) vel = -255;
@@ -557,6 +586,7 @@ void RobbusKidsy :: movement :: MotorRight(int16_t vel) {
     ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
     ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - adjusted_rightSpeed);
   }
+  else stop();
 }
 
 void RobbusKidsy :: movement :: forward(uint16_t vel) {
@@ -800,6 +830,8 @@ void RobbusKidsy :: Neopixel :: heartBeat(uint8_t colorName) {
 }
 
 void RobbusKidsy :: Neopixel :: heartBeat(uint8_t colorName, uint8_t brightness) {
+  if(brightness >= 255) brightness = 254;
+  else if(brightness < 10) brightness = 10;
   for(uint8_t j=0; j<2; j++) {
     for(uint8_t i=0; i<=brightness; i++) {
       switch(colorName) {
@@ -833,21 +865,32 @@ void RobbusKidsy :: Neopixel :: off() {
   color(0,0,0);
 }
 
-uint8_t RobbusKidsy :: ColorSensor :: readProm() {
-  for(uint8_t i=0; i<3; i++) {
-    valueMatrix[i] = read();
-    //Serial.println("Val" + String(i) + ": " + String(valueMatrix[i]));
+void RobbusKidsy :: ColorSensor :: enable() {
+  Wire.begin(); 
+  if(!RGBWSensor.begin()) {
+    Serial.println("ERROR: couldn't detect the sensor");
   }
-  if(valueMatrix[0] == valueMatrix[1] && 
-     valueMatrix[2] == valueMatrix[1] )
-  return(valueMatrix[0]);
-  else return(-1);
+  RGBWSensor.setConfiguration(VEML6040_IT_40MS + VEML6040_TRIG_ENABLE + VEML6040_AF_AUTO + VEML6040_SD_ENABLE);
+  pinMode(LEDW, OUTPUT);
+  digitalWrite(LEDW, HIGH);
 }
 
-int8_t RobbusKidsy :: ColorSensor :: read() {
-  tcs.getRawData(&red, &green, &blue, &white);
-  
-  // Hacer rgb medición relativa
+void RobbusKidsy :: ColorSensor :: disable() {
+  pinMode(LEDW, OUTPUT);
+  digitalWrite(LEDW, LOW);
+}
+
+uint16_t RobbusKidsy :: ColorSensor :: getRed()   { return(RGBWSensor.getRed());   } 
+uint16_t RobbusKidsy :: ColorSensor :: getGreen() { return(RGBWSensor.getGreen()); }
+uint16_t RobbusKidsy :: ColorSensor :: getBlue()  { return(RGBWSensor.getBlue());  }
+uint16_t RobbusKidsy :: ColorSensor :: getWhite() { return(RGBWSensor.getWhite()); }
+
+uint8_t RobbusKidsy :: ColorSensor :: read() {
+  red = RGBWSensor.getRed();
+  green = RGBWSensor.getGreen();
+  blue = RGBWSensor.getBlue();
+  white = RGBWSensor.getWhite();
+
   sum = white;
   r = red; r /= sum;
   g = green; g /= sum;
@@ -856,8 +899,7 @@ int8_t RobbusKidsy :: ColorSensor :: read() {
   // Escalar rgb a bytes
   r *= 256; g *= 256; b *= 256;
 
-  // Convertir a hue, saturation, value
-  ColorConverter::RgbToHsv(static_cast<uint8_t>(r), static_cast<uint8_t>(g), static_cast<uint8_t>(b), hue, saturation, sat_value);
+  ColorConverter :: RgbToHsv(static_cast<uint8_t>(r), static_cast<uint8_t>(g), static_cast<uint8_t>(b), hue, saturation, sat_value);
   hue360 = hue * 360;
 
   if (hue360 >= (red_hue - offset_hue) && hue360 < (red_hue + offset_hue) && (white > black_umbral && white < white_umbral))
@@ -900,16 +942,6 @@ int8_t RobbusKidsy :: ColorSensor :: read() {
   }
   else value = -1;
   return(value);
-}
-
-void RobbusKidsy :: ColorSensor :: enable() {
-    tcs.enable();
-    digitalWrite(LEDW, HIGH);
-}
-
-void RobbusKidsy :: ColorSensor :: disable() {
-    tcs.disable();
-    digitalWrite(LEDW, LOW);
 }
 
 String RobbusKidsy :: ColorSensor :: getName(uint8_t name) {

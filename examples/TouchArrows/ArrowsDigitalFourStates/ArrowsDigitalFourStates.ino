@@ -42,6 +42,8 @@
 
 RobbusKidsy Kidsy;        // Llama a tu Robbus Kidsy
 
+long timestamp;   // guarda el valor de la funcion millis() que cuenta el tiempo de ejecucion del programa
+int t = 50;    // guarda el valor en milisegundos de la pausa entre incrementos al mantener la flecha presionada
 int speed = 0;            // guarda la velocidad de los motores
 
 void setup() {
@@ -55,7 +57,7 @@ bool flag_repeat_forward = false;       // activa la repeticion de la accion al 
 bool flag_firstHold_backward = false;   // primera vez que se mantiene presionada la flecha atras
 bool flag_repeat_backward = false;      // activa la repeticion de la accion al presionar flecha atras
 
-long timestamp;   // guarda el valor de la funcion millis() que cuenta el tiempo de ejecucion del programa
+
 
 void loop() {
   // Lee los estados de las flechas, estos pueden ser 4:
@@ -90,7 +92,7 @@ void loop() {
 
   if(flag_repeat_forward == true) {   // si la bandera de repeticion esta activa
     speed += 5;                       // hace incrementos rapidos de 5
-    delay(25);
+    delay(t);
   }
   // --------------------------------------------------------------------------------------------------------------------
 
@@ -118,7 +120,7 @@ void loop() {
 
   if(flag_repeat_backward == true) {   // si la bandera de repeticion esta activa
     speed -= 5;                        // hace incrementos rapidos de -5
-    delay(25);
+    delay(t);
   }
   // --------------------------------------------------------------------------------------------------------------------
 

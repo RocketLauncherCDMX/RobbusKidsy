@@ -111,28 +111,28 @@ void actions(int action) {
     case FORWARD:                         // accion: ADELANTE
       Serial.println("  ADELANTE");
       Kidsy.Buzzer.playTone(1000, 50);    // Tono representativo: 1000Hz
-      Kidsy.Neopixel.color(WHITE);        // Color representativo: BLANCO
+      Kidsy.Neopixel.color(WHITE, 50);        // Color representativo: BLANCO
       delay(50);
       Kidsy.Neopixel.off();               // apaga Neopixel
       break;
     case BACKWARD:
       Serial.println("  ATRAS");
       Kidsy.Buzzer.playTone(1100, 50);    // Tono representativo: 1100Hz
-      Kidsy.Neopixel.color(MAGENTA);      // Color representativo: MAGENTA
+      Kidsy.Neopixel.color(MAGENTA, 50);      // Color representativo: MAGENTA
       delay(50);
       Kidsy.Neopixel.off();               // apaga Neopixel
       break;
     case LEFT:
       Serial.println("  IZQUIERDA");
       Kidsy.Buzzer.playTone(1200, 50);    // Tono representativo: 1200Hz
-      Kidsy.Neopixel.color(CYAN);         // Color representativo: CYAN
+      Kidsy.Neopixel.color(CYAN, 50);         // Color representativo: CYAN
       delay(50);
       Kidsy.Neopixel.off();               // apaga Neopixel
       break;
     case RIGHT:
       Serial.println("  DERECHA");
       Kidsy.Buzzer.playTone(1300, 50);    // Tono representativo: 1300Hz
-      Kidsy.Neopixel.color(YELLOW);       // Color representativo: AMARILLO
+      Kidsy.Neopixel.color(YELLOW, 50);       // Color representativo: AMARILLO
       delay(50);
       Kidsy.Neopixel.off();               // apaga Neopixel
       break;
@@ -141,15 +141,15 @@ void actions(int action) {
       Kidsy.Buzzer.playTone(1000, 250);   // tonos sucesivos con colores de Neopixel 
       delay(500);
       Serial.print(" 2 ...");
-      Kidsy.Neopixel.color(RED);
+      Kidsy.Neopixel.color(RED, 50);
       Kidsy.Buzzer.playTone(1000, 250);
       delay(500);
       Serial.print(" 1 ...");
-      Kidsy.Neopixel.color(YELLOW);
+      Kidsy.Neopixel.color(YELLOW, 50);
       Kidsy.Buzzer.playTone(1000, 250);
       delay(500);
       Serial.println(" ¡Comienza!");
-      Kidsy.Neopixel.color(GREEN);
+      Kidsy.Neopixel.color(GREEN, 50);
       Kidsy.Buzzer.playTone(2000, 250);
       delay(1000);
       Kidsy.Neopixel.color(OFF);
@@ -158,13 +158,13 @@ void actions(int action) {
       Kidsy.Buzzer.playTone(1000, 50);
       break;
     case INTERACT_NEOP:                   // indica una interaccion de usuario con neopixel
-      Kidsy.Neopixel.color(GREEN);
+      Kidsy.Neopixel.color(GREEN, 50);
       delay(25);
       Kidsy.Neopixel.off();
       break;
     case INTERACT_BOTH:                   // indica una interaccion de usuario con sonido y neopixel
       Kidsy.Buzzer.playTone(1000);
-      Kidsy.Neopixel.color(GREEN);
+      Kidsy.Neopixel.color(GREEN, 50);
       delay(25);
       Kidsy.Buzzer.noTone();
       Kidsy.Neopixel.off();
@@ -174,11 +174,11 @@ void actions(int action) {
       delay(100);
       Kidsy.Buzzer.playTone(2000, 25);
       delay(100);
-      Kidsy.Neopixel.heartBeat(GREEN);    // color de Neopixel: VERDE
+      Kidsy.Neopixel.heartBeat(GREEN, 50);    // color de Neopixel: VERDE
       break;
     case INCORRECT:                       // indica que lo que se hizo fue incorrecto
       Kidsy.Buzzer.playTone(200);         // tono de accion incorrecta
-      Kidsy.Neopixel.heartBeat(RED);      // color de neopixel: ROJO
+      Kidsy.Neopixel.heartBeat(RED, 50);      // color de neopixel: ROJO
       Kidsy.Buzzer.noTone();
       break;
     case VICTORY:                         // indica que se gano el juego en cuestion
@@ -191,7 +191,7 @@ void actions(int action) {
       Kidsy.Buzzer.playTone(1200, 500);
       delay(500);
   
-      Kidsy.Neopixel.color(GREEN);        // neopixel se mantiene en VERDE
+      Kidsy.Neopixel.color(GREEN, 50);        // neopixel se mantiene en VERDE
       
       Kidsy.Move.turnLeft(150);           // Kidsy realiza movimientos de victoria
       delay(400);
@@ -228,7 +228,7 @@ void actions(int action) {
 void makeMove(int moveList, int speed, int duration) {
   switch(moveList) {
     case FORWARD:
-      Kidsy.Neopixel.color(WHITE);
+      Kidsy.Neopixel.color(WHITE, 50);
       actions(FORWARD);
       Kidsy.Move.forward(speed);
       delay(duration);
@@ -236,7 +236,7 @@ void makeMove(int moveList, int speed, int duration) {
       Kidsy.Move.stop();
       break;
     case BACKWARD:
-      Kidsy.Neopixel.color(MAGENTA);
+      Kidsy.Neopixel.color(MAGENTA, 50);
       actions(BACKWARD);
       Kidsy.Move.backward(speed);
       delay(duration);
@@ -244,7 +244,7 @@ void makeMove(int moveList, int speed, int duration) {
       Kidsy.Move.stop();
       break;
     case LEFT:
-      Kidsy.Neopixel.color(CYAN);
+      Kidsy.Neopixel.color(CYAN, 50);
       actions(LEFT);
       Kidsy.Move.turnLeft(speed);
       delay(duration);
@@ -252,7 +252,7 @@ void makeMove(int moveList, int speed, int duration) {
       Kidsy.Move.stop();
       break;
     case RIGHT:
-      Kidsy.Neopixel.color(YELLOW);
+      Kidsy.Neopixel.color(YELLOW, 50);
       actions(RIGHT);
       Kidsy.Move.turnRight(speed);
       delay(duration);

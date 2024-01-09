@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include "TCS34725.h"
+#include "veml6040.h"
 #include "pitches.h"
 #include "Preferences.h"
 
@@ -39,6 +39,7 @@ public:
   #define NONE  0
 
   #define LEDW      16
+  #define BUZZER    0
   #define NEOPIXEL  1
   #define L1  2
   #define L2  3
@@ -127,9 +128,10 @@ public:
   class movement {
   private:
     #define DCM_LEFT_IN1            2
-    #define DCM_LEFT_IN2            18
-    #define DCM_RIGHT_IN1           4
-    #define DCM_RIGHT_IN2           17
+    #define DCM_LEFT_IN2            4
+    #define DCM_RIGHT_IN1           17
+    #define DCM_RIGHT_IN2           18
+    #define DCM_SLEEP               33
     #define PWM_CHANNEL_LEFT_IN1    0
     #define PWM_CHANNEL_LEFT_IN2    1
     #define PWM_CHANNEL_RIGHT_IN1   2
@@ -145,9 +147,11 @@ public:
 
   public:
     #define STOP   0
-    uint8_t top_leftSpeed = 255;
-    uint8_t top_rightSpeed = 255;
+    uint8_t top_leftSpeed;
+    uint8_t top_rightSpeed;
 
+    void disableMotors();
+    void enableMotors();
     void MotorLeft(int16_t);
     void MotorRight(int16_t);
     void forward(uint16_t);
@@ -200,11 +204,12 @@ public:
 
   class ColorSensor {
   private:
+    
+    
+  public:
     double hue, saturation, sat_value;
     uint32_t sum;
     float r, g, b;
-    
-  public:
     uint16_t hue360;
     bool LedW = LOW, :1;
     uint8_t value;
@@ -223,18 +228,21 @@ public:
     uint16_t cyan_hue;
     uint16_t magenta_hue;
 
-    uint8_t offset_hue = 15;
+    uint8_t offset_hue = 10;
 
-    int8_t read();
-    uint8_t readProm();
     void enable();
     void disable();
+    uint16_t getRed();
+    uint16_t getGreen();
+    uint16_t getBlue();
+    uint16_t getWhite();
+    uint8_t read();
     String getName(uint8_t);
-    
-  } ColorSensor;
+  } ColorSensor;  
 };
 // End of Robbus classes
 // ---------------------------------------------------------------------------------------------------------------
+
 
 // ---------------------------------------------------------------------------------------------------------------
 // Independent helping Classes

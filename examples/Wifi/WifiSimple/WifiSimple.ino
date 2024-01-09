@@ -25,7 +25,7 @@
 
 // Configura el acceso a tu red Wifi cambiandolo en los siguientes Strings
 const char* ssid     = "ssid";
-const char* password = "password";
+const char* password = "pass";
 
 WiFiServer server(80);    // Crea una instancia de servidor Web
 
@@ -35,8 +35,8 @@ void setup() {
   Serial.begin(115200);   // Comunicacion serial
   Kidsy.begin();          // Inicializa el hardware
 
-  if(ssid == "ssid") {
-    Serial.println("Por favor pon el nombre de tu red en ssid, y la contraseña en password");
+  if(ssid == "ssid" || password == "pass") {
+    Serial.println("Introduce esta direccion en el navegador de cualquier dispositivo conectado a la misma red");
     while(1);
   }
 

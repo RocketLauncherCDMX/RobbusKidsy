@@ -14,7 +14,7 @@
 //
 // Tu Kidsy cuenta con 8 color predefinidos, los cuales pueden ser:
 //
-// BLACK
+// BLACK (Apagado)
 // RED
 // GREEN
 // BLUE
@@ -28,6 +28,8 @@
 // 
 // Esta funcion puede regular el brillo del Neopixel, tanto en color solido, como en los efectos, por ejemplo:
 // Kidsy.Neopixel.color(RED, 100);         // Mostrara el color rojo con un brillo de 100 (maximo 255)
+//
+// Tambien dispone de algunos interesantes efectos, como un latido:
 // Kidsy.Neopixel.heartBeat(GREEN, 50);   // Mostrara el efecto heartBeat con un brillo de 50 (maximo 255);
 // --------------------------------------------------------------------------------------------------------------
 
@@ -47,10 +49,10 @@ void loop() {
   Kidsy.Neopixel.color(BLUE, 50);   // Muestra el color Azul con brillo 50
   delay(1000);
 
-  Kidsy.Neopixel.heartBeat(CYAN, 50);    // Muestra el color Azul con brillo 50
-  delay(2000);
-  Kidsy.Neopixel.heartBeat(MAGENTA, 50);  // Muestra el color Azul con brillo 50
-  delay(2000);
-  Kidsy.Neopixel.heartBeat(YELLOW, 50);   // Muestra el color Azul con brillo 50
-  delay(2000);
+  Kidsy.Neopixel.heartBeat(CYAN, 50);    // Muestra latido en Cyan con brillo 50
+  delay(1000);
+  Kidsy.Neopixel.heartBeat(MAGENTA, 100);  // Muestra latido en Magenta con brillo 100
+  delay(1000);
+  Kidsy.Neopixel.heartBeat(YELLOW, 255);   // Muestra latido en Amarillo con brillo al maximo
+  delay(1000);
 }

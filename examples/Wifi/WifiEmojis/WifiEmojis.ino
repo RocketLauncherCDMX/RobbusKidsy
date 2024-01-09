@@ -31,8 +31,8 @@
 ///// CAMBIAR A TU RED
 
 // Configura el acceso a tu red Wifi cambiandolo en los siguientes Strings
-const char* ssid     = "ssid";
-const char* password = "password";
+const char* ssid     = "ssid";     // nombre de la red
+const char* password = "pass";        // contraseña
 
 WiFiServer server(80);    // Crea una instancia de servidor Web
 
@@ -42,8 +42,8 @@ void setup() {
   Serial.begin(115200);   // Comunicacion serial
   Kidsy.begin();          // Inicializa el hardware de Kidsy
 
-  if(ssid == "ssid") {
-    Serial.println("Por favor pon el nombre de tu red en ssid, y la contraseña en password");
+  if(ssid == "ssid" || password == "pass") {
+    Serial.println("Debes poner el nombre de tu red en ssid, y la contraseña en password");
     while(1);
   }
 
@@ -96,9 +96,9 @@ void loop() {
 
             //Emojis para mejor abstracción, se usa el código Unicode en decimal
             client.print("<h1><a href=\"/Front\"> &#11014 </a> <br>");
-            client.print("<h1><a href=\"/Left\"> &#11013 </a>  <a href=\"/Stop\"> &#9899 </a> <a href=\"/Right\"> &#10145 </a> <br>");
-            client.print("<h1><a href=\"/Back\"> &#11015 </a> <br> <br>");
-            client.print("<h1><a href=\"/Claxon\"> &#128266 </a> <br>");
+            client.print("<a href=\"/Left\"> &#11013 </a>  <a href=\"/Stop\"> &#9899 </a> <a href=\"/Right\"> &#10145 </a> <br>");
+            client.print("<a href=\"/Back\"> &#11015 </a> <br> <br>");
+            client.print("<a href=\"/Claxon\"> &#128266 </a> <br></h1>");
 
             client.print("</body>");
 

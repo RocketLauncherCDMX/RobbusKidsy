@@ -15,7 +15,7 @@
 // de arriba hacia abajo, pero el flujo se puede cambiar como si de abrir y cerrar llaves se tratara, por 
 // medio de un switch. 
 // 
-// Con este ejemplo aprenderas a utilizar una sentencia switch para hacer que robus decida una direccion
+// Con este ejemplo aprenderas a utilizar una sentencia switch para hacer que Robbus decida una direccion
 // posible entre cuatro opciones distintas. 
 // Robbus puede ver 7 colores diferentes:
 //
@@ -78,18 +78,30 @@ void loop() {
     
     case RED:                    // "case" sirve para nombrar un posible caso, termina con :
       Kidsy.Move.forward(100);   // Robbus se mueve al frente
+      delay(500);                // pequeña pausa
+      Kidsy.Move.stop();         // Robbus se detiene
+      delay(500);                // pequeña pausa
       break;                     // si este fue el caso, "break;" rompe el ciclo, y evita que entre a otro caso.
     
     case GREEN:                  // Evalua si el color es verde ...
-      Kidsy.Move.backward(100);  // ... Robbus se mueve al frente
+      Kidsy.Move.backward(100); // ... Robbus se mueve al frente
+      delay(500);
+      Kidsy.Move.stop();
+      delay(500);
       break;                    
     
-    case BLUE:                   // Evalua si el color es azul ...
-      Kidsy.Move.turnLeft(100);  // ... Robbus se mueve a la izquierda
+    case YELLOW:                 // Evalua si el color es azul ...
+      Kidsy.Move.turnLeft(100); // ... Robbus se mueve a la izquierda
+      delay(500);
+      Kidsy.Move.stop();
+      delay(500);
       break;
       
     case MAGENTA:                // el ultimo caso es MAGENTA, si llego aqui, significa que no era ninguno de los 3 anteriores...
-      Kidsy.Move.turnRight(100); // ... Robbus se mueve a la derecha
+      Kidsy.Move.turnRight(100);// ... Robbus se mueve a la derecha
+      delay(500);
+      Kidsy.Move.stop();
+      delay(500);
       break;
 
     default:                     // Si no fue ninguna opcion, siempre podemos dejar un caso auxiliar llamado default

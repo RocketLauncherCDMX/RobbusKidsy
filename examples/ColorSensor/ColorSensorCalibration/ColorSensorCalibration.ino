@@ -11,7 +11,7 @@
 // - ColorSensor
 // - Neopixel
 //
-// Si aun no hay explorado estos dos elementos por separado, te invitamos a probar los ejemplos:
+// Si aun no has explorado estos dos elementos por separado, te invitamos a probar los ejemplos:
 // ColorSensorSimple y NeopixelFunctions.
 //
 // Este sensor es capaz de leer colores basicos y su cantidad de color blanco, por lo que puede diferenciar
@@ -48,10 +48,10 @@
 //
 // 1. Si has cambiado el programa de Robbus Kidsy, asegurate que las funciones Kidsy.begin() y 
 //    Kidsy.ColorSensor.enable() esten en tu programa.
-// 2. Prende tu Kidsy o conectalo a tu computadora por el puerto micro USB.
+// 2. Prende tu Kidsy, si no enciende, puede deberse a falta de bateria, recuerda recargarlo.
 // 3. Configura el puerto Serial a 115200 Baudios. Para la calibracion, no es necesario que este conectado por
 //    USB, pero te sera mas sencillo seguir las instrucciones por Serial.
-// 4. Manten presionado el boton A mientras presionas el boton RESET.
+// 4. Manten presionado el boton A mientras presionas y sueltas el boton RESET.
 // 5. Sabras que has entrado al modo de calibracion del sensor de color por que parpadeara el Neopixel en rojo.
 // 6. Si estas conectado por USB, sigue los pasos que se te indican, de lo contrario continua leyendo.
 // 7. El Neopixel se quedara encendido en un color, deberas colocar a Kidsy encima del color correspondiente
@@ -62,7 +62,9 @@
 // 
 // Cuando completes la calibracion, los valores se quedaran guardados en la memoria Flash del microcontrolador,
 // por lo que aun despues de apagarlo y volverlo a encender, Kidsy recordara esos mismos valores.
-
+//
+// Nota: El color negro se mostrara en el Neopixel como apagado.
+//
 // --------------------------------------------------------------------------------------------------------------
 
 #include<RobbusKidsy.h>

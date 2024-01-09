@@ -45,6 +45,6 @@ void setup() {
 }
 
 void loop() {
-  /* Para que no aturdirte, el sonido solo se reproduce una vez en el setup, si quieres volver
+  /* Para no aturdirte, el sonido solo se reproduce una vez en el setup, si quieres volver
      a escucharlo, basta que presiones el boton RESET.*/
 }

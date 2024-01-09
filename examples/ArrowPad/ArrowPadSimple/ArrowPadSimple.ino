@@ -28,7 +28,14 @@
 //
 // La cual devuelve el valor de la flecha presionada.
 
-// Para mover las llantas de tu robot, puedes hacerlo con las funciones:
+// Para mover las llantas de tu robot, puedes hacerlo con las funcion:
+//
+// if(Kidsy.getArrowPad()) == FORWARD) {}   // Evalua si de las cuatro flechas, se presiono adelante
+// if(Kidsy.getArrowPad()) == BACKWARD) {}  // Evalua si de las cuatro flechas, se presiono atras
+// if(Kidsy.getArrowPad()) == LEFT) {}      // Evalua si de las cuatro flechas, se presiono izquierda
+// if(Kidsy.getArrowPad()) == RIGHT) {}     // Evalua si de las cuatro flechas, se presiono derecha
+//
+// Tambien puedes usar una sentencia switch para evaluar la flecha presionada.
 //
 // El siguiente codigo imprime que flecha se presiona del pad.
 // ------------------------------------------------------------------------------------------------------------
