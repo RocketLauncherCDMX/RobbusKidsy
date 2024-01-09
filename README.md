@@ -2,7 +2,7 @@
 
 ![Render_008](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/cb009d29-da85-4506-91f8-fa9c1f5d87fb)
 
-Gracias por tu interés en Robbus Kidsy, un robot móvil de dos llantas, basado en el microcontrolador ESP32.
+Gracias por tu interés en Robbus Kidsy, un robot móvil de dos ruedas, compatible con Arduino, basado en el microcontrolador ESP32.
 
 ## Primeros pasos
 
