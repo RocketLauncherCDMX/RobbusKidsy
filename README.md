@@ -1,5 +1,5 @@
-![Re![Robbus Kidsy V4 2](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a5f40739-1902-4d42-a847-90a9c8e02ce5)
-nder_008](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/cb009d29-da85-4506-91f8-fa9c1f5d87fb)
+![Robbus Kidsy V4 2](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/ae86730a-c011-4d75-8974-e4463f6b9454)
+![Render_008F](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a347889b-bcf6-466a-8be3-ea1f119e94c5)
 
 Gracias por tu interés en Robbus Kidsy, un robot móvil de dos ruedas, compatible con Arduino, basado en el microcontrolador ESP32.
 
