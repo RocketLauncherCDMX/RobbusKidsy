@@ -27,9 +27,14 @@ La facilidad de Arduino es que dispone de la gran mayoría de tarjetas listas pa
 
 ![Intalacion de biblioteca 03](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a30dbc35-4cc1-4295-95f1-8ff119423142)
 
-Puedes comenzar a divertirte con tu Robbus Kidsy desde que lo sacas de su empaque, ya que trae 3 funcionalidades muy divertidas, estas las encontrarás explicadas en la carpeta **Documents**
+Puedes comenzar a divertirte con tu Robbus Kidsy desde que lo sacas de su empaque, ya que trae 3 funcionalidades muy divertidas, estas las encontrarás explicadas en la esta página, dentro de la carpeta **Documents**
 
-![Mesa de trabajo 19](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/66bcfcb6-1d10-4887-96d2-d2b167757abb)
+```bash
+https://github.com/RocketLauncherCDMX/RobbusKidsy/tree/master/documents/Spanish
+```
+Si quieres programar por tu cuenta a Kidsy, puedes apoyarte de la gran variedad de ejemplos que la biblioteca tiene incluidos para Arduino, yendo a la pestaña **Archivo/Ejemplos**
+
+![Intalacion de biblioteca 06](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/9bad4976-1dda-4eb1-b8d6-46310e29f636)
 
 ## IMPORTANTE
 Si estás intentando programarlo pero al subir el programa marca un error, asegurate de que el interruptor de encendido esté en la posición ON y el LED verde encendido.
