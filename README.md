@@ -137,6 +137,6 @@ Para programar el gameBundle_01 también será necesario instalar la biblioteca 
 ¡Que te diviertas con tu Robbus Kidsy!
 
 <p align="right">
-  <img src="https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/574c03c0-2e4c-44d7-a36a-98085a2168a6" alt="Rocket Launcher Logo">
+  <img src="https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/574c03c0-2e4c-44d7-a36a-98085a2168a6" alt="Rocket Launcher Logo" width="200">
 </p>
 
