@@ -12,7 +12,18 @@ La biblioteca compatible para arduino, se encuentra en el library manager, busca
 
 ![Instalacion de biblioteca 02](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/b91858a9-d555-414a-b7b6-d24503788e34)
 
-La tarjeta que deberás seleccionar es la Adafruit ESP32 Feather. 
+## Instalación del core ESP32
+
+Como se ha comentado, el corazón de Kidsy es el ESP32, por lo que, además de la biblioteca, también necesitarás instalar este núcleo. Si ya has usado anteriormente alguna tarjeta compatible, seguramente ya lo tendrás instalado, de lo contrario, bastará con dar click en la pestaña **Herramientas**, **placa** y **Gestor de tarjetas**.
+
+![Intalacion de biblioteca 04](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/3cff5535-1b8b-4468-9b44-99068947c277)
+
+Aquí deberás buscar **ESP32** y seleccionar esp32 by Espressif Systems. Una vez instalado, ya podrás elegir la tarjeta.
+
+![Intalacion de biblioteca 05](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/53acc892-9f31-40b2-88e9-4cab5cc82a85)
+
+## Selección de tarjeta
+La facilidad de Arduino es que dispone de la gran mayoría de tarjetas listas para programarse. Sin embargo, por el momento, Robbus Kidsy no dispone de su propia tarjeta, pero no te preocupes, podrás elegir una tarjeta compatible. La tarjeta que deberás seleccionar es la Adafruit ESP32 Feather. 
 
 ![Intalacion de biblioteca 03](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a30dbc35-4cc1-4295-95f1-8ff119423142)
 
