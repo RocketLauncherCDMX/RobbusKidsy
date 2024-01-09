@@ -1,5 +1,4 @@
-![Robbus Kidsy V4 2](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/ae86730a-c011-4d75-8974-e4463f6b9454)
-![Render_008F](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a347889b-bcf6-466a-8be3-ea1f119e94c5)
+![Robbus Kidsy overview](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/de7d2ab2-48e1-472c-935b-4866fc14e093)
 
 Gracias por tu interés en Robbus Kidsy, un robot móvil de dos ruedas, basado en el microcontrolador ESP32, capaz de moverse por si mismo, completamente programable en Arduino. Los elementos que lo componen son:
 
