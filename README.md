@@ -127,7 +127,11 @@ En conclusión:
 
 ## Programa tu Robbus Kidsy
 
-Cuando tengas instalada la biblioteca para Arduino, en la sección Ejemplos, tendrás acceso a cada uno de los programas que hemos escrito para que aprendas cómo funcionan las partes de tu Kidsy. No tengas miedo de experimentar, y si en algún momento quieres volver al programa de fábrica, no te preocupes, el ejemplo dentro de la carpeta RobbusKidsy/Games/ llamado **gameBoundle_01** reestablecerá a tu Kidsy. Además de instalar la biblioteca **DabbleESP32.h** desde el library manager.
+Cuando tengas instalada la biblioteca para Arduino, en la sección Ejemplos, tendrás acceso a cada uno de los programas que hemos escrito para que aprendas cómo funcionan las partes de tu Kidsy. No tengas miedo de experimentar, y si en algún momento quieres volver al programa de fábrica, no te preocupes, el ejemplo dentro de la carpeta RobbusKidsy/Games/ llamado **gameBoundle_01** reestablecerá a tu Kidsy. 
+
+Para programar el gameBundle_01 también será necesario instalar la biblioteca **DabbleESP32.h** desde el library manager, la cual funciona para conectar por Bluetooth a la aplicacion Dabble.
+
+![Intalacion de biblioteca 07](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/c1764c1f-c265-438c-8347-d2e590c6619e)
 
 ¡Que te diviertas con tu Robbus Kidsy!
 
