@@ -3,17 +3,18 @@
 
 Gracias por tu interés en Robbus Kidsy, un robot móvil de dos ruedas, basado en el microcontrolador ESP32, capaz de moverse por si mismo, completamente programable en Arduino. Los elementos que lo componen son:
 
-![Sensor de color@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/99d9faa1-209f-4c10-a40d-83d471a76c90)
-![Flechas tactiles@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/be1ae076-dbed-4609-b762-8548602d7aeb)
-![Neopixel@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/d0f7a7ff-bf6e-4950-8156-3429bb45ab58)
-![Motores@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/30d72490-044c-4d5d-b702-fab0e49c9c34)
-![Llantas@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/45a96982-a1f5-465b-9197-5cef8824a726)
-![LEDs@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/aa67351d-cfef-49f0-941a-e3218ffb9b8f)
-![ESP32@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a05eb8f9-c089-4420-bb9d-b78d70919176)
-![Buzzer@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/d8376d9d-0c6a-4599-a315-a921389afd4e)
-![Botones@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/86d143ef-053e-4ccc-ab2a-d8aab7c88532)
-![Bateria@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/376a2917-b8e2-413a-820a-86ff16058676)
-![Rueda loca@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/8e6d6a59-83f5-4733-be04-667fb14b2921)
+![Sensor de color_0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/4b4032cc-51a1-40db-882d-82bcc8f1174e)
+![Flechas tactiles_0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/da4478b0-f116-4c15-a794-eccb7707dc69)
+![ESP32_0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/5caef927-94a0-4a9e-9fca-606c41b189a7)
+![Bateria_0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/df769a68-1073-47f3-b7a5-baef60a9348e)
+![Motores_0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/56ac1962-f15f-41b3-85f6-e515c387f9e5)
+![Neopixel_0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/e71b3e6a-17b0-4752-84be-9915664d166b)
+![LEDs_0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/82aa86ad-1f70-406f-a5ed-9b37258adc72)
+![Buzzer_0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/2488ac80-3b60-46f7-bb9c-c609608e0ecc)
+![Botones_0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/1d50cbb0-d6e5-4b37-b564-808d56c8c5a6)
+![USB_0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/c0bd5469-05f3-428b-9337-3425a2cbcdbf)
+![Llantas_0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/4ff27b69-b5b3-4f00-a38f-e6c9a768658c)
+![Rueda loca_0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/14f28604-e06e-491c-92e1-4539b268c4b1)
 
 ## Primeros pasos
 
