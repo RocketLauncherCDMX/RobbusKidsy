@@ -20,6 +20,9 @@ Gracias por tu interés en Robbus Kidsy, un robot móvil de dos ruedas, basado e
 
 La biblioteca compatible para arduino, se encuentra en el library manager, buscando **RobbusKidsy** la podrás descargar directamente dentro de Arduino. de lo contrario, puedes bajar e instalar por tu cuenta la biblioteca para Arduino, para ello, da click en CODE, luego en DOWNLOAD ZIP y copia el archivo ZIP a tu carpeta libraries en Documents/Arduino.
 
+**IMPORTANTE**
+Elige la version 2.0.0 de la biblioteca para la version 4.0 o superior de tu Robbus Kidsy. Puedes consultar la versión debajo del logotipo de Rocket Launcher.
+
 ![Instalacion de biblioteca 01](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/ec3a71b2-8fbb-4516-a508-2c1b0934a355)
 
 ![Instalacion de biblioteca 02](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/b91858a9-d555-414a-b7b6-d24503788e34)
