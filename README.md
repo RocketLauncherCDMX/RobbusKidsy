@@ -2,9 +2,19 @@
 
 ![Render_008](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/cb009d29-da85-4506-91f8-fa9c1f5d87fb)
 
+Gracias por tu interés en Robbus Kidsy, un robot móvil de dos llantas, basado en el microcontrolador ESP32.
+
+## Primeros pasos
+
 La biblioteca compatible para arduino, se encuentra en el library manager, buscando **RobbusKidsy** la podrás descargar directamente dentro de Arduino. de lo contrario, puedes bajar e instalar por tu cuenta la biblioteca para Arduino, para ello, da click en CODE, luego en DOWNLOAD ZIP y copia el archivo ZIP a tu carpeta libraries en Documents/Arduino.
 
+![Instalacion de biblioteca 01](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/ec3a71b2-8fbb-4516-a508-2c1b0934a355)
+
+![Instalacion de biblioteca 02](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/4d5dc081-8dd2-4bf3-8677-d15a8425ac00)
+
 La tarjeta que deberás seleccionar es la Adafruit ESP32 Feather. 
+
+![Intalacion de biblioteca 03](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a30dbc35-4cc1-4295-95f1-8ff119423142)
 
 Puedes comenzar a divertirte con tu Robbus Kidsy desde que lo sacas de su empaque, ya que trae 3 funcionalidades muy divertidas, estas las encontrarás explicadas en la carpeta **Documents**
 
