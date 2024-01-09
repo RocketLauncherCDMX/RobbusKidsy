@@ -1,7 +1,19 @@
 ![Robbus Kidsy V4 2](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/ae86730a-c011-4d75-8974-e4463f6b9454)
 ![Render_008F](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a347889b-bcf6-466a-8be3-ea1f119e94c5)
 
-Gracias por tu interés en Robbus Kidsy, un robot móvil de dos ruedas, compatible con Arduino, basado en el microcontrolador ESP32.
+Gracias por tu interés en Robbus Kidsy, un robot móvil de dos ruedas, basado en el microcontrolador ESP32, capaz de moverse por si mismo, completamente programable en Arduino. Los elementos que lo componen son:
+
+![Sensor de color@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/99d9faa1-209f-4c10-a40d-83d471a76c90)
+![Flechas tactiles@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/be1ae076-dbed-4609-b762-8548602d7aeb)
+![Neopixel@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/d0f7a7ff-bf6e-4950-8156-3429bb45ab58)
+![Motores@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/30d72490-044c-4d5d-b702-fab0e49c9c34)
+![Llantas@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/45a96982-a1f5-465b-9197-5cef8824a726)
+![LEDs@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/aa67351d-cfef-49f0-941a-e3218ffb9b8f)
+![ESP32@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a05eb8f9-c089-4420-bb9d-b78d70919176)
+![Buzzer@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/d8376d9d-0c6a-4599-a315-a921389afd4e)
+![Botones@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/86d143ef-053e-4ccc-ab2a-d8aab7c88532)
+![Bateria@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/376a2917-b8e2-413a-820a-86ff16058676)
+![Rueda loca@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/8e6d6a59-83f5-4733-be04-667fb14b2921)
 
 ## Primeros pasos
 
@@ -37,22 +49,6 @@ Si quieres programar por tu cuenta a Kidsy, puedes apoyarte de la gran variedad 
 
 ## IMPORTANTE
 Si estás intentando programarlo pero al subir el programa marca un error, asegurate de que el interruptor de encendido esté en la posición ON y el LED verde encendido.
-
-## Descripción
-
-Robbus Kidsy es un pequeño robot móvil capaz de moverse por si mismo. Es completamente programable en Arduino. Los elementos que lo componen son:
-
-![Sensor de color@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/99d9faa1-209f-4c10-a40d-83d471a76c90)
-![Flechas tactiles@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/be1ae076-dbed-4609-b762-8548602d7aeb)
-![Neopixel@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/d0f7a7ff-bf6e-4950-8156-3429bb45ab58)
-![Motores@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/30d72490-044c-4d5d-b702-fab0e49c9c34)
-![Llantas@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/45a96982-a1f5-465b-9197-5cef8824a726)
-![LEDs@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/aa67351d-cfef-49f0-941a-e3218ffb9b8f)
-![ESP32@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a05eb8f9-c089-4420-bb9d-b78d70919176)
-![Buzzer@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/d8376d9d-0c6a-4599-a315-a921389afd4e)
-![Botones@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/86d143ef-053e-4ccc-ab2a-d8aab7c88532)
-![Bateria@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/376a2917-b8e2-413a-820a-86ff16058676)
-![Rueda loca@0 5x](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/8e6d6a59-83f5-4733-be04-667fb14b2921)
 
 Si alguna función de tu Kidsy no funciona adecuadamente (sensor de color, flechas táctiles o motores), puedes hacer una calibración de cada uno siguiendo los siguientes pasos:
 
