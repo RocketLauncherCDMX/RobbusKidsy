@@ -18,6 +18,8 @@ La tarjeta que deberás seleccionar es la Adafruit ESP32 Feather.
 
 Puedes comenzar a divertirte con tu Robbus Kidsy desde que lo sacas de su empaque, ya que trae 3 funcionalidades muy divertidas, estas las encontrarás explicadas en la carpeta **Documents**
 
+![Mesa de trabajo 19](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/66bcfcb6-1d10-4887-96d2-d2b167757abb)
+
 ## IMPORTANTE
 Si estás intentando programarlo pero al subir el programa marca un error, asegurate de que el interruptor de encendido esté en la posición ON y el LED verde encendido.
 
