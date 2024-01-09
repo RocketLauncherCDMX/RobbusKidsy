@@ -27,7 +27,7 @@ La facilidad de Arduino es que dispone de la gran mayoría de tarjetas listas pa
 
 ![Intalacion de biblioteca 03](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a30dbc35-4cc1-4295-95f1-8ff119423142)
 
-Puedes comenzar a divertirte con tu Robbus Kidsy desde que lo sacas de su empaque, ya que trae 3 funcionalidades muy divertidas, estas las encontrarás explicadas en la esta página, dentro de la carpeta **Documents**
+Puedes comenzar a divertirte con tu Robbus Kidsy desde que lo sacas de su empaque, ya que trae 3 funcionalidades muy divertidas, estas las encontrarás explicadas en el siguiente link:
 
 ```bash
 https://github.com/RocketLauncherCDMX/RobbusKidsy/tree/master/documents/Spanish
