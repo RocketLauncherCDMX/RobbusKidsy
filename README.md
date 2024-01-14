@@ -4,6 +4,20 @@ Gracias por tu interés en Robbus Kidsy, un robot móvil de dos ruedas, basado e
 
 ![Robbus Kidsy - Parts-05](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/f7145416-2960-4107-999f-9512fbc5b0ab)
 
+De fábrica Robbus Kidsy viene programado con 3 divertidos juegos:
+
+```bash
+1. Kidsy Dice
+2. Guia a Kidsy
+3. Kidsy Kart
+```
+
+Cada uno de estos juegos se inicia al presionar los botones A, B y C. Puedes encontrar más información en el siguiente link:
+
+```bash
+https://github.com/RocketLauncherCDMX/RobbusKidsy/tree/master/documents/Spanish
+```
+
 ## Primeros pasos
 
 La biblioteca compatible para arduino, se encuentra en el library manager, buscando **RobbusKidsy** la podrás descargar directamente dentro de Arduino. de lo contrario, puedes bajar e instalar por tu cuenta la biblioteca para Arduino, para ello, da click en CODE, luego en DOWNLOAD ZIP y copia el archivo ZIP a tu carpeta libraries en Documents/Arduino.
