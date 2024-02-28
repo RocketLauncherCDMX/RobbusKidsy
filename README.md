@@ -79,7 +79,7 @@ En conclusión:
 
 Si eres más visual, el siguiente video te mostrará como hacerlo:
 
-[![Calibración del sensor de color de Robbus Kidsy](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/c23a67cf-da22-406d-af47-048f26562b0f)](https://www.youtube.com/watch?v=ZopndiGDuBM)
+[![Calibración del sensor de color de Robbus Kidsy](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/1a01a13a-b81d-4e30-94ef-f1a5d92a4e07)](https://www.youtube.com/watch?v=ZopndiGDuBM)
 
 ## Calibración de las flechas táctiles
 
