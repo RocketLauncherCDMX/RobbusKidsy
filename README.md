@@ -56,7 +56,7 @@ Si quieres programar por tu cuenta a Kidsy, puedes apoyarte de la gran variedad 
 ## IMPORTANTE
 Si estás intentando programarlo pero al subir el programa marca un error, asegurate de que el interruptor de encendido esté en la posición ON y el LED verde encendido.
 
-Si alguna función de tu Kidsy no funciona adecuadamente (sensor de color, flechas táctiles o motores), puedes hacer una calibración de cada uno siguiendo los siguientes pasos:
+Si alguno de los siguientes elementos no funciona adecuadamente, sensor de color, flechas táctiles o motores, puedes hacer una calibración de cada uno siguiendo los siguientes pasos:
 
 ## Calibración del sensor de color
 
