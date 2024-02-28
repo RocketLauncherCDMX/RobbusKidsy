@@ -76,9 +76,7 @@ En conclusión:
 5. Después del blanco, comprueba el sensado de los colores libremente.
 6. Presiona el botón A para concluir.
 ```
-![calibrandoSensorDeColor](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/c23a67cf-da22-406d-af47-048f26562b0f)
-
-[![Texto alternativo](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/c23a67cf-da22-406d-af47-048f26562b0f)]([URL_DEL_VIDEO](https://www.youtube.com/watch?v=ZopndiGDuBM))
+[![Calibración del sensor de color](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/c23a67cf-da22-406d-af47-048f26562b0f)]([URL_DEL_VIDEO](https://www.youtube.com/watch?v=ZopndiGDuBM))
 
 ## Calibración de las flechas táctiles
 
