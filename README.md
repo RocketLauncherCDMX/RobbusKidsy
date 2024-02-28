@@ -77,7 +77,7 @@ En conclusión:
 6. Presiona el botón A para concluir.
 ```
 Si eres una persona más visual, te invitamos a visitar el video ```Calibrando el sensor de color de Robbus Kidsy```
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ZopndiGDuBM" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ZopndiGDuBM?si=jvUCTNVoCJ1KZeJB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 
 ## Calibración de las flechas táctiles
