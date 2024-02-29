@@ -103,7 +103,7 @@ En conclusión:
 ```bash
 1. Manten el botón B presionado mientras pulsas Reset.
 2. Presiona B sin presionar ninguna flecha (4 LEDs encendidos).
-3. Mantén presionada la flecha rcorrecpondiente mientras presionas el botón B.
+3. Mantén presionada la flecha correcpondiente mientras presionas el botón B.
 4. Repite para el resto de flechas.
 ```
 
