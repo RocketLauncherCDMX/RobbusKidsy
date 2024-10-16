@@ -37,7 +37,7 @@ Como se ha comentado, el corazón de Kidsy es el ESP32, por lo que, además de l
 
 Aquí deberás buscar **ESP32** y seleccionar esp32 by Espressif Systems. Una vez instalado, ya podrás elegir la tarjeta.
 
-**Importante:** Deberás escoger la versión **2.0.17** o menor, ya que las versión 3.0.0 hacia arriba no compilará.
+**Importante:** Deberás escoger la versión **2.0.17** o menor, ya a partir de la versión 3.0.0 no compilará.
 
 ![Intalacion de biblioteca 05](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/53acc892-9f31-40b2-88e9-4cab5cc82a85)
 
