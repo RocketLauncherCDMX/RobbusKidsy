@@ -37,7 +37,8 @@ Como se ha comentado, el corazón de Kidsy es el ESP32, por lo que, además de l
 
 Aquí deberás buscar **ESP32** y seleccionar esp32 by Espressif Systems. Una vez instalado, ya podrás elegir la tarjeta.
 
-**Importante:** Deberás escoger la versión **2.0.17** o menor, ya a partir de la versión 3.0.0 no compilará.
+**IMPORTANTE**
+Deberás escoger la versión **2.0.17** o menor, ya que a partir de la versión 3.0.0 no compilará.
 
 ![Intalacion de biblioteca 05](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/53acc892-9f31-40b2-88e9-4cab5cc82a85)
 
@@ -57,6 +58,9 @@ Si quieres programar por tu cuenta a Kidsy, puedes apoyarte de la gran variedad 
 
 ## IMPORTANTE
 Si estás intentando programarlo pero al subir el programa marca un error, asegurate de que el interruptor de encendido esté en la posición ON y el LED verde encendido.
+Si aún así tienes problemas, deberás bajar la velocidad de carga a 115200 baudios.
+
+![Instalacion de biblioteca 08](https://github.com/user-attachments/assets/9b495898-e7b9-46b0-96cd-3de954302356)
 
 Si alguno de los siguientes elementos no funciona adecuadamente, sensor de color, flechas táctiles o motores, puedes hacer una calibración de cada uno siguiendo los siguientes pasos:
 
