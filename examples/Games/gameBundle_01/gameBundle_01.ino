@@ -107,20 +107,20 @@ RobbusKidsy Kidsy;             // Llama a Robbus Kidsy
 unsigned int color_intensity = 50;  // La intensidad del Neopixel (1 - 255);
 short flag_sound = ON;             // ON = sonido habilitado
                                      // OFF = sonido deshabilitado
-uint8_t acceleration = 30;           // aceleracion de las llantas (1 - 255);
+uint8_t acceleration = 60;           // aceleracion de las llantas (1 - 255);
                                     
 // ----------------------------------------------------------------------------------------------
 // GAME A
 #define MAX_MOVES     10          // numero maximo de movimientos
-#define SPEED_A       100         // velocidad de los movimientos de kidsy (minimo 1, maximo 255)
+#define SPEED_A       200         // velocidad de los movimientos de kidsy (minimo 1, maximo 255)
 #define DURATION_A    300         // tiempo que mantendra cada movimiento en ms
 #define PAUSE_TIME_A  100         // pausa entre un movimiento y el siguiente en milisegundos
 // ----------------------------------------------------------------------------------------------
 // GAME B
 #define MAX_ARROWS    100         // limite de memoria para guardar direcciones
-#define SPEED_B       150         // velocidad de los movimientos de kidsy
-#define DURATION_B    250         // tiempo que mantendra cada movimiento
-#define PAUSE_TIME_B  100         // pausa entre un movimiento y el siguiente en milisegundos
+#define SPEED_B       200         // velocidad de los movimientos de kidsy
+#define DURATION_B    350         // tiempo que mantendra cada movimiento
+#define PAUSE_TIME_B  200         // pausa entre un movimiento y el siguiente en milisegundos
 //
 // ----------------------------------------------------------------------------------------------
 // GAME C

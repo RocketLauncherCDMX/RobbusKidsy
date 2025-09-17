@@ -37,7 +37,7 @@ VEML6040::VEML6040(void) {
 
 bool VEML6040::begin(void) {
   bool sensorExists = false;
-  Wire.begin();
+  Wire.begin(23,22,400000);
   Wire.beginTransmission(VEML6040_I2C_ADDRESS);
   if (Wire.endTransmission() == 0) {
     sensorExists = true;

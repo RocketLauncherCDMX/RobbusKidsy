@@ -4,16 +4,14 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include "veml6040.h"
-#include "pitches.h"
 #include "Preferences.h"
+#include "driver/rmt.h"
 
 // -------------------------------------------------------------------------------------------------------------
 // RobbusKidsy Classes
 class RobbusKidsy {
 private:
   // Global private constants
-  #define PWM_MOTOR_FREQ        30000   // this variable is used to define the time period 
-  #define PWM_RESOUTION         8       // this will define the resolution of the signal which is 8 in this case
   #define ARROW_BUFFER_LENGHT   25      // large of buffer for smooth arrow's touch
 
   uint64_t timeStamp;
@@ -127,51 +125,49 @@ public:
 
   class movement {
   private:
+    #define MOTOR_PWM_FREQ          20000
+    #define MOTOR_PWM_RES           8
+
     #define DCM_LEFT_IN1            2
     #define DCM_LEFT_IN2            4
     #define DCM_RIGHT_IN1           17
     #define DCM_RIGHT_IN2           18
     #define DCM_SLEEP               33
-    #define PWM_CHANNEL_LEFT_IN1    0
-    #define PWM_CHANNEL_LEFT_IN2    1
-    #define PWM_CHANNEL_RIGHT_IN1   2
-    #define PWM_CHANNEL_RIGHT_IN2   3
 
     uint8_t adjusted_leftSpeed;
     uint8_t adjusted_rightSpeed;
-    uint8_t speed = 0;
     uint direction = FORWARD;
     bool status = OFF;
-    uint8_t pwm_channel;
-    uint8_t dcm_in;
 
   public:
     #define STOP   0
-    uint8_t top_leftSpeed;
-    uint8_t top_rightSpeed;
+    uint8_t bottom_leftSpeed = 50;
+    uint8_t bottom_rightSpeed = 50;
+    uint8_t top_leftSpeed = 255;
+    uint8_t top_rightSpeed = 255;
 
     void disableMotors();
     void enableMotors();
-    void MotorLeft(int16_t);
-    void MotorRight(int16_t);
-    void forward(uint16_t);
-    void backward(uint16_t);
-    void turnLeft(uint16_t);
-    void turnRight(uint16_t);
+    void motorLeft(int16_t);
+    void motorRight(int16_t);
+    void forward(uint8_t);
+    void backward(uint8_t);
+    void turnLeft(uint8_t);
+    void turnRight(uint8_t);
     void stop();
 
   } Move;
 
   class Buzzer {
   private:
-    uint16_t old_frequency = 0;
+    bool _beepActive = false;
+    uint32_t _beepEnd;
+
   public:
     #define BUZZER  25
-    #define PWM_CHANNEL_BUZZER  4
 
     void playTone(int16_t, uint16_t);
     void playTone(int16_t);
-    void playTone(int16_t, uint16_t, uint8_t);
     void noTone();
     void playNote(char, uint16_t);
     void r2d2(uint16_t);
@@ -181,15 +177,31 @@ public:
 
   class Neopixel {
   private:
-    uint8_t value[3];  // GRB value
-    uint8_t col, bit;
-    uint8_t i;
-  public:
-    #define NONE          0
-    #define ANY_BUTTON    5
-    #define ANY_ARROW     6
+    #define NEOPIXEL_PIN     19
+    #define RMT_CHANNEL      RMT_CHANNEL_0
+    #define RMT_CLK_DIV      2
 
-    int tempo;
+    #define WS_T0H_TICKS     16           // ~0.40 us
+    #define WS_T0L_TICKS     34           // ~0.85 us
+    #define WS_T1H_TICKS     32           // ~0.80 us
+    #define WS_T1L_TICKS     18           // ~0.45 us
+
+    static inline rmt_item32_t ws_bit(bool one) {
+      rmt_item32_t i;
+      if (one) {
+        i.level0 = 1; i.duration0 = WS_T1H_TICKS;
+        i.level1 = 0; i.duration1 = WS_T1L_TICKS;
+      } else {
+        i.level0 = 1; i.duration0 = WS_T0H_TICKS;
+        i.level1 = 0; i.duration1 = WS_T0L_TICKS;
+      }
+      return i;
+    }
+
+  public:
+    #define NONE             0
+    #define ANY_BUTTON       5
+    #define ANY_ARROW        6
 
     void color(uint8_t,uint8_t,uint8_t);
     void color(uint8_t,uint8_t);
@@ -204,8 +216,7 @@ public:
 
   class ColorSensor {
   private:
-    
-    
+        
   public:
     double hue, saturation, sat_value;
     uint32_t sum;

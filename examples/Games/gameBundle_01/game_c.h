@@ -1,6 +1,6 @@
 #define CUSTOM_SETTINGS
 #define INCLUDE_GAMEPAD_MODULE
-#include <DabbleESP32.h>
+//#include <DabbleESP32.h>
 #include "KidsyDabbleJoystick.h"
 
 #define FLAT_SPEED            90        // velocidad de una llanta ponchada (magenta)
@@ -41,16 +41,16 @@ void call_game_c() {
   Serial.println("Juguemos a Kidsy Kart!");
   Serial.println("Para este juego es necesario que descargues la app Dabble desde tu tienda de applicaciones.");
   Serial.println("Dentro, escoge Gamepad, y dale al ícono de conectar. Estarás listo para controlarme :)");
-  Dabble.begin("Robbus Kidsy");       // Enter baudrate of your bluetooth.Connect bluetooth on Bluetooth port present on evive.
+  //Dabble.begin("Robbus Kidsy");       // Enter baudrate of your bluetooth.Connect bluetooth on Bluetooth port present on evive.
   manageLeds(0,0,ON,0);
   
 
   while(kidsyStatus != GAMEOVER) {
-    Dabble.processInput();             //this function is used to refresh data obtained from smartphone.Hence calling this function is mandatory in order to get data properly from your mobile.
+    //Dabble.processInput();             //this function is used to refresh data obtained from smartphone.Hence calling this function is mandatory in order to get data properly from your mobile.
     buttonsProcess();
     
-    int new_angle = GamePad.getAngle();
-    int b = GamePad.getRadius();
+    //int new_angle = GamePad.getAngle();
+    //int b = GamePad.getRadius();
     
     // Process the arrows in the dabble app
     // --------------------------------------------------------------------------------
@@ -133,7 +133,7 @@ void call_game_c() {
       setSpeedLeft = 0;
       setSpeedRight = 0;
     }
-    else if(b != 0 && new_angle != 0) {
+    /*else if(b != 0 && new_angle != 0) {
       if(new_angle != old_angle) {
         Serial.print("Angulo: " + String(new_angle) + "°, Radio: " + String(b));
         if(new_angle >= 60 && new_angle < 120) {
@@ -182,7 +182,7 @@ void call_game_c() {
         setSpeedRight = 0;
       }
       old_angle = new_angle;
-    }
+    }*/
     else if(flag_direction_buttons == false) {
       setSpeedLeft = 0;
       setSpeedRight = 0;

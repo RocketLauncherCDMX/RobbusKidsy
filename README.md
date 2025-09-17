@@ -1,9 +1,22 @@
 ![Robbus Kidsy overview](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/de7d2ab2-48e1-472c-935b-4866fc14e093)
 <br><br>
-Gracias por tu interés en Robbus Kidsy, un robot móvil de dos ruedas, basado en el microcontrolador ESP32, capaz de moverse por si mismo, completamente programable en Arduino. Los elementos que lo componen son: <br>
+Gracias por tu interés en Robbus Kidsy, un robot móvil de dos ruedas, basado en el microcontrolador ESP32, capaz de moverse por si mismo, completamente programable en Arduino. <br><br><br>
 
-![Partes de Robbus Kidsy](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/b9a26373-69a0-4ea7-ba25-2b65386cb1f1)
+![Robbus Kidsy - Parts-05](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/f7145416-2960-4107-999f-9512fbc5b0ab)
 
+De fábrica Robbus Kidsy viene programado con 3 divertidos juegos:
+
+```bash
+1. Kidsy Dice
+2. Guia a Kidsy
+3. Kidsy Kart
+```
+
+Cada uno de estos juegos se inicia al presionar los botones A, B y C. Puedes encontrar más información en el siguiente link:
+
+```bash
+https://github.com/RocketLauncherCDMX/RobbusKidsy/tree/master/documents/Spanish
+```
 
 ## Primeros pasos
 
@@ -24,6 +37,9 @@ Como se ha comentado, el corazón de Kidsy es el ESP32, por lo que, además de l
 
 Aquí deberás buscar **ESP32** y seleccionar esp32 by Espressif Systems. Una vez instalado, ya podrás elegir la tarjeta.
 
+**IMPORTANTE**
+Deberás escoger la versión **2.0.17** o menor, ya que a partir de la versión 3.0.0 no compilará.
+
 ![Intalacion de biblioteca 05](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/53acc892-9f31-40b2-88e9-4cab5cc82a85)
 
 ## Selección de tarjeta
@@ -31,19 +47,22 @@ La facilidad de Arduino es que dispone de la gran mayoría de tarjetas listas pa
 
 ![Intalacion de biblioteca 03](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/a30dbc35-4cc1-4295-95f1-8ff119423142)
 
-Puedes comenzar a divertirte con tu Robbus Kidsy desde que lo sacas de su empaque, ya que trae 3 funcionalidades muy divertidas, estas las encontrarás explicadas en el siguiente link:
+Puedes comenzar a divertirte con tu Robbus Kidsy desde que lo sacas de su empaque, ya que trae 3 funcionalidades muy divertidas, las encontrarás explicadas en el siguiente link:
 
 ```bash
 https://github.com/RocketLauncherCDMX/RobbusKidsy/tree/master/documents/Spanish
 ```
-Si quieres programar por tu cuenta a Kidsy, puedes apoyarte de la gran variedad de ejemplos que la biblioteca tiene incluidos para Arduino, yendo a la pestaña **Archivo/Ejemplos/Robbus Kidsy**
+Si quieres programar por tu cuenta a Kidsy, puedes apoyarte de la gran variedad de ejemplos que la biblioteca tiene incluidos para Arduino, llendo a la pestaña **Archivo/Ejemplos/Robbus Kidsy**
 
 ![Intalacion de biblioteca 06](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/9bad4976-1dda-4eb1-b8d6-46310e29f636)
 
 ## IMPORTANTE
-Si estás intentando programarlo pero al subir el programa marca un error, asegurate de que el interruptor de encendido esté en la posición ON y el LED verde encendido.
+Si estás intentando programarlo pero al subir el programa marca un error, asegurate de que el interruptor de encendido esté en la posición ON y el LED verde encendido.<br>
+Si aún así tienes problemas, deberás bajar la velocidad de carga a 115200 baudios.
 
-Si alguna función de tu Kidsy no funciona adecuadamente (sensor de color, flechas táctiles o motores), puedes hacer una calibración de cada uno siguiendo los siguientes pasos:
+![Instalacion de biblioteca 08](https://github.com/user-attachments/assets/9b495898-e7b9-46b0-96cd-3de954302356)
+
+Si alguno de los siguientes elementos no funciona adecuadamente, sensor de color, flechas táctiles o motores, puedes hacer una calibración de cada uno siguiendo los siguientes pasos:
 
 ## Calibración del sensor de color
 
@@ -63,6 +82,10 @@ En conclusión:
 5. Después del blanco, comprueba el sensado de los colores libremente.
 6. Presiona el botón A para concluir.
 ```
+
+Si eres más visual, el siguiente video te mostrará como hacerlo:
+
+[![Calibración del sensor de color de Robbus Kidsy](https://github.com/RocketLauncherCDMX/RobbusKidsy/assets/66702091/1a01a13a-b81d-4e30-94ef-f1a5d92a4e07)](https://www.youtube.com/watch?v=ZopndiGDuBM)
 
 ## Calibración de las flechas táctiles
 
@@ -86,7 +109,7 @@ En conclusión:
 ```bash
 1. Manten el botón B presionado mientras pulsas Reset.
 2. Presiona B sin presionar ninguna flecha (4 LEDs encendidos).
-3. Mantén presionada la flecha rcorrecpondiente mientras presionas el botón B.
+3. Mantén presionada la flecha correcpondiente mientras presionas el botón B.
 4. Repite para el resto de flechas.
 ```
 

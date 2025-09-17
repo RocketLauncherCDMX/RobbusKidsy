@@ -42,7 +42,7 @@ bool new_angle;
 bool old_angle;
 
 void buttonsProcess() {
-  new_forwardButton = GamePad.isPressed(UP_BIT);
+  /*new_forwardButton = GamePad.isPressed(UP_BIT);
   new_backwardButton = GamePad.isPressed(DOWN_BIT);
   new_leftButton = GamePad.isPressed(LEFT_BIT);
   new_rightButton = GamePad.isPressed(RIGHT_BIT);
@@ -112,5 +112,5 @@ void buttonsProcess() {
   old_squareButton = new_squareButton;
   old_circleButton = new_circleButton;
   old_selectButton = new_selectButton;
-  old_startButton = new_startButton;
+  old_startButton = new_startButton;*/
 }

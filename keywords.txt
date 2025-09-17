@@ -22,8 +22,8 @@ off 							KEYWORD2
 toggle 						KEYWORD2
 blink 						KEYWORD2
 analogRead 				KEYWORD2
-MotorLeft 				KEYWORD2
-MotorRight 				KEYWORD2
+motorLeft 				KEYWORD2
+motorRight 				KEYWORD2
 forward 					KEYWORD2
 backward 					KEYWORD2
 turnLeft 					KEYWORD2
@@ -56,7 +56,6 @@ Buzzer						KEYWORD2
 Neopixel					KEYWORD2
 ColorSensor				KEYWORD2
 Move							KEYWORD2
-ColorSensor				KEYWORD2
 
 ############################################################
 # Constants

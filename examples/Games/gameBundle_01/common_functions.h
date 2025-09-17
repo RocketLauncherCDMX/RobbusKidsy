@@ -43,33 +43,28 @@ void IRAM_ATTR onTimer() {
   else if(motorSpeedRight > setSpeedRight)  motorSpeedRight-=acceleration;
 
   // carga los nuevos valores de velocidad en los motores
-  Kidsy.Move.MotorLeft(motorSpeedLeft);
-  Kidsy.Move.MotorRight(motorSpeedRight);
+  Kidsy.Move.motorLeft(motorSpeedLeft);
+  Kidsy.Move.motorRight(motorSpeedRight);
 
   // Para la variable compartida por loop y la funcion de interrupcion
   portEXIT_CRITICAL_ISR(&timerMux);   
 }
 
 void configureTimer() {
-  // A continucacion configuramos el timer:
-  
-  // 1       - Inicializa el Timer1, Robbus Kidsy dispone de 4 timers (0 al 3)
-  // 80      - Valor del preescaler para 80MHz / 80 = 1000000 veces por segundo
-  // true    - Cuenta ascendente, false: cuenta descendente
-  timer = timerBegin(1, 80, true);
-  
-  // timer    - Pasamos la variable timer creada
-  // &onTimer - funcion onTimer
-  // true     - la interrupcion generada sera ascendente, false: descendente
-  timerAttachInterrupt(timer, &onTimer, true);  
-  
-  // timer      - Puntero al timer
-  // timer_time - Valor del contador en el cual el timer interrumpira (ms para un valor de preescaler de 80 y velocidad de 80MHz)
-  // true       - Interrupcion periodica, false: interrumpe una sola vez 
-  timerAlarmWrite(timer, timer_time, true);
+  // En core 3.x: timerBegin recibe la FRECUENCIA del reloj del timer (Hz).
+  // Usamos 1 MHz para trabajar cómodo en microsegundos con la alarma.
+  timer = timerBegin(1000000);                 // 1,000,000 Hz (1 µs por tick)
 
-  //  Habilitamos el timer que acabamos de crear
-  timerAlarmEnable(timer);
+  // La firma nueva de attach ya no acepta el tercer parámetro (edge).
+  timerAttachInterrupt(timer, &onTimer);       // ISR: void IRAM_ATTR onTimer()
+
+  // En core 3.x ya no existen timerAlarmWrite / timerAlarmEnable.
+  // Se usa timerAlarm(timer, periodo_us, autoreload, reload_us)
+  // Queremos una interrupción periódica cada 'timer_time' microsegundos.
+  timerAlarm(timer, (uint64_t)timer_time, true, 0);
+
+  // Arrancamos el timer (equivalente a "enable")
+  timerStart(timer);
 }
 
 /* --------------------------------------------------------------------------------------------
